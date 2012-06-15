@@ -1,107 +1,107 @@
-<html>  
-<head>  
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />  
-	<title>SAPUI5 Conditional Databinding</title>  
-	<script src="/sapui5/sap-ui-core.js"  
-		type="text/javascript"  
-		id="sap-ui-bootstrap"  
-		data-sap-ui-libs="sap.ui.commons,sap.ui.table"  
-		data-sap-ui-theme="sap_goldreflection">  
-	</script>  
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>SAPUI5 Conditional Databinding</title>
+  <script src="/sapui5/sap-ui-core.js"
+    type="text/javascript"
+    id="sap-ui-bootstrap"
+    data-sap-ui-libs="sap.ui.commons,sap.ui.table"
+    data-sap-ui-theme="sap_goldreflection">
+  </script>
 
-	<script>  
-		jQuery.sap.log.setLevel(jQuery.sap.log.LogLevel['ERROR']);  
+  <script>
+    jQuery.sap.log.setLevel(jQuery.sap.log.LogLevel['ERROR']);
 
-		var contacts = {
-			modelData: [
-				{
-						firstName: "DJ",
-						lastName: "Adams",
-						phoneNumbers: [
-							{type: "mobile", number: "07960-mobile"},
-							{type: "home", number: "0161-home"},
-							{type: "work", number: "0208-work"}
-						]
-				},
-				{
-						firstName: "Michelle",
-						lastName: "Adams",
-						phoneNumbers: [
-							{type: "mobile", number: "07919-mobile"},
-							{type: "home", number: "0161-home"},
-							{type: "work", number: "01625-work"}
-						]
-				},
-				{
-						firstName: "Joseph",
-						lastName: "Adams",
-						phoneNumbers: [
-							{type: "mobile", number: "01636-mobile"},
-							{type: "home", number: "0161-home"},
-							{type: "school", number: "02151-school"}
-						]
-				},
-			]	
-		};
+    var contacts = {
+      modelData: [
+        {
+          firstName: "DJ",
+          lastName: "Adams",
+          phoneNumbers: [
+            {type: "mobile", number: "07960-mobile"},
+            {type: "home", number: "0161-home"},
+            {type: "work", number: "0208-work"}
+          ]
+        },
+        {
+          firstName: "Michelle",
+          lastName: "Adams",
+          phoneNumbers: [
+            {type: "mobile", number: "07919-mobile"},
+            {type: "home", number: "0161-home"},
+            {type: "work", number: "01625-work"}
+          ]
+        },
+        {
+          firstName: "Joseph",
+          lastName: "Adams",
+          phoneNumbers: [
+            {type: "mobile", number: "01636-mobile"},
+            {type: "home", number: "0161-home"},
+            {type: "school", number: "02151-school"}
+          ]
+        },
+      ]
+    };
 
 
-		function capitaliseFirstLetter(string) {
-			return string.charAt(0).toUpperCase() + string.slice(1);
-		}
-		
-		function createColumnOfType(sArrayName, sType, sValueParameter) {
-			var column = new sap.ui.table.Column({
-				label: new sap.ui.commons.Label({text: capitaliseFirstLetter(sType)}),
-				template: new sap.ui.commons.TextView().bindProperty("text", sArrayName, function(aVal) {
-					var sValue = "";
-					if (aVal) {
-						jQuery.each(aVal, function(i, d) {
-							if (d.type === sType) {
-								sValue = d[sValueParameter];
-								return false;
-							}
-						});
-					}
-					return sValue;	
-				})
-			});
-			return column;
-		}  
+    function capitaliseFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    }
   
-		var oTable = new sap.ui.table.DataTable();  
-		
-		oTable.addColumn(new sap.ui.table.Column({  
-		  label: new sap.ui.commons.Label({text: "First Name"}),  
-		  template: new sap.ui.commons.TextView().bindProperty("text", "firstName"),  
-		  sortProperty: "firstName"  
-		}));  
-		  
-		oTable.addColumn(new sap.ui.table.Column({  
-		  label: new sap.ui.commons.Label({text: "Last Name"}),  
-		  template: new sap.ui.commons.TextView().bindProperty("text", "lastName"),  
-		  sortProperty: "lastName",  
-		}));  
-		 
-		jQuery.each(['home', 'work', 'mobile', 'school'], function(i, v) {
-			oTable.addColumn(createColumnOfType("phoneNumbers", v, "number"));
-		});
-		
-		  
-		var oModel = new sap.ui.model.json.JSONModel();  
-		oModel.setData(contacts);  
-		  
-		oTable.setModel(oModel);  
-		oTable.bindRows("modelData");  
-		
-		oTable.placeAt("dataTable");  
+    function createColumnOfType(sArrayName, sType, sValueParameter) {
+      var column = new sap.ui.table.Column({
+        label: new sap.ui.commons.Label({text: capitaliseFirstLetter(sType)}),
+        template: new sap.ui.commons.TextView().bindProperty("text", sArrayName, function(aVal) {
+          var sValue = "";
+          if (aVal) {
+            jQuery.each(aVal, function(i, d) {
+              if (d.type === sType) {
+                sValue = d[sValueParameter];
+                return false;
+              }
+            });
+          }
+          return sValue;
+        })
+      });
+      return column;
+    }
+
+    var oTable = new sap.ui.table.DataTable();
   
-	</script>  
+    oTable.addColumn(new sap.ui.table.Column({
+      label: new sap.ui.commons.Label({text: "First Name"}),
+      template: new sap.ui.commons.TextView().bindProperty("text", "firstName"),
+      sortProperty: "firstName"
+    }));
+    
+    oTable.addColumn(new sap.ui.table.Column({
+      label: new sap.ui.commons.Label({text: "Last Name"}),
+      template: new sap.ui.commons.TextView().bindProperty("text", "lastName"),
+      sortProperty: "lastName",
+    }));
+   
+    jQuery.each(['home', 'work', 'mobile', 'school'], function(i, v) {
+      oTable.addColumn(createColumnOfType("phoneNumbers", v, "number"));
+    });
+  
+    
+    var oModel = new sap.ui.model.json.JSONModel();
+    oModel.setData(contacts);
+    
+    oTable.setModel(oModel);
+    oTable.bindRows("modelData");
+  
+    oTable.placeAt("dataTable");
+
+  </script>
 
 </head>
-  
-<body class="sapUiBody">  
-	<h1>SAPUI5 Conditional Databinding</h1>
-	<p>See <a href='http://scn.sap.com/message/13270512'>discussion on SAPUI5 forum</a></p>  
-	<div id="dataTable"></div>  
-</body>  
+
+<body class="sapUiBody">
+  <h1>SAPUI5 Conditional Databinding</h1>
+  <p>See <a href='http://scn.sap.com/message/13270512'>discussion on SAPUI5 forum</a></p>
+  <div id="dataTable"></div>
+</body>
 </html>
