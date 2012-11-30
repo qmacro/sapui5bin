@@ -2,7 +2,7 @@
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>SAPUI5 Conditional Databinding</title>
-  <script src="/sapui5/sap-ui-core.js"
+  <script src="/sapui5/resources/sap-ui-core.js"
     type="text/javascript"
     id="sap-ui-bootstrap"
     data-sap-ui-libs="sap.ui.commons,sap.ui.table"
@@ -68,7 +68,8 @@
       return column;
     }
 
-    var oTable = new sap.ui.table.DataTable();
+    var oTable = new sap.ui.table.Table();
+    oTable.setColumnHeaderHeight(30);
   
     oTable.addColumn(new sap.ui.table.Column({
       label: new sap.ui.commons.Label({text: "First Name"}),
@@ -91,7 +92,7 @@
     oModel.setData(contacts);
     
     oTable.setModel(oModel);
-    oTable.bindRows("modelData");
+    oTable.bindRows("/modelData");
   
     oTable.placeAt("dataTable");
 
