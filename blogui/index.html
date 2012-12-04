@@ -1,55 +1,92 @@
 <!DOCTYPE HTML>  
 <html>  
 <head> 
-    <title>The Title</title> 
+    <title>DJ Adams</title> 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <style type="text/css">
+      #recentTitle { font-weight: bold; font-size: 110%; }
+    </style>
     <script src="/sapui5/resources/sap-ui-core.js" 
         type="text/javascript"   
         id="sap-ui-bootstrap"  
         data-sap-ui-libs="sap.ui.ux3, sap.ui.commons, sap.ui.table"  
         data-sap-ui-theme="sap_goldreflection">  
     </script>  
+
     <script type="text/javascript">  
-
-    jQuery.sap.log.setLevel(jQuery.sap.log.LogLevel['DEBUG']);
-
-    var c = sap.ui.commons;
-    var oShell = new sap.ui.ux3.Shell({     
-        appTitle: "App Title",
-        showFeederTool: false,
-        showInspectorTool: false,
-        showSearchTool: false,
-        showLogoutButton: false,
-        worksetItems: [
-                       new sap.ui.ux3.NavigationItem({
-                         text: "Item 1"
-                       })
-        ]
-    });
+    jQuery.sap.log.setLevel(jQuery.sap.log.LogLevel['ERROR']);
 
     sap.ui.localResources("resources");
-    var view = sap.ui.view({
-      id: "idView1",
-      viewName: "resources.view1",
-      type: sap.ui.core.mvc.ViewType.JS
-    });
-    
-    oShell.addHeaderItem(new c.TextView({text:"DJ Adams",tooltip:"qmacro"}));
-    oShell.addHeaderItem(new c.Button({
-        text:"Personalize",
-        tooltip:"Personalize",
-        press:function(){
-            oShell.openPersonalizationDialog();
-        }
-    }));
 
-    oShell.setContent(view);
+    var oContent = {};
+
+    var oShell = new sap.ui.ux3.Shell({     
+      appTitle: "Reserving the right to be wrong",
+      showFeederTool: false,
+      showInspectorTool: false,
+      showSearchTool: false,
+      showLogoutButton: false,
+      worksetItems:[
+        new sap.ui.ux3.NavigationItem({key:"wi_blog",text:"Blog",subItems:[
+          new sap.ui.ux3.NavigationItem({key:"wi_blog_recent", text:"Recent"}),
+          new sap.ui.ux3.NavigationItem({key:"wi_blog_archives", text:"Archives"})
+        ]}),
+        new sap.ui.ux3.NavigationItem({key:"wi_about",text:"About",subItems:[ ]}),
+      ]
+    });
+
+    oShell.addHeaderItem(new sap.ui.commons.TextView({text:"DJ Adams",tooltip:"qmacro"}));
+
+    function jsView(name) {
+      return new sap.ui.view({
+        id: "id_" + name,
+        viewName: name,
+        type: sap.ui.core.mvc.ViewType.JS
+      });
+    }
+
+    function getContent(key) {
+      if (oContent[key]) return oContent[key];
+      switch(key) {
+        case "wi_about":
+          oContent[key] = jsView("resources.about");
+          break;
+        case "wi_blog":
+          oContent[key] = new sap.ui.commons.Label({text: "blog"});
+          break;
+        case "wi_blog_recent":
+          oContent[key] = jsView("resources.blogrecent");
+          break;
+        case "wi_blog_archives":
+          oContent[key] = new sap.ui.commons.Label({text: "blog archives"});
+          break;
+        default:
+          break;
+      };
+      return oContent[key];
+        
+    }
+
+
+    oShell.attachWorksetItemSelected(function (oEvent) {
+      var key = oEvent.getParameter("key");
+      oEvent.oSource.setContent(getContent(key));
+    });
+
+    oShell.setContent(getContent("wi_blog_recent"));
+
     oShell.placeAt("content");
     
     </script>  
 </head>  
 
 <body class="sapUiBody" role="application">  
-    <div id="content"></div>  
+  <div id="content"></div>  
+  <script>
+    var _gaq=[["_setAccount","UA-12395541-6"],["_trackPageview"]];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;
+    g.src=("https:"==location.protocol?"//ssl":"//www")+".google-analytics.com/ga.js";
+    s.parentNode.insertBefore(g,s)}(document,"script"));
+  </script>
 </body>  
 </html>  
