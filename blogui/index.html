@@ -27,11 +27,11 @@
       showSearchTool: false,
       showLogoutButton: false,
       worksetItems:[
+        new sap.ui.ux3.NavigationItem({key:"wi_about",text:"About",subItems:[ ]}),
         new sap.ui.ux3.NavigationItem({key:"wi_blog",text:"Blog",subItems:[
           new sap.ui.ux3.NavigationItem({key:"wi_blog_recent", text:"Recent"}),
-          new sap.ui.ux3.NavigationItem({key:"wi_blog_archives", text:"Archives"})
+          new sap.ui.ux3.NavigationItem({key:"wi_blog_archive", text:"Archives"}),
         ]}),
-        new sap.ui.ux3.NavigationItem({key:"wi_about",text:"About",subItems:[ ]}),
       ]
     });
 
@@ -57,8 +57,8 @@
         case "wi_blog_recent":
           oContent[key] = jsView("resources.blogrecent");
           break;
-        case "wi_blog_archives":
-          oContent[key] = new sap.ui.commons.Label({text: "blog archives"});
+        case "wi_blog_archive":
+          oContent[key] = jsView("resources.blogarchive");
           break;
         default:
           break;
@@ -73,7 +73,7 @@
       oEvent.oSource.setContent(getContent(key));
     });
 
-    oShell.setContent(getContent("wi_blog_recent"));
+    oShell.setContent(getContent("wi_about"));
 
     oShell.placeAt("content");
     
