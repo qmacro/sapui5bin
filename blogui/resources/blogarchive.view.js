@@ -12,7 +12,10 @@ sap.ui.jsview("resources.blogarchive", {
       columns: [
         new sap.ui.table.Column({
           label: new sap.ui.commons.Label({text: "Date"}),
-          template: new sap.ui.commons.TextView({text: "{published}"})
+          template: new sap.ui.commons.TextView("idPublished", {})
+            .bindProperty("text", "published", function(val) {
+              return val && moment(new Date(val)).fromNow();
+            })
         }),
         new sap.ui.table.Column({
           label: new sap.ui.commons.Label({text: "Post"}),

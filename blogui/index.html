@@ -6,6 +6,7 @@
     <style type="text/css">
       #recentTitle { font-weight: bold; font-size: 110%; }
     </style>
+    <script src="/qmacro/jslibs/moment.min.js" type="text/javascript"></script>
     <script src="/sapui5/resources/sap-ui-core.js" 
         type="text/javascript"   
         id="sap-ui-bootstrap"  
@@ -66,7 +67,6 @@
       return oContent[key];
         
     }
-
 
     oShell.attachWorksetItemSelected(function (oEvent) {
       var key = oEvent.getParameter("key");
