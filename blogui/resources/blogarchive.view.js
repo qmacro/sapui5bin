@@ -5,15 +5,18 @@ sap.ui.jsview("resources.blogarchive", {
 
   createContent : function(oController) {
 
-    console.log("in view resources.blogarchive createContent()");
-
-    var postbody = new sap.ui.core.HTML("postbody", {content: "{content}"});
-
-    var oPanel = new sap.ui.commons.Panel("postpanel", {
-      width: "100%",
-      title: new sap.ui.commons.Title({text: "{title}"}),
-      content: postbody
+    var postbody = new sap.ui.core.HTML("postbody", {
+      content: "{content}",
+      preferDOM: false,
+      sanitizeContent: true
     });
+
+    var oPanel = new sap.ui.commons.Panel("idPostPanel1", {});
+    oPanel.setTitle(new sap.ui.commons.Title("idTitle1", {text: "{title}"}));
+    oPanel.addContent(new sap.ui.core.HTML("idHtml1", {
+      content: "{content}",
+      preferDOM: false
+    }));
 
     var oTable = new sap.ui.table.Table({
       id: this.createId("blogarchiveTable"),
@@ -36,9 +39,7 @@ sap.ui.jsview("resources.blogarchive", {
     });
     oTable.attachRowSelectionChange(function(oEvent) {
       var context = oEvent.getParameter("rowContext");
-      console.log("rowSelectionChange!\n" + postbody.getContent());
-      //oPanel.removeContent();
-      //oPanel.addContent(postbody);
+      console.log("context is " + context);
       oPanel.setBindingContext(context);
     });
 
@@ -48,7 +49,6 @@ sap.ui.jsview("resources.blogarchive", {
       content: [oTable, new sap.ui.commons.HorizontalDivider(), oPanel],
       width: "100%"
     });
-    //return oPanel;
 
 
   }

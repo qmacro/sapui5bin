@@ -6,8 +6,6 @@ sap.ui.controller("resources.blogarchive", {
 */
   onInit: function() {
 
-  	console.log("in controller resources.blogarchive: onInit()");
-
     var oBlogModel = new sap.ui.model.xml.XMLModel();
     oBlogModel.loadData("/qmacro/blog/feed/atom");
     this.getView().setModel(oBlogModel);

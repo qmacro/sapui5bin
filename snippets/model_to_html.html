@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>  
+<html>  
+<head> 
+    <title>Model to HTML</title> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="/sapui5/resources/sap-ui-core.js" 
+        type="text/javascript"   
+        id="sap-ui-bootstrap"  
+        data-sap-ui-libs="sap.ui.commons"  
+        data-sap-ui-theme="sap_goldreflection">  
+    </script>  
+
+    <script type="text/javascript">  
+
+    function countEntries(xml, element) {
+      var $feed = $(jQuery.parseXML(xml));
+      return $feed.find(element).length;
+    }
+
+    var oPanel = new sap.ui.commons.Panel("idPanel1", {});
+    oPanel.setTitle(new sap.ui.commons.Title("idTitle1", {text: "{title}"}));
+    oPanel.addContent(new sap.ui.core.HTML("idHtml1", {
+      content: "{content}",
+      preferDOM: false
+    }));
+
+    var oModel = new sap.ui.model.xml.XMLModel();
+    oModel.loadData("/qmacro/blog/feed/atom", "", false);
+
+    oPaginator = new sap.ui.commons.Paginator("idPaginator1", {
+      numberOfPages: countEntries(oModel.getXML(), 'entry'),
+      page: function(oEvent) {
+        var targetPage = parseInt(oEvent.getParameter("targetPage"));
+        oPanel.bindContext('/entry/' + (targetPage - 1));
+      }
+    });
+
+    oPanel.setModel(oModel);
+    oPanel.bindContext('/entry/0')
+    oPanel.placeAt("content");
+
+    oPaginator.placeAt("paginator");
+
+    </script>  
+</head>  
+
+<body class="sapUiBody" role="application">  
+  <div id="paginator"></div>  
+  <div id="content"></div>  
+</body>  
+</html>  

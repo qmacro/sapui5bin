@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><feed xmlns="http://www.w3.org/2005/Atom" xmlns:thr="http://purl.org/syndication/thread/1.0" xml:lang="en" xml:base="http://www.pipetree.com/qmacro/blog/wp-atom.php">
+	<title type="text">Simple Feed</title>
+	<author type="text">DJ Adams</author>
+	<entry>
+		<title type="html"><![CDATA[Entry 1]]></title>
+		<content type="html" xml:base="http://www.pipetree.com/qmacro/blog/2012/12/entry-1">
+		<![CDATA[<p>This is <strong>entry 1</strong></p>]]>
+		</content>
+	</entry>
+	<entry>
+		<title type="html"><![CDATA[Entry 2]]></title>
+		<content type="html" xml:base="http://www.pipetree.com/qmacro/blog/2012/12/entry-1">
+		<![CDATA[<p>This is <strong>entry 2</strong></p>]]>
+		</content>
+	</entry>
+</feed>
