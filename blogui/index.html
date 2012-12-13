@@ -19,7 +19,7 @@
 
     sap.ui.localResources("resources");
 
-    var oContent = {};
+    var oContent = {} ;
 
     var oShell = new sap.ui.ux3.Shell({     
       appTitle: "Reserving the right to be wrong",
@@ -28,10 +28,10 @@
       showSearchTool: false,
       showLogoutButton: false,
       worksetItems:[
-        new sap.ui.ux3.NavigationItem({key:"wi_about",text:"About",subItems:[ ]}),
-        new sap.ui.ux3.NavigationItem({key:"wi_blog",text:"Blog",subItems:[
-          new sap.ui.ux3.NavigationItem({key:"wi_blog_recent", text:"Recent"}),
-          new sap.ui.ux3.NavigationItem({key:"wi_blog_archive", text:"Archives"}),
+        new sap.ui.ux3.NavigationItem("wiabout", {key:"wi_about",text:"About",subItems:[ ]}),
+        new sap.ui.ux3.NavigationItem("wiblog", {key:"wi_blog",text:"Blog",subItems:[
+          new sap.ui.ux3.NavigationItem("wiblogrecent", {key:"wi_blog_recent", text:"Recent"}),
+          new sap.ui.ux3.NavigationItem("wiblogarchive", {key:"wi_blog_archive", text:"Archives"}),
         ]}),
       ]
     });
@@ -73,6 +73,7 @@
       oEvent.oSource.setContent(getContent(key));
     });
 
+    //oShell.setSelectedWorksetItem("wiblogarchive");
     oShell.setContent(getContent("wi_about"));
 
     oShell.placeAt("content");
