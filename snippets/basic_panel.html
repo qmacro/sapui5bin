@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>  
+<html>  
+<head> 
+    <title>Basic Panel</title> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="/sapui5/resources/sap-ui-core.js" 
+        type="text/javascript"   
+        id="sap-ui-bootstrap"  
+        data-sap-ui-libs="sap.ui.commons"  
+        data-sap-ui-theme="sap_goldreflection">  
+    </script>  
+
+    <script type="text/javascript">  
+
+    var oPanel = new sap.ui.commons.Panel("idPanel1", {
+      width: "100%",
+      title: new sap.ui.commons.Title({text: "Panel Title"}),
+      content: new sap.ui.commons.TextView({text: "Hello World"})
+    });
+
+    oPanel.placeAt("content");
+    
+    </script>  
+</head>  
+
+<body class="sapUiBody" role="application">  
+  <div id="content"></div>  
+</body>  
+</html>  
