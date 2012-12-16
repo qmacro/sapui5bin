@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>  
+<html>  
+<head> 
+    <title>Dynamic Table</title> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="/sapui5/resources/sap-ui-core.js" 
+        type="text/javascript"   
+        id="sap-ui-bootstrap"  
+        data-sap-ui-libs="sap.ui.commons, sap.ui.table"  
+        data-sap-ui-theme="sap_goldreflection">  
+    </script>  
+
+    <script type="text/javascript"> 
+
+    // Turn a flat rowset into name:value records
+    function buildData(columns, rows) {
+      var data = [];
+      for(var r=0, rl=rows.length; r < rl; r++) {
+        var rec = {};
+        for(var c=0, cl=columns.length; c < cl; c++) { 
+          rec[columns[c]] = rows[r][c];
+        }
+        data.push(rec);
+      }
+      return data;
+    }
+      
+
+    function renderTable(columns, rows, mycols)
+    {
+
+      //Create an instance of the table control
+      var oTable = new sap.ui.table.Table({
+        selectionMode: sap.ui.table.SelectionMode.Single,
+      });
+
+      //Dynamically create the columns
+      for(var i=0;i<columns.length;i++)
+      {
+        var col = columns[i];
+        var oColumn = new sap.ui.table.Column("id"+col, {
+          label: new sap.ui.commons.Label({text: col}),
+          template: new sap.ui.commons.TextView({text: "{"+col+"}"}),
+          visible: false
+        });
+        oTable.addColumn(oColumn);
+      } 
+  
+      // Make visible the chosen cols
+      $.each(mycols, function(col) { sap.ui.getCore().byId("id"+mycols[col]).setVisible(); });
+  
+      // Wire up the data
+      var oModel = sap.ui.model.json.JSONModel(buildData(columns, rows));
+      oTable.setModel(oModel);
+      oTable.bindRows("/");
+      oTable.setVisibleRowCount(rows.length);
+  
+      oTable.placeAt("content");
+  
+    }
+    
+    var columns = ["firstname", "lastname", "nationality"];
+    var rows = [["John", "Doe", "US"], ["Bill", "Pickett", "Canada"], ["Frank", "Segment", "England"]];
+
+    // Render a table, choosing a couple of cols
+    renderTable(columns, rows, ["firstname", "nationality"]);
+
+    </script>  
+
+</head>  
+
+<body class="sapUiBody" role="application">  
+  <h1>Dynamic Table</h1>
+  <p>See <a href='http://scn.sap.com/thread/3280362'>http://scn.sap.com/thread/3280362</a></p>
+  <div id="content"></div>  
+</body>  
+</html>  
