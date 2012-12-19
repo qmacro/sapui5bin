@@ -6,13 +6,14 @@
   <!-- Load SAPUI5, select theme and control library -->
   <script id="sap-ui-bootstrap"
     type="text/javascript"
-    src="http://gateway.server:port/sapui5/sapui5-static/resources/sap-ui-core.js"
+    src="/sapui5/resources/sap-ui-core.js"
     data-sap-ui-theme="sap_platinum"
     data-sap-ui-libs="sap.ui.commons,sap.ui.table"></script>
 
   <script>
 
-    var oTable = new sap.ui.table.DataTable();
+    var oTable = new sap.ui.table.Table();
+    oTable.setColumnHeaderHeight(30);
 
     oTable.addColumn(new sap.ui.table.Column({
       label: new sap.ui.commons.Label({text: "Agency Name"}),
@@ -70,9 +71,9 @@
     }));
 
 
-    var oModel = new sap.ui.model.odata.ODataModel("http://gateway.server:port/sap/opu/sdata/iwfnd/RMTSAMPLEFLIGHT");
+    var oModel = new sap.ui.model.odata.ODataModel("/proxy/ER4/sap/opu/sdata/iwfnd/RMTSAMPLEFLIGHT");
     oTable.setModel(oModel);
-    oTable.bindRows("TravelagencyCollection");
+    oTable.bindRows("/TravelagencyCollection");
     oTable.placeAt("dataTable");
 
   </script>
@@ -80,6 +81,8 @@
 </head>
 <body class="sapUiBody">
   <h1>SAP OData in SAPUI5 Data Table Control</h1>
+  <p>Originally from <a href='https://gist.github.com/1820544'>https://gist.github.com/1820544</a>
+    and now updated for SAPUI5 1.8.4.</p>
   <div id="dataTable"></div>
 </body>
 </html>
