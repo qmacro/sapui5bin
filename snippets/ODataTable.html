@@ -1,0 +1,85 @@
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>SAP OData in SAPUI5 Data Table Control</title>
+
+  <!-- Load SAPUI5, select theme and control library -->
+  <script id="sap-ui-bootstrap"
+    type="text/javascript"
+    src="http://gateway.server:port/sapui5/sapui5-static/resources/sap-ui-core.js"
+    data-sap-ui-theme="sap_platinum"
+    data-sap-ui-libs="sap.ui.commons,sap.ui.table"></script>
+
+  <script>
+
+    var oTable = new sap.ui.table.DataTable();
+
+    oTable.addColumn(new sap.ui.table.Column({
+      label: new sap.ui.commons.Label({text: "Agency Name"}),
+      template: new sap.ui.commons.TextView().bindProperty("text", "NAME"),
+      sortProperty: "NAME"
+    }));
+
+    oTable.addColumn(new sap.ui.table.Column({
+      label: new sap.ui.commons.Label({text: "Street"}),
+      template: new sap.ui.commons.TextField().bindProperty("value", "STREET"),
+      sortProperty: "STREET",
+    }));
+
+    oTable.addColumn(new sap.ui.table.Column({
+      label: new sap.ui.commons.Label({text: "Post Code"}),
+      template: new sap.ui.commons.TextField().bindProperty("value", "POSTCODE"),
+      sortProperty: "POSTCODE",
+    }));
+
+    oTable.addColumn(new sap.ui.table.Column({
+      label: new sap.ui.commons.Label({text: "City"}),
+      template: new sap.ui.commons.TextField().bindProperty("value", "CITY"),
+      sortProperty: "CITY",
+    }));
+
+    oTable.addColumn(new sap.ui.table.Column({
+      label: new sap.ui.commons.Label({text: "Country"}),
+      template: new sap.ui.commons.TextField().bindProperty("value", "COUNTRY"),
+      sortProperty: "COUNTRY",
+    }));
+
+    oTable.addColumn(new sap.ui.table.Column({
+      label: new sap.ui.commons.Label({text: "Region"}),
+      template: new sap.ui.commons.TextField().bindProperty("value", "REGION"),
+      sortProperty: "REGION",
+    }));
+
+    oTable.addColumn(new sap.ui.table.Column({
+      label: new sap.ui.commons.Label({text: "Phone"}),
+      template: new sap.ui.commons.TextField().bindProperty("value", "TELEPHONE"),
+      sortProperty: "TELEPHONE",
+    }));
+
+    oTable.addColumn(new sap.ui.table.Column({
+      label: new sap.ui.commons.Label({text: "Web Site"}),
+      template: new sap.ui.commons.Link().bindProperty("text", "URL").bindProperty("href", "URL"),
+      sortProperty: "URL",
+    }));
+
+
+    oTable.addColumn(new sap.ui.table.Column({
+      label: new sap.ui.commons.Label({text: "Currency"}),
+      template: new sap.ui.commons.TextField().bindProperty("value", "CURRENCY"),
+      sortProperty: "CURRENCY",
+    }));
+
+
+    var oModel = new sap.ui.model.odata.ODataModel("http://gateway.server:port/sap/opu/sdata/iwfnd/RMTSAMPLEFLIGHT");
+    oTable.setModel(oModel);
+    oTable.bindRows("TravelagencyCollection");
+    oTable.placeAt("dataTable");
+
+  </script>
+
+</head>
+<body class="sapUiBody">
+  <h1>SAP OData in SAPUI5 Data Table Control</h1>
+  <div id="dataTable"></div>
+</body>
+</html>
