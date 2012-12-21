@@ -78,7 +78,7 @@
 
     // Setup
 
-    var appTitle = "OData Catalog";
+    var appTitle = "OData Service Catalog";
     jQuery(document).ready(function() {setAppTitle(appTitle);});
     jQuery.sap.log.setLevel(jQuery.sap.log.LogLevel['ERROR']);
     selectServices(oSystemInfo['systems'][0]['sid']);
@@ -109,17 +109,6 @@
       .setColumnHeaderHeight(30)
       .addColumn(textViewColumn("Title", "Title"))
       .addColumn(textViewColumn("Description", "Description"))
-      /*
-      .attachRowSelectionChange(function(oEvent) {
-        var oTextView = new sap.ui.commons.TextView();
-        oTextView.bindProperty("text", "Notes");
-        var oDialog = new sap.ui.commons.Dialog({modal: true, title: "Notes"});
-        oDialog
-          .setBindingContext(oEvent.getParameter("rowContext"))
-          .addContent(oTextView)
-          .open();
-      })
-      */
     ;
     oServiceTable.getColumns()[0].setWidth("33%");
 
@@ -129,7 +118,13 @@
     var oLayout = new sap.ui.commons.layout.VerticalLayout({
       width: "50%",
       content: [
-        oSysDropdownBox,
+        new sap.ui.commons.layout.HorizontalLayout({
+          content: [
+            new sap.ui.commons.Label({text: "Select System: "}),
+            oSysDropdownBox
+          ]
+        }),
+        //oSysDropdownBox,
         new sap.ui.commons.HorizontalDivider(),
         oServiceTable,
       ]
