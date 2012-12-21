@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>  
+<html>  
+<head> 
+    <title></title> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="/sapui5/resources/sap-ui-core.js" 
+        type="text/javascript"   
+        id="sap-ui-bootstrap"  
+        data-sap-ui-libs="sap.ui.commons, sap.ui.table"  
+        data-sap-ui-theme="sap_platinum">  
+    </script>  
+
+    <script type="text/javascript"> 
+
+    var oServiceModels = [];
+    var oServiceTable = new sap.ui.table.Table();
+
+    var oSystemInfo = {
+      tooltip: "Gateway System",
+      systems: [
+        {sid: "ER4", description: "Gateway Demo"},
+        {sid: "GWD", description: "Gateway Development"},
+      ]
+    };
+
+    /**
+    * setAppTitle()
+    * Sets application title in header and H1
+    *
+    */
+    function setAppTitle(title) {
+      document.title = title;
+      jQuery('#title').text(title);
+    }
+
+    /**
+    * buildServiceUrl()
+    * Returns a service URL (relative) for a given service catalog
+    *
+    */
+    function buildServiceUrl(system) {
+      return '/proxy/' + system + '/sap/opu/odata/IWFND/CATALOGSERVICE/';
+    }
+
+    /**
+    * selectServices()
+    * Sets up an OData model (if it is not set up already) to point to
+    * the service catalog of a selected SAP system, and connects that model
+    * to the service table
+    *
+    */
+    function selectServices(system) {
+      system = system.toUpperCase();
+      var serviceUrl = buildServiceUrl(system);
+      console.log("Service URL is " + serviceUrl);
+      if (oServiceModels[system] == undefined) {
+        oServiceModels[system] = new sap.ui.model.odata.ODataModel(serviceUrl);
+      }
+      oServiceTable.setModel(oServiceModels[system]);
+      oServiceTable.bindRows("/ServiceCollection");
+    }
+
+
+    /**
+    * textViewColumn()
+    * Creates a TextView style column for use in a Table
+    *
+    */
+    function textViewColumn(label_text, property_value, property_sort) {
+      var col = new sap.ui.table.Column({
+        label: new sap.ui.commons.Label({text: label_text}),
+        template: new sap.ui.commons.TextView().bindProperty("text", property_value)
+      });
+      col.setSortProperty(typeof property_sort !== 'undefined' ? property_sort : property_value);
+      return col;
+    }
+
+
+    // Setup
+
+    var appTitle = "OData Catalog";
+    jQuery(document).ready(function() {setAppTitle(appTitle);});
+    jQuery.sap.log.setLevel(jQuery.sap.log.LogLevel['ERROR']);
+    selectServices(oSystemInfo['systems'][0]['sid']);
+
+
+    // System selection via dropdown box
+
+    var oSystemsModel = new sap.ui.model.json.JSONModel();
+    oSystemsModel.setData(oSystemInfo);
+
+    var oSysTemplate = new sap.ui.core.ListItem();
+    oSysTemplate.bindProperty("text", "sid");
+
+    var oSysDropdownBox = new sap.ui.commons.DropdownBox();
+    oSysDropdownBox
+      .setModel(oSystemsModel)
+      .setEditable(true)
+      .bindProperty("tooltip", "/tooltip")
+      .attachChange(function() { selectServices(oSysDropdownBox.getValue()); } )
+    ;
+    oSysDropdownBox.bindItems("/systems", oSysTemplate);
+
+
+    // Services listed in a table
+
+    oServiceTable
+      .setSelectionMode(sap.ui.table.SelectionMode.Single)
+      .setColumnHeaderHeight(30)
+      .addColumn(textViewColumn("Title", "Title"))
+      .addColumn(textViewColumn("Description", "Description"))
+      /*
+      .attachRowSelectionChange(function(oEvent) {
+        var oTextView = new sap.ui.commons.TextView();
+        oTextView.bindProperty("text", "Notes");
+        var oDialog = new sap.ui.commons.Dialog({modal: true, title: "Notes"});
+        oDialog
+          .setBindingContext(oEvent.getParameter("rowContext"))
+          .addContent(oTextView)
+          .open();
+      })
+      */
+    ;
+    oServiceTable.getColumns()[0].setWidth("33%");
+
+
+    // Layout the system selection, services and service detail
+
+    var oLayout = new sap.ui.commons.layout.VerticalLayout({
+      width: "50%",
+      content: [
+        oSysDropdownBox,
+        new sap.ui.commons.HorizontalDivider(),
+        oServiceTable,
+      ]
+    });
+
+    oLayout.placeAt("content");
+
+    </script>  
+
+</head>  
+
+<body class="sapUiBody" role="application">  
+  <h1 id="title"></h1>
+  <div id="content"></div>  
+</body>  
+</html>  
