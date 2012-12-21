@@ -105,10 +105,19 @@
     // Services listed in a table
 
     oServiceTable
+      .setWidth('500px')
       .setSelectionMode(sap.ui.table.SelectionMode.Single)
       .setColumnHeaderHeight(30)
       .addColumn(textViewColumn("Title", "Title"))
       .addColumn(textViewColumn("Description", "Description"))
+      .attachRowSelectionChange(function(oEvent) {
+        var context = oEvent.getParameter("rowContext");
+        var control = sap.ui.getCore().byId("idTV1");
+        control
+          .setModel(oServiceTable.getModel())
+          .setBindingContext(context)
+        ;
+      })
     ;
     oServiceTable.getColumns()[0].setWidth("33%");
 
@@ -116,7 +125,6 @@
     // Layout the system selection, services and service detail
 
     var oLayout = new sap.ui.commons.layout.VerticalLayout({
-      width: "50%",
       content: [
         new sap.ui.commons.layout.HorizontalLayout({
           content: [
@@ -124,11 +132,17 @@
             oSysDropdownBox
           ]
         }),
-        //oSysDropdownBox,
         new sap.ui.commons.HorizontalDivider(),
-        oServiceTable,
+        new sap.ui.commons.layout.HorizontalLayout({
+          content: [
+            oServiceTable,
+            new sap.ui.commons.TextView("idTV1", {text: "{Author}"})
+          ]
+        }),
+        new sap.ui.commons.HorizontalDivider()
       ]
     });
+
 
     oLayout.placeAt("content");
 
