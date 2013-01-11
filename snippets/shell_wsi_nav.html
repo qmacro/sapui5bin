@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>  
+<html>  
+<head> 
+    <title>Shell WorksetItem Navigation</title> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="/sapui5/resources/sap-ui-core.js" 
+        type="text/javascript"   
+        id="sap-ui-bootstrap"  
+        data-sap-ui-libs="sap.ui.ux3, sap.ui.commons"  
+        data-sap-ui-theme="sap_goldreflection">  
+    </script>  
+
+    <script type="text/javascript">  
+    var oShell = new sap.ui.ux3.Shell({     
+      appTitle: "Shell WorksetItem Navigation",
+      worksetItems:[
+        new sap.ui.ux3.NavigationItem("id_wsiA", {key:"wsiA",text:"A",subItems:[ ]}),
+        new sap.ui.ux3.NavigationItem("id_wsiB", {key:"wsiB",text:"B",subItems:[
+          new sap.ui.ux3.NavigationItem("id_wsiB.1", {key:"wsiB.1", text:"B.1"}),
+          new sap.ui.ux3.NavigationItem("id_wsiB.2", {key:"wsiB.2", text:"B.2"}),
+        ]}),
+      ]
+    });
+
+    function getContent(key) {
+      return new sap.ui.commons.Label({text: key}); // test only!
+    }
+
+    oShell.attachWorksetItemSelected(function (oEvent) {
+      var key = oEvent.getParameter("key");
+      oEvent.oSource.setContent(getContent(key));
+    });
+
+    var subId = "id_wsi" + getUrlParameter("sub");
+    var wsi = sap.ui.getCore().byId(subId) ? subId : 'id_wsiA';
+    oShell.setSelectedWorksetItem(wsi);
+    oShell.setContent(getContent(wsi));
+
+    oShell.placeAt("content");
+    
+
+    function getUrlParameter(name) {
+      return decodeURI((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]);
+    }
+
+    </script>  
+</head>  
+
+<body class="sapUiBody" role="application">  
+  <div id="content"></div>  
+</body>  
+</html>  
