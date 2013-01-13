@@ -1,0 +1,517 @@
+<!DOCTYPE HTML>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <script 
+   src="/sapui5/resources/sap-ui-core.js" 
+   type="text/javascript" 
+   id="sap-ui-bootstrap"    
+      data-sap-ui-libs="sap.ui.commons,sap.service.visualization,sap.ui.table"
+   data-sap-ui-theme="sap_goldreflection">
+</script>
+</head>
+<body class="sapUiBody">
+
+  <h1> SAPUI5 integration test page </h1>
+ 
+  <div id="uiAreaForMyControls"></div>
+  
+    <h2> Settings </h2>
+  <div>
+  
+   <fieldset>
+	<legend>Pie Type Related</legend>
+	<span id="pieType"></span>
+	<span id="pieTypeDropDownBox"></span> 
+  </fieldset>
+  
+  <fieldset>
+	<legend>Size Related</legend>
+	<span id="sizeInc"></span>
+	<span id="sizeDec"></span> 
+  </fieldset>
+  
+  <fieldset>
+	<legend>Title Related</legend>
+	<span id="titleLabel"></span>
+	<span id="titleTextField"></span> 
+	&nbsp;&nbsp;&nbsp;	
+	<span id="subTitleLabel"></span>
+	<span id="subTitleTextField"></span>
+  </fieldset>
+  
+  <fieldset>
+	<legend>Theme Related</legend>
+	<span id="themeLabel"></span>
+	<span id="themeDropDownBox"></span> 
+  </fieldset>
+  
+  
+    <fieldset>
+	<legend>Legend Related</legend>
+	<span id="showLegendCheckbox"></span>
+	&nbsp;&nbsp;&nbsp;	
+	<span id="legendFirstLabel"></span>
+	<span id="legendFirstDropDown"></span> 
+	<span id="legendDirectionLabel"></span>
+	<span id="legendDirectionDropDownBox"></span> 
+	&nbsp;&nbsp;&nbsp;	
+	<span id="LegendVerticalOffsetLabel"></span>
+	<span id="LegendVerticalOffsetTextField"></span>
+	<span id="LegendHorizontalOffsetLabel"></span>
+	<span id="LegendHorizontalOffsetTextField"></span>
+  </fieldset>
+  
+  <fieldset>
+	<legend>Selection Related</legend>
+	<span id="deselectEnabledCheckbox"></span>
+	&nbsp;&nbsp;&nbsp;	
+	<span id="selectionModeLabel"></span>
+	<span id="selectionModeDropDownBox"></span>
+	&nbsp;&nbsp;&nbsp;
+	<span id="defaultSelectedSliceIndexesLabel"></span>
+	<span id="defaultSelectedSliceIndexesTextField"></span>
+	<br><br>
+	<div id="onPieSelectedLabel"></div>
+	<div id="onPieSelectedTextView"></div>
+  </fieldset>
+  
+   <fieldset>
+	<legend>Dataset Related</legend>
+	<span id="datasetBtn"></span>
+	<span id="sectorColor"></span>
+  </fieldset>
+  
+  <a href="pieChartAPIList.html"> API List </a>
+  
+  <script>
+
+  var isNumber = function(value){
+		var patt = /^(0|-?[1-9]\d*)$|^(0|-?[1-9]\d*)\.(\d+)$/;
+		return patt.exec(value);
+	};
+	
+  
+  	var oTable1 = new sap.ui.table.DataTable();
+  	var oTableValue = [
+  	      			{ Country : "Canada", profit: 334108752},
+  	      			{ Country : "China",profit: 98299511.50477},
+  	      			{ Country : "France",profit: 164876618.4337123 },
+  	      			{ Country : "Germany",profit: 81702329},
+  	      			{ Country : "India",profit: 170938000},
+  	      			{ Country : "United States",profit: 309050816},
+  	      		];
+  	       	var oControl = new sap.ui.commons.TextView().bindProperty("text", "Country");
+  	       	oTable1.addColumn(new sap.ui.table.Column({label: new sap.ui.commons.Label({text: "Country"}), template: oControl, sortProperty: "Country", filterProperty: "Country", width: "200px"}));
+  	       	
+  	     	var oControl = new sap.ui.commons.TextView().bindProperty("text", "profit");
+  	       	oTable1.addColumn(new sap.ui.table.Column({label: new sap.ui.commons.Label({text: "profit"}), template: oControl, sortProperty: "profit", filterProperty: "profit", width: "200px"}));
+
+  		
+  	oModel = new sap.ui.model.json.JSONModel();
+  	oModel.setData({modelData: oTableValue});
+  	oTable1.setModel(oModel);
+  	oTable1.setVisibleRowCount(6);
+  	oTable1.bindRows("modelData");
+    	var dataset = new sap.service.visualization.dataset.SimpleDMDataset();
+        dataset.setDataTable(oTable1);
+      	var pie = new sap.service.visualization.chart.Pie("myPie",{
+        	width: "700px",
+    	    height: "400px",
+    	    allDeSelectable: true,
+    	    legendFirst: true,
+    	    selectionMode: 'single',
+    	    legendDirection: 'right',
+    	    title: 'Profit and Revenue By Country',
+    	    titleHorizontalAlign:'center',
+    	    subTitle: 'Q1 - 2012',
+    	    subTitleHorizontalAlign:'center',
+    	    showTitle: true,
+    	    defaultSelectedSliceIndexes: [5],
+    	    legendFormatString: ['0.00%'],
+//    		titleFormatString:'0.00%',// to be implemented
+//    		subTitleFormatString:'0.00%',// to be implemented
+    		tooltipTextFormatString: ['0.00%'],
+    		tooltipMainValueFormatString : ['#,##0'],
+    		tooltipSubValueFormatString : ['0.00%'],
+    	    showLegend: true,
+    	    pieType:'pie',
+    	    dataset: dataset
+      	});
+	
+    	pie.placeAt("uiAreaForMyControls");
+      	$("#0").scrollTop(48);
+      	$("#uiAreaForMyControls").width(700).height(400);
+      	
+      	var onWidthChange = function(width) {
+      		pie.setWidth(width);
+      		//$("#uiAreaForMyControls").width(width);
+      	}
+      	
+      	var onHeightChange = function(height) {
+      		pie.setHeight(height);
+      		//$("#uiAreaForMyControls").height(height);
+      	}
+      	
+      	var onTitleChange = function(title) {
+      		pie.setTitle(title);
+      	}
+      	
+      	var onSubTitleChange = function(subTitle) {
+      		pie.setSubTitle(subTitle);
+      	}
+      	
+      	var onThemeChange = function(theme) {
+      		sap.ui.getCore().applyTheme(theme);
+      	}
+      	
+      	var onShowLegendChange = function(showLegend) {
+      		pie.setShowLegend(showLegend);
+      	}
+      	
+      	var onLegendDirectionChange = function(legendDirection) {
+      		pie.setLegendDirection(legendDirection);
+      	}
+      	
+      	var onLegendHorizontalOffsetChange = function(offset){
+      		pie.setLegendHorizontalOffset(parseInt(offset));
+      	}
+      	
+      	var onLegendVerticalOffsetChange = function(offset){
+      		pie.setLegendVerticalOffset(parseInt(offset));
+      	}
+      	
+      	var onLegendFirstChange = function(legendFirst) {
+      		bar.setLegendFirst(legendFirst);
+      	}
+      	
+      	var onAllDeSelectableChange = function(allDeSelectable) {
+      		pie.setAllDeSelectable(allDeSelectable);
+      	}
+      	
+      	var onSelectionModeChange = function(selectionMode) {
+      		pie.setSelectionMode(selectionMode);
+      	}
+      	
+      	var onDefaultSelectedSliceIndexesChange = function(defaultSelectedSliceIndexes) {
+      		var IndexStrings = defaultSelectedSliceIndexes.split(",");
+      		var indexes = new Array();
+      		for (var index in IndexStrings) {
+      			if(isNumber(IndexStrings[index])){
+      				indexes.push(parseInt(IndexStrings[index]));
+      			}
+      		}
+      		pie.setDefaultSelectedSliceIndexes(indexes);
+      	}
+      	
+    	//
+      	//	Pie type related
+      	//
+      	//type
+      	var pieType = new sap.ui.commons.Label("ui5pieType");
+      	pieType.setText("pie type : ");
+      	pieType.placeAt("pieType");
+    	
+    	var pieTypeDropDownBox = new sap.ui.commons.DropdownBox("ui5pieTypeDropDownBox");
+    	pieTypeDropDownBox.setTooltip("pieType dropDownBox");
+    	pieTypeDropDownBox.setEditable(true);
+    	pieTypeDropDownBox.setWidth("160px");
+    	
+    	var pieTypeItem0 = new sap.ui.core.ListItem("pieTypeItem0");
+    	pieTypeItem0.setText("pie");
+    	pieTypeDropDownBox.addItem(pieTypeItem0);
+    	var pieTypeItem1 = new sap.ui.core.ListItem("pieTypeItem1");
+    	pieTypeItem1.setText("donut");
+    	pieTypeDropDownBox.addItem(pieTypeItem1);
+    	
+    	pieTypeDropDownBox.attachChange(function(){
+    		pie.setPieType(pieTypeDropDownBox.getValue());
+    		
+    	});
+    	pieTypeDropDownBox.placeAt("pieTypeDropDownBox");
+      	//
+      	//	size related
+      	//
+      	//size
+    	var oButton1 = new sap.ui.commons.Button({
+    		text : "size +",
+    		tooltip : "increase the pie size",
+    		press : function() {
+    			var width= pie.getWidth();
+    			 width=parseInt(width.substring(0,width.length-2))*1.1;
+    			var cssWidth=width+'px';
+    			var height= pie.getHeight();
+    			 height=parseInt(height.substring(0,height.length-2))*1.1;
+    			var cssheight=height+'px';
+    			onHeightChange(cssheight);
+    			onWidthChange(cssWidth);
+    		}
+    	});
+    	oButton1.placeAt("sizeInc");
+    	
+    	var oButton2 = new sap.ui.commons.Button({
+    		text : "size -",
+    		tooltip : "increase the pie size",
+    		press : function() {
+    			var width= pie.getWidth();
+    			 width=parseInt(width.substring(0,width.length-2))/1.1;
+    			var cssWidth=width+'px';
+    			var height= pie.getHeight();
+    			 height=parseInt(height.substring(0,height.length-2))/1.1;
+    			var cssheight=height+'px';
+    			onHeightChange(cssheight);
+    			onWidthChange(cssWidth);
+    		}
+    	});
+    	oButton2.placeAt("sizeDec");
+    	
+    	//
+      	//	Title related
+      	//
+      	//title
+      	var titleLabel = new sap.ui.commons.Label("ui5TitleLabel");
+      	titleLabel.setText("Title : ");
+      	titleLabel.placeAt("titleLabel");
+      	
+      	var titleTextField = new sap.ui.commons.TextField("ui5TitleTextField");
+      	titleTextField.setValue("Profit and Revenue By Country");
+      	titleTextField.attachChange(function(){onTitleChange(titleTextField.getValue());});
+      	titleTextField.placeAt("titleTextField");
+
+      	//subtitle
+      	var subTitleLabel = new sap.ui.commons.Label("ui5SubTitleLabel");
+      	subTitleLabel.setText("SubTitle : ");
+      	subTitleLabel.placeAt("subTitleLabel");
+      	
+      	var subTitleTextField = new sap.ui.commons.TextField("ui5SubTitleTextField");
+      	subTitleTextField.setValue("Q1 - 2012");
+      	subTitleTextField.attachChange(function(){onSubTitleChange(subTitleTextField.getValue());});
+      	subTitleTextField.placeAt("subTitleTextField");
+      	
+      	//
+      	//	Theme related
+      	//
+      	//theme
+      	var themeLabel = new sap.ui.commons.Label("ui5ThemeLabel");
+      	themeLabel.setText("Theme : ");
+      	themeLabel.placeAt("themeLabel");
+    	
+    	var themeDropDownBox = new sap.ui.commons.DropdownBox("ui5ThemeDropDownBox");
+    	themeDropDownBox.setTooltip("theme dropDownBox");
+    	themeDropDownBox.setEditable(true);
+    	themeDropDownBox.setWidth("160px");
+    	
+    	var themeItem0 = new sap.ui.core.ListItem("themeItem0");
+    	themeItem0.setText("sap_platinum");
+    	themeDropDownBox.addItem(themeItem0);
+    	var themeItem1 = new sap.ui.core.ListItem("themeItem1");
+    	themeItem1.setText("sap_ux");
+    	themeDropDownBox.addItem(themeItem1);
+    	var themeItem2 = new sap.ui.core.ListItem("themeItem2");
+    	themeItem2.setText("sap_goldreflection");
+    	themeDropDownBox.addItem(themeItem2);
+    	var themeItem3 = new sap.ui.core.ListItem("themeItem3");
+    	themeItem3.setText("sap_hcb");
+    	themeDropDownBox.addItem(themeItem3);
+    	
+    	themeDropDownBox.attachChange(function(){onThemeChange(themeDropDownBox.getValue());});
+    	themeDropDownBox.placeAt("themeDropDownBox");
+      	
+      	//
+    	//	Legend related
+    	//
+      	//showLegend 
+    	var showLegendCheckbox = new sap.ui.commons.CheckBox({
+    	    text : 'showLegend',
+    	    tooltip : 'showLegend checkbox',
+    	    checked : true,
+    	    change : function(){onShowLegendChange(showLegendCheckbox.getChecked());},
+    	    enabled :  true,
+    		editable :  true 
+        });
+    	showLegendCheckbox.placeAt("showLegendCheckbox");
+
+    	//legendDirection
+    	var legendDirectionLabel = new sap.ui.commons.Label("ui5LegendDirectionLabel");
+    	legendDirectionLabel.setText("legendDirection : ");
+    	legendDirectionLabel.placeAt("legendDirectionLabel");
+    	
+    	var legendDirectionDropDownBox = new sap.ui.commons.DropdownBox("ui5LegendDirectionDropDownBox");
+    	legendDirectionDropDownBox.setTooltip("legendDirection dropDownBox");
+    	legendDirectionDropDownBox.setEditable(true);
+    	legendDirectionDropDownBox.setWidth("160px");
+    	
+    	var legendDirectionItem0 = new sap.ui.core.ListItem("legendDirectionItem0");
+    	legendDirectionItem0.setText("left");
+    	legendDirectionDropDownBox.addItem(legendDirectionItem0);
+    	var legendDirectionItem1 = new sap.ui.core.ListItem("legendDirectionItem1");
+    	legendDirectionItem1.setText("right");
+    	legendDirectionDropDownBox.addItem(legendDirectionItem1);
+    	var legendDirectionItem2 = new sap.ui.core.ListItem("legendDirectionItem2");
+    	legendDirectionItem2.setText("top");
+    	legendDirectionDropDownBox.addItem(legendDirectionItem2);
+    	var legendDirectionItem3 = new sap.ui.core.ListItem("legendDirectionItem3");
+    	legendDirectionItem3.setText("bottom");
+    	legendDirectionDropDownBox.addItem(legendDirectionItem3);
+    	legendDirectionDropDownBox.setValue("right");
+    	
+    	legendDirectionDropDownBox.attachChange(function(){
+    		onLegendDirectionChange(legendDirectionDropDownBox.getValue());
+    	});
+    	legendDirectionDropDownBox.placeAt("legendDirectionDropDownBox");
+    	
+    	//LegendVerticalOffset
+    	var LegendVerticalOffsetLabel = new sap.ui.commons.Label("ui5LegendVerticalOffsetLabel");
+    	LegendVerticalOffsetLabel.setText("LegendVerticalOffset : ");
+    	LegendVerticalOffsetLabel.placeAt("LegendVerticalOffsetLabel");
+    	
+    	var LegendVerticalOffsetTextField = new sap.ui.commons.TextField("ui5LegendVerticalOffsetTextField");
+    	LegendVerticalOffsetTextField.setValue("");
+    	LegendVerticalOffsetTextField.attachChange(function(){
+    		var offset = parseInt(LegendVerticalOffsetTextField.getValue());
+    		if(isNaN(offset)){
+    			offset=0;
+    		}
+    		onLegendVerticalOffsetChange(offset);
+    	});
+    	LegendVerticalOffsetTextField.placeAt("LegendVerticalOffsetTextField");
+    	
+    	//LegendHorizontalOffset
+    	var LegendHorizontalOffsetLabel = new sap.ui.commons.Label("ui5LegendHorizontalOffsetLabel");
+    	LegendHorizontalOffsetLabel.setText("LegendHorizontalOffset : ");
+    	LegendHorizontalOffsetLabel.placeAt("LegendHorizontalOffsetLabel");
+    	
+    	var LegendHorizontalOffsetTextField = new sap.ui.commons.TextField("ui5LegendHorizontalOffsetTextField");
+    	LegendHorizontalOffsetTextField.setValue("");
+    	LegendHorizontalOffsetTextField.attachChange(function(){
+    		var offset =parseInt(LegendHorizontalOffsetTextField.getValue());
+    		if(isNaN(offset)){
+    			offset=0;
+    		}
+    		onLegendHorizontalOffsetChange(offset);
+    	});
+    	LegendHorizontalOffsetTextField.placeAt("LegendHorizontalOffsetTextField");
+    	
+    	//
+    	//	Selection related
+    	//
+    	//deselectEnabled
+    	var deselectEnabledCheckbox = new sap.ui.commons.CheckBox({
+    	    text : 'deselectEnabled',
+    	    tooltip : 'deselectEnabled checkbox',
+    	    checked : true,
+    	    change : function(){onAllDeSelectableChange(deselectEnabledCheckbox.getChecked());}
+        });
+    	deselectEnabledCheckbox.placeAt("deselectEnabledCheckbox");
+    	
+    	//
+    	//	Dataset related
+    	//
+    	//
+    	var datasetBtn = new sap.ui.commons.Button({
+    		text : "change dataset",
+    		tooltip : "change data set",
+    		press : function() {
+    			var oTable1 = new sap.ui.table.DataTable();
+    		  	var oTableValue = [
+    		  	      			{ Country : "China",profit: 1338299511.50477},
+    		  	      			{ Country : "France",profit: 64876618.4337123 },
+    		  	      			{ Country : "Germany",profit: 81702329},
+    		  	      			{ Country : "United States",profit: 309050816},
+    		  	      		];
+    		  	       	var oControl = new sap.ui.commons.TextView().bindProperty("text", "Country");
+    		  	       	oTable1.addColumn(new sap.ui.table.Column({label: new sap.ui.commons.Label({text: "Country"}), template: oControl, sortProperty: "Country", filterProperty: "Country", width: "200px"}));
+    		  	       	
+    		  	     	var oControl = new sap.ui.commons.TextView().bindProperty("text", "profit");
+    		  	       	oTable1.addColumn(new sap.ui.table.Column({label: new sap.ui.commons.Label({text: "profit"}), template: oControl, sortProperty: "profit", filterProperty: "profit", width: "200px"}));
+
+    		  		
+    		  	oModel = new sap.ui.model.json.JSONModel();
+    		  	oModel.setData({modelData: oTableValue});
+    		  	oTable1.setModel(oModel);
+    		  	oTable1.setVisibleRowCount(6);
+    		  	oTable1.bindRows("modelData");
+    			var dataset = new sap.service.visualization.dataset.SimpleDMDataset();
+    		    dataset.setDataTable(oTable1);
+    		  	pie.setDataset(dataset);
+    		  	
+    		}
+    	});
+    	datasetBtn.placeAt("datasetBtn");
+    	//
+    	//	Dataset related
+    	//
+    	// sector color
+    	var sectorBtn = new sap.ui.commons.Button({
+    		text : "change sector color",
+    		tooltip : "change sector color",
+    		press : function() { 
+    			onSectorColorsChange();
+    		}
+    	});
+    	sectorBtn.placeAt("sectorColor");
+    	
+    	var onSectorColorsChange= function(){
+    		pie.setSectorColors(['#9a44ee','#003f9a']);
+    	}
+
+    	//selectionMode
+    	var selectionModeLabel = new sap.ui.commons.Label("ui5SelectionModeLabel");
+    	selectionModeLabel.setText("selectionMode : ");
+    	selectionModeLabel.placeAt("selectionModeLabel");
+    	
+    	var selectionModeDropDownBox = new sap.ui.commons.DropdownBox("ui5SelectionModeDropDownBox");
+    	selectionModeDropDownBox.setTooltip("selectionMode dropDownBox");
+    	selectionModeDropDownBox.setEditable(true);
+    	selectionModeDropDownBox.setWidth("160px");
+    	
+    	var selectionModeItem0 = new sap.ui.core.ListItem("selectionModeItem0");
+    	selectionModeItem0.setText("single");
+    	selectionModeDropDownBox.addItem(selectionModeItem0);
+    	var selectionModeItem1 = new sap.ui.core.ListItem("selectionModeItem1");
+    	selectionModeItem1.setText("multiple");
+    	selectionModeDropDownBox.addItem(selectionModeItem1);
+    	var selectionModeItem2 = new sap.ui.core.ListItem("selectionModeItem2");
+    	
+    	selectionModeDropDownBox.attachChange(function(){onSelectionModeChange(selectionModeDropDownBox.getValue());});
+    	selectionModeDropDownBox.placeAt("selectionModeDropDownBox");
+    	
+    	//defaultSelectedSliceIndexes
+    	var defaultSelectedSliceIndexesLabel = new sap.ui.commons.Label("ui5DefaultSelectedSliceIndexesLabel");
+    	defaultSelectedSliceIndexesLabel.setText("defaultSelectedSliceIndexes : ");
+    	defaultSelectedSliceIndexesLabel.placeAt("defaultSelectedSliceIndexesLabel");
+
+    	var defaultSelectedSliceIndexesTextField = new sap.ui.commons.TextField("ui5DefaultSelectedSliceIndexesTextField");
+    	defaultSelectedSliceIndexesTextField.setValue("");
+    	defaultSelectedSliceIndexesTextField.attachChange(function(){onDefaultSelectedSliceIndexesChange(defaultSelectedSliceIndexesTextField.getValue());});
+    	defaultSelectedSliceIndexesTextField.placeAt("defaultSelectedSliceIndexesTextField");
+    	
+    	//on pie selected
+    	var onPieSelectedLabel = new sap.ui.commons.Label("ui5OnPieSelectedLabel");
+    	onPieSelectedLabel.setText("Information about the selected slice : ");
+    	onPieSelectedLabel.placeAt("onPieSelectedLabel");
+    	
+    	var onPieSelectedTextView = new sap.ui.commons.TextView("ui5OnPieSelectedTextView",{
+            text : '',
+            tooltip : 'Displays the information of the selected slice',
+            wrapping : true,
+            width : '500px',
+            design: sap.ui.commons.TextViewDesign.Standard
+        });
+    	onPieSelectedTextView.placeAt("onPieSelectedTextView");
+    	
+    	pie.attachSelectData(
+    		function (oControlEvent) {
+    			var log0 = "Dimension selected: " + oControlEvent.getParameter("Dimension") + '\n';
+    			var data = oControlEvent.getParameter("Data");
+    			var log1 = "Dimension label: " + data[0].dimensionLabel + '\n';
+    			var log2 = "Measure value: " + data[0].measureValue + '\n';
+    			var log3 = "Measure Index: " + data[0].measureIndex + '\n';
+    			var log4 = "Dimension Item Index: " + data[0].dimensionItemIndex + '\n';
+    			var log5 = "pie control id: "+ oControlEvent.getSource().getId();
+    			onPieSelectedTextView.setText(log0+log1+log2+log3+log4+log5);
+    		}
+      	);
+    	  	
+      </script>
+      
+    </body>
