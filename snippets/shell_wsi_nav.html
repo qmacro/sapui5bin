@@ -29,12 +29,14 @@
     oShell.attachWorksetItemSelected(function (oEvent) {
       var key = oEvent.getParameter("key");
       oEvent.oSource.setContent(getContent(key));
+      window.location.hash = key;
     });
 
-    var subId = "id_wsi" + getUrlParameter("sub");
-    var wsi = sap.ui.getCore().byId(subId) ? subId : 'id_wsiA';
-    oShell.setSelectedWorksetItem(wsi);
-    oShell.setContent(getContent(wsi));
+    sap.ui.getCore().attachInitEvent(function() {
+      $(window).bind('hashchange', function() {
+        navigateToHash();
+      });
+    });
 
     oShell.placeAt("content");
     
@@ -42,6 +44,17 @@
     function getUrlParameter(name) {
       return decodeURI((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]);
     }
+
+    function navigateToHash() {
+      this.subId = "id_" + (window.location.href.split("#")[1] || "");
+      var wsi = sap.ui.getCore().byId(subId) ? subId : 'id_wsiA';
+      oShell.setSelectedWorksetItem(wsi);
+      oShell.setContent(getContent(wsi));
+    }
+
+    $(function() {
+      navigateToHash();
+    });
 
     </script>  
 </head>  
