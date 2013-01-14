@@ -93,9 +93,10 @@ sap.ui.controller("cart.order", {
 				oLITemp, null).setValue("..Select");
 		oComboBox2.setVisible();
 
-		cartline.product ="";
-		cartline.price ="";
-		sap.ui.getCore().byId("tvGrandTotal").setText(my.formatCurrency(my.vm.grandTotal()));
+		//reset values and show updated total
+		cartLine.product ="";
+		cartLine.price ="";
+		sap.ui.getCore().byId("tvGrandTotal").setText(my.formatCurrency(my.vm.grandTotal()));	
 	},
 
 	onProductChange : function(oEvent) {
