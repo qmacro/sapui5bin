@@ -8,7 +8,8 @@ sap.ui.controller("cart.order", {
 		var sUrl = "http://services.odata.org/Northwind/Northwind.svc/",
 			user, pwd;
 		
-		// sUrl = getServiceUrl(sUrl);
+		//proxy
+		//sUrl = getServiceUrl(sUrl);
 
 		if (!this.getView().getModel()) {
 			var oModel = new sap.ui.model.odata.ODataModel(sUrl, true, user, pwd);
@@ -91,6 +92,10 @@ sap.ui.controller("cart.order", {
 		oComboBox2.bindItems("/" + oContext + "/Products",
 				oLITemp, null).setValue("..Select");
 		oComboBox2.setVisible();
+
+		cartline.product ="";
+		cartline.price ="";
+		sap.ui.getCore().byId("tvGrandTotal").setText(my.formatCurrency(my.vm.grandTotal()));
 	},
 
 	onProductChange : function(oEvent) {
@@ -175,6 +180,8 @@ sap.ui.controller("cart.order", {
 		//remove line from layout
 		oLayout.getRows()[line+1].destroyCells();
 		oLayout.removeRow(line+1);
+		//recalculate total
+		sap.ui.getCore().byId("tvGrandTotal").setText(my.formatCurrency(my.vm.grandTotal()));
 	}
 		
 });
