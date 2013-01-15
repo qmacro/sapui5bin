@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>  
+<html>  
+<head> 
+    <title>Basic Panel</title> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="/sapui5/resources/sap-ui-core.js" 
+        type="text/javascript"   
+        id="sap-ui-bootstrap"  
+        data-sap-ui-libs="sap.ui.commons"  
+        data-sap-ui-theme="sap_goldreflection">  
+    </script>  
+
+    <script type="text/javascript">  
+
+	var oPanel = new sap.ui.commons.Panel("idPanel1", {
+      width: "350px",
+      title: new sap.ui.commons.Title({text: "Login"}),
+      //content: new sap.ui.commons.TextView({text: "This is the content of the Panel..."})
+    });
+	
+	//var oContent = new sap.ui.commons.TextView({text: "This is more content"});
+	//oPanel.addContent(oContent);
+	
+	//Create a matrix layout with 2 columns
+	var oMatrix = new sap.ui.commons.layout.MatrixLayout({layoutFixed: true, width: '300px', columns: 2});
+	oMatrix.setWidths('100px', '200px');
+
+	//Create a simple form within the layout
+	var oLabel = new sap.ui.commons.Label({text: 'User Name'});
+	var oInput = new sap.ui.commons.TextField({value: 'lstanger', width: '100%'});
+	oLabel.setLabelFor(oInput);
+	oMatrix.createRow(oLabel, oInput);
+
+	oLabel = new sap.ui.commons.Label({text: 'Password'});
+	oInput = new sap.ui.commons.TextField({value: '*********', width: '100%'});
+	oLabel.setLabelFor(oInput);
+	oMatrix.createRow(oLabel, oInput);
+	
+	
+	// create a simple button with some text and a tooltip only
+	var oButton1 = new sap.ui.commons.Button({
+		text : "Login",
+		tooltip : "Login Here",
+		press : function() {alert('Thank you for ' + oButton1.getText());}
+	});
+	
+	oMatrix.createRow(oButton1);
+	
+	
+	
+	oPanel.addContent(oMatrix);
+	
+	
+	
+
+    oPanel.placeAt("content"); 
+
+
+    
+    </script>  
+</head>  
+
+<body class="sapUiBody" role="application">  
+  <div id="content"></div>  
+</body>  
+</html>  
