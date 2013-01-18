@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>  
+<html>  
+<head> 
+    <title>Modal Dialog</title> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="/sapui5/resources/sap-ui-core.js" 
+        type="text/javascript"   
+        id="sap-ui-bootstrap"  
+        data-sap-ui-libs="sap.ui.commons"  
+        data-sap-ui-theme="sap_goldreflection">  
+    </script>  
+
+    <script type="text/javascript">  
+
+    var oDialog = new sap.ui.commons.Dialog("Dialog", {
+      modal: true,
+      title: "Modal Dialog",
+      content: [
+        new sap.ui.commons.layout.MatrixLayout({
+          columns: 2,
+          width: "100%",
+          rows: [
+            new sap.ui.commons.layout.MatrixLayoutRow([
+              new sap.ui.commons.Label({text:"A"}),
+              new sap.ui.commons.Label({text:"B"}),
+            ])
+          ]
+        })
+      ],
+      closed: function(oControlEvent){
+        console.log("Modal Dialog closed");
+      }
+    });
+
+    function showDialog() {
+
+      oDialog.open();
+
+
+    }
+ 
+
+    var oControl = new sap.ui.commons.Toolbar({
+      items: [ 
+        new sap.ui.commons.Button({
+          text: "Press Me",
+          press: showDialog,
+        }),
+      ]
+    });
+
+    oControl.placeAt("content");
+    
+    </script>  
+</head>  
+
+<body class="sapUiBody" role="application">  
+  <div id="content"></div>  
+</body>  
+</html>  
