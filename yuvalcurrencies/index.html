@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>  
+<html>  
+<head> 
+    <title>Yuval Currencies</title> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="/sapui5/resources/sap-ui-core.js" 
+        type="text/javascript"   
+        id="sap-ui-bootstrap"  
+        data-sap-ui-libs="sap.ui.ux3, sap.ui.commons, sap.ui.table"  
+        data-sap-ui-theme="sap_goldreflection">  
+    </script>  
+    <script type="text/javascript">  
+
+    // See http://scn.sap.com/message/13821629 for background
+
+    sap.ui.localResources("resources");
+    var oBundle = jQuery.sap.resources({url:"mybundle.properties"});
+    var view = sap.ui.view({
+      id: "idView1",
+      viewName: "resources.currency",
+      type: sap.ui.core.mvc.ViewType.JS
+    });
+    view.placeAt("content");
+    
+    </script>  
+</head>  
+
+<body class="sapUiBody" role="application">  
+    <div id="content"></div>  
+</body>  
+</html>  
