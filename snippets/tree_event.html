@@ -15,7 +15,8 @@
     // See http://stackoverflow.com/questions/14728262/event-handling-in-sapui5-tree-controls/
 
     function Tree_Click(oControlEvent){
-      alert(oControlEvent.getParameter("node"));
+      var selectedNode = oControlEvent.getParameter("node").sId;
+      sap.ui.getCore().byId("selectedNode").setText(selectedNode);
     }
 
 
@@ -50,6 +51,10 @@
     MenuTree.addNode(Node2);
 
     MenuTree.placeAt("content");
+
+
+    // Display selected node below the tree
+    new sap.ui.commons.TextView("selectedNode").placeAt("content");
     
     </script>  
 </head>  
