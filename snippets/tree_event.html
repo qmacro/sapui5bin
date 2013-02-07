@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>  
+<html>  
+<head> 
+    <title>Tree Event</title> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="/sapui5/resources/sap-ui-core.js" 
+        type="text/javascript"   
+        id="sap-ui-bootstrap"  
+        data-sap-ui-libs="sap.ui.commons"  
+        data-sap-ui-theme="sap_goldreflection">  
+    </script>  
+
+    <script type="text/javascript">  
+
+    // See http://stackoverflow.com/questions/14728262/event-handling-in-sapui5-tree-controls/
+
+    function Tree_Click(oControlEvent){
+      alert(oControlEvent.getParameter("node"));
+    }
+
+
+    var MenuTree = new sap.ui.commons.Tree("MenuTree", {select : Tree_Click});
+    MenuTree.setTitle("Home");
+    MenuTree.setWidth("100%");
+    MenuTree.setHeight("auto");
+    MenuTree.setShowHeaderIcons(true);
+    MenuTree.setShowHorizontalScrollbar(false);
+    //create Tree Nodes
+    var Node1 = new sap.ui.commons.TreeNode("Node_fruit", {
+        text : "Fruit",
+        expanded : true
+    });
+    var Node2 = new sap.ui.commons.TreeNode("Node_veg", {
+        text : "Vegetables",
+        expanded : true
+    });
+    var Node1_1 = new sap.ui.commons.TreeNode("Node_app", {
+        text : "Apple",
+    });
+
+    var Node2_1 = new sap.ui.commons.TreeNode("Node_carr", {
+        text : "Carrot",
+    });
+
+    Node2.addNode(Node2_1);
+    Node1.addNode(Node1_1);
+
+    //add Tree Node root to the Tree
+    MenuTree.addNode(Node1);
+    MenuTree.addNode(Node2);
+
+    MenuTree.placeAt("content");
+    
+    </script>  
+</head>  
+
+<body class="sapUiBody" role="application">  
+  <div id="content"></div>  
+</body>  
+</html>  
