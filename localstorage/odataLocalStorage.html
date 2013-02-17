@@ -1,0 +1,116 @@
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>SAP OData Local Storage Example</title>
+
+  <!-- Load SAPUI5, select theme and control library -->
+  <script id="sap-ui-bootstrap"
+    type="text/javascript"
+    src="../resources/sap-ui-core.js"
+    data-sap-ui-theme="sap_platinum"
+    data-sap-ui-libs="sap.ui.commons,sap.ui.table"></script>
+
+  <script>
+
+    var oTable = new sap.ui.table.Table();
+    oTable.setColumnHeaderHeight(30);
+
+    oTable.addColumn(new sap.ui.table.Column({
+      label: new sap.ui.commons.Label({text: "Agency Name"}),
+      template: new sap.ui.commons.TextView().bindProperty("text", "NAME"),
+      sortProperty: "NAME"
+    }));
+
+    oTable.addColumn(new sap.ui.table.Column({
+      label: new sap.ui.commons.Label({text: "Street"}),
+      template: new sap.ui.commons.TextField().bindProperty("value", "STREET"),
+      sortProperty: "STREET",
+    }));
+
+    oTable.addColumn(new sap.ui.table.Column({
+      label: new sap.ui.commons.Label({text: "Post Code"}),
+      template: new sap.ui.commons.TextField().bindProperty("value", "POSTCODE"),
+      sortProperty: "POSTCODE",
+    }));
+
+    oTable.addColumn(new sap.ui.table.Column({
+      label: new sap.ui.commons.Label({text: "City"}),
+      template: new sap.ui.commons.TextField().bindProperty("value", "CITY"),
+      sortProperty: "CITY",
+    }));
+
+    oTable.addColumn(new sap.ui.table.Column({
+      label: new sap.ui.commons.Label({text: "Country"}),
+      template: new sap.ui.commons.TextField().bindProperty("value", "COUNTRY"),
+      sortProperty: "COUNTRY",
+    }));
+
+    oTable.addColumn(new sap.ui.table.Column({
+      label: new sap.ui.commons.Label({text: "Region"}),
+      template: new sap.ui.commons.TextField().bindProperty("value", "REGION"),
+      sortProperty: "REGION",
+    }));
+
+    oTable.addColumn(new sap.ui.table.Column({
+      label: new sap.ui.commons.Label({text: "Phone"}),
+      template: new sap.ui.commons.TextField().bindProperty("value", "TELEPHONE"),
+      sortProperty: "TELEPHONE",
+    }));
+
+    oTable.addColumn(new sap.ui.table.Column({
+      label: new sap.ui.commons.Label({text: "Web Site"}),
+      template: new sap.ui.commons.Link().bindProperty("text", "URL").bindProperty("href", "URL"),
+      sortProperty: "URL",
+    }));
+
+
+    oTable.addColumn(new sap.ui.table.Column({
+      label: new sap.ui.commons.Label({text: "Currency"}),
+      template: new sap.ui.commons.TextField().bindProperty("value", "CURRENCY"),
+      sortProperty: "CURRENCY",
+    }));
+
+
+    putOdataToStorage = function() {
+      //easiest way i could find
+      var map = $.map(oModel.oData, function(n, i) { return n; });
+      jsonData = JSON.stringify({"TravelagencyCollection": map} );
+      oStorage.put(DATA_STORE,jsonData);
+    };
+
+    getOdataFromStorage = function() {
+      return JSON.parse(oStorage.get(DATA_STORE));
+    };
+
+    $.sap.require("jquery.sap.storage");
+
+    var DATA_STORE = "RMTSAMPLEFLIGHT";
+    var oStorage =  $.sap.storage(jQuery.sap.storage.Type.local);
+        oModel = {},
+        jsonData = getOdataFromStorage(); 
+
+    if (jsonData){
+      oModel = new sap.ui.model.json.JSONModel();
+      oModel.setData(jsonData);
+    } else {  
+      var sServiceUrl = "../../sap/opu/sdata/iwfnd/RMTSAMPLEFLIGHT",
+          sUser = "developer",
+          sPassword = "ch4ngeme",
+      oModel = new sap.ui.model.odata.ODataModel(sServiceUrl, true, sUser, sPassword);
+        //onLoad put doata to local storage
+      oModel.attachRequestCompleted(putOdataToStorage,this);
+    };
+         
+    oTable.setModel(oModel);
+    oTable.bindRows("/TravelagencyCollection");
+    oTable.placeAt("dataTable");
+
+  </script>
+
+</head>
+<body class="sapUiBody">
+  <h1>SAP OData Local Storage Example</h1>
+  <div id="dataTable"></div>
+
+</body>
+</html>
