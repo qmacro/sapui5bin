@@ -73,7 +73,8 @@
 
     putOdataToStorage = function() {
       //easiest way i could find
-      var map = $.map(oModel.oData, function(n, i) { return n; });
+      // var map = $.map(oModel.oData, function(n, i) { return n; });
+      var map = oModel.oData;
       jsonData = JSON.stringify({"TravelagencyCollection": map} );
       oStorage.put(DATA_STORE,jsonData);
     };
@@ -84,7 +85,7 @@
 
     $.sap.require("jquery.sap.storage");
 
-    var DATA_STORE = "RMTSAMPLEFLIGHT";
+    var DATA_STORE = "RMTSAMPLEFLIGHT1";
     var oStorage =  $.sap.storage(jQuery.sap.storage.Type.local);
         oModel = {},
         jsonData = getOdataFromStorage(); 
