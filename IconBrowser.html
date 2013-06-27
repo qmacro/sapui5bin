@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta charset="UTF-8">
+
+        <title>Icon List</title>
+
+        <script id="sap-ui-bootstrap" 
+                type="text/javascript"
+                src="/sapui5/latest/libs/resources/sap-ui-core.js"
+                data-sap-ui-theme="sap_bluecrystal"
+                data-sap-ui-libs="sap.m"
+                data-sap-ui-xx-fakeOS="ios"
+        >
+        </script>
+
+        <script>
+
+        jQuery.sap.require("sap.ui.core.IconPool");
+
+        var oTileContainer = new sap.m.TileContainer({
+        	tiles: sap.ui.core.IconPool
+	   			.getIconNames()
+	   			.map(function(name) {
+					return new sap.m.StandardTile("tile-" + name, {
+						icon: sap.ui.core.IconPool.getIconURI(name),
+						title: name
+					});
+				})
+		});
+
+		new sap.m.App({
+			pages: [
+				new sap.m.Page({
+					enableScrolling: false,
+					showHeader: true,
+					title: "Icon Browser",
+					content: [ oTileContainer ]
+				})
+			]
+		}).placeAt("sapUiBody");
+
+        </script>
+    </head>
+
+    <body id="sapUiBody" role="application">
+    </body>
+</html>
