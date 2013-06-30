@@ -4,7 +4,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta charset="UTF-8">
 
-        <title>Icon Browser</title>
+        <title>SAPUI5 Icon Browser</title>
 
         <script id="sap-ui-bootstrap" 
                 type="text/javascript"
@@ -22,19 +22,53 @@
         	tiles: sap.ui.core.IconPool
 	   			.getIconNames()
 	   			.map(function(name) {
-					return new sap.m.StandardTile("tile-" + name, {
+					return new sap.m.StandardTile({
 						icon: sap.ui.core.IconPool.getIconURI(name),
 						title: name
 					});
 				})
 		});
 
+        var oAboutPopover = new sap.m.Popover("idAboutPopover", {
+            placement: sap.m.PlacementType.Bottom,
+            showHeader: true,
+            title: "About",
+            footer: new sap.m.Bar({
+                contentRight: [
+                    new sap.m.Button({
+                        text: "OK",
+                        press: function() {
+                            sap.ui.getCore().byId("idAboutPopover").close();
+                        }
+                    })
+                ]
+            }),
+            content: 
+                new sap.m.StandardTile({
+                    icon: sap.ui.core.IconPool.getIconURI("initiative"),
+                    title: "SAPUI5 Icon Browser",
+                    info: "press for source",
+                    press: function() {
+                        window.open("https://github.com/qmacro/sapui5bin/blob/master/IconBrowser.html");
+                    }
+                })
+    
+        });
+
 		new sap.m.App({
 			pages: [
 				new sap.m.Page({
 					enableScrolling: false,
 					showHeader: true,
-					title: "Icon Browser",
+                    headerContent: [
+                        new sap.m.Button({
+                           icon: sap.ui.core.IconPool.getIconURI('initiative'),
+                           press: function() {
+                                oAboutPopover.openBy(this);
+                           }
+                        })
+                    ],
+					title: "SAPUI5 Icon Browser",
 					content: [ oTileContainer ]
 				})
 			]
