@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+		<title>FileUploader Test</title>
+
+		<script id="sap-ui-bootstrap"
+				src="/sapui5/latest/libs/resources/sap-ui-core.js"
+				type="text/javascript"
+				data-sap-ui-theme="sap_goldreflection"
+				data-sap-ui-libs="sap.ui.commons"
+				>
+		</script>
+
+		<script type="text/javascript">
+
+			var oFileUploader1 = new sap.ui.commons.FileUploader("upload_1", {
+				name: "test1",
+				uploadUrl: "http://requestb.in/12ju4yc1",
+				value: "",
+				width: "250px",
+				tooltip: "Upload your file to the local server.",
+				additionalData: "abc=123&test=456",
+				uploadComplete: function (oEvent) {
+					var sResponse = oEvent.getParameter("response");
+					if (sResponse) {
+						var m = /^\[(\d\d\d)\]:(.*)$/.exec(sResponse);
+						if (m[1] == "200") {
+							sap.ui.commons.MessageBox.show("Return Code: " + m[1] + "\n" + m[2], "SUCCESS", "Upload Success");
+						} else {
+							sap.ui.commons.MessageBox.show("Return Code: " + m[1] + "\n" + m[2], "ERROR", "Upload Error");
+						}
+					}
+				}
+			});
+
+			var oLabel = new sap.ui.commons.Label({ text: "Fileuploader to the local server: ", labelFor: oFileUploader1});
+			oLabel.placeAt("target1");
+			oFileUploader1.placeAt("target1");
+
+			var oButton = new sap.ui.commons.Button({
+				text : "Upload",
+				press : function() {
+					oFileUploader1.upload();
+				}
+			});
+			oButton.placeAt("target1");
+
+		</script>
+	</head>
+
+	<body class="sapUiBody" role="application">
+		<h1>Test Page for sap.ui.commons.FileUploader</h1>
+		<p>See <a href='http://scn.sap.com/thread/3383312'>File Uploader UI control issue</a> for background.<p>
+		<p>Steps:
+			<ol>
+				<li>Set up a Request Bin over at <a href='http://requestb.in'>requestb.in</a>, so you can see the results of the POST</li>
+				<li>Enter the unique Bin ID (e.g. <emphasis><a href='http://requestb.in/12ju4yc1'>http://requestb.in/12ju4yc1</a></emphasis>) into the uploadUrl property of the FileUploader control. Note - you can do this directly in your browser's JavaScript console like this: <code>oFileUploader1.setUploadUrl("your-request-bin-URL-here")</code></li>
+				<li>Choose a file and hit the upload button</li>
+				<li>Navigate to your specific Request Bin to view the uploaded contents</li>
+			</ol>
+		<div id="target1"></div>
+		<div id="target3"></div>
+		<p>The raw form of the POSTed data should look something like this:</p>
+			<code>
+				POST /12ju4yc1 HTTP/1.1
+X-Bluecoat-Via: 5770E1E0FF222B66
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.116 Safari/537.36
+Referer: http://localhost:8888/shed/sapui5bin/FileUploader.html
+Pragma: no-cache
+Origin: http://localhost:8888
+Host: requestb.in
+Cookie: session="1uD5tPGVFytg29EWWnviKtXZg6k=?recent=KGxwMQpWMTJqdTR5YzEKcDIKYS4="; __utma=219999002.878297273.1372663081.1372663081.1372663081.1; __utmb=219999002.7.10.1372663081; __utmc=219999002; __utmz=219999002.1372663081.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); uvts=5PhMdlCodNPf712; uvf=1
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryBDTo9N2ASrNg86zK
+Content-Length: 435
+Connection: close
+Cache-Control: no-cache
+Accept-Language: en-US,en;q=0.8
+Accept-Encoding: gzip,deflate,sdch
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+
+------WebKitFormBoundaryBDTo9N2ASrNg86zK
+Content-Disposition: form-data; name="test1"; filename="README.txt"
+Content-Type: text/plain
+
+This is a test file.
+4
+5
+6
+End.
+------WebKitFormBoundaryBDTo9N2ASrNg86zK
+Content-Disposition: form-data; name="_charset_"
+
+ISO-8859-1
+------WebKitFormBoundaryBDTo9N2ASrNg86zK
+Content-Disposition: form-data; name="test1-data"
+
+abc=123&test=456
+------WebKitFormBoundaryBDTo9N2ASrNg86zK--
+</code>
+	</body>
+</html>
