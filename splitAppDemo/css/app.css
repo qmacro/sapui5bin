@@ -1,0 +1,159 @@
+/* //////////////////////////////////////////////////////////////////////////////////////
+iPhone Application
+////////////////////////////////////////////////////////////////////////////////////// */
+
+.sap-ios .sapMListInset .sapMDLILabel,
+.sap-ios .sapMListInset .sapMILILabel {
+	color: #396BA5;
+	font-size: 13px;
+	text-align: right;
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	-webkit-box-pack: end;
+	line-height: 1.4;
+	max-width: 80px;
+	min-width: 80px;
+	white-space: normal;
+	font-weight: normal;
+	margin-left: 0;
+}
+
+.sapMDLIValue {
+	color: #444 !important;
+	font-size: 15px;
+	text-align: left !important;
+	width: 40%;
+	line-height: 2.1em;
+	padding-left: 2px;
+	padding-top: 0.05em;
+	font-weight: bold;
+}
+
+.sapMCb > .sapMRbBLabel {
+	vertical-align: top !important;
+	padding-left: 10px !important;
+	font-size: 15px;
+	color: #444;
+	font-weight: bold;
+	padding-top: 0.1em;
+}
+
+.sap-ios .sapMCbMark {
+	display: block;
+	height: 1.125em;
+	width: 1.125em;
+	border: solid 2px #CCC;
+	border-radius: 0.5625em;
+	margin: 0.125em;
+}
+
+.sap-ios .sapMDialog.sapMCommonDialog,
+.sap-ios .sapMBusyDialog.sapMCommonDialog {
+  width: 18em;
+  border-radius: 0.625em;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  background-clip: padding-box;
+  box-sizing: border-box;
+  text-align: center;
+  color: #ffffff;
+  padding: 0.4375em;
+  box-shadow: 0 0.0625em 0 rgba(0, 0, 0, 0.1), 0.0625em 0 0 rgba(0, 0, 0, 0.1), 0 -0.0625em 0 rgba(0, 0, 0, 0.1), -0.0625em 0 0 rgba(0, 0, 0, 0.1), 0 0.1865em 0.375em rgba(0, 0, 0, 0.5);
+  text-shadow: 0;
+  -webkit-animation-duration: 300ms;
+  -webkit-animation-iteration-count: 1;
+}
+
+.sap-ios .sapMDialogOpening{
+		-webkit-animation-name: sapMDialogZoomIn;
+		animation-name: sapMDialogZoomIn;
+	}
+
+	.sapMDialogClosing {
+		-webkit-animation-name: sapMDialogZoomOut;
+		animation-name: sapMDialogZoomOut;
+	}
+	
+	.sapMMessageDialog.sapMDialogOpening{
+		-webkit-animation-name: sapMDialogBounce;
+		animation-name: sapMDialogBounce;
+	}
+
+.sap-ios .sapMDialogBLyInit {
+  /*opacity: 0;*/
+
+  opacity: 1;
+  background-color: transparent;
+  background-image: -webkit-radial-gradient(center, circle, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0.3) 30%, rgba(0, 0, 0, 0.5) 60%, rgba(0, 0, 0, 0.6) 100%);
+  /*-webkit-transition: opacity 300ms linear;*/
+
+}
+.sap-ios .sapMDialogTitle {
+  font-size: 1.2em;
+  line-height: 1em;
+  color: #2E618D;
+  margin-top: .5em;
+  font-weight: bold;
+}
+.sap-ios .sapMCommonDialog button.sapMDialogBtn {
+  width: 100%;
+  height: 44px;
+  font-size: 1em;
+  line-height: 1em;
+  border-radius: 0.3125em;
+  text-align: center;
+  text-decoration: none;
+  text-shadow: 0 -0.0625em 0 #000000;
+  color: #ffffff;
+  font-weight: bold;
+  padding: 0;
+  margin: 0;
+  margin-top: 5px;
+  box-shadow: inset 0 0.0625em 0 #000000, inset 0 -0.0625em 0 #262626, inset 0 -0.125em 0 #000000;
+  border: none;
+-webkit-box-shadow: none !important;
+-webkit-border-image: url(images/button.png) 8 8 8 7 stretch;
+padding: 0;
+}
+.sap-ios .sapMCommonDialog button.sapMDialogBtn:active {
+  background-image: -webkit-linear-gradient(top, rgba(153, 153, 153, 0.55) 0%, rgba(48, 48, 48, 0.1) 50%, rgba(48, 48, 48, 0.1) 50%, rgba(64, 64, 64, 0.5) 100%);
+}
+@-webkit-keyframes sapMDialogBounce {
+  0% {
+    -webkit-transform: scale3d(0.8, 0.8, 1);
+    transform: scale3d(0.8, 0.8, 1);
+  }
+  55% {
+    -webkit-transform: scale3d(1.08, 1.08, 1);
+    transform: scale3d(1.08, 1.08, 1);
+  }
+  75% {
+    -webkit-transform: scale3d(0.9, 0.9, 1);
+    transform: scale3d(0.9, 0.9, 1);
+  }
+  100% {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+}
+.sapMPageBgStandard, .sapMPageBgList {
+	background-color: #dedede;
+}
+
+.sapMCb {
+	white-space: nowrap;
+}
+
+.sapMCb > .sapMRbBLabel {
+	vertical-align: top !important;
+	padding-left: 10px !important;
+	font-size: 15px;
+	color: #444;
+	font-weight: bold;
+	padding-top: 0.1em;
+}
+
+.sapMFlexBoxTextArea  {
+	width: 280px;
+	margin-left: 20px ;
+	margin-top: 10px;
+}

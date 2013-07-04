@@ -1,0 +1,53 @@
+<template data-controller-name="view.Detail">
+   <div data-sap-ui-type="sap.m.Page" data-sap-ui-aggregation="content" data-nav-button-tap="onItems" data-title="{i18n>view.Detail.title}" data-show-nav-button="true" data-nav-button-text="{i18n>view.Detail.back}">
+      <div data-sap-ui-type="sap.m.List">
+         <div data-sap-ui-type="sap.m.CustomListItem" data-counter="0">
+            <div data-sap-ui-type="sap.m.HBox" data-align-items="Center">
+               <div id="TypeIcon" data-sap-ui-type="sap.m.Image" data-src="{Type}"></div>
+               <div id="vBox1" data-sap-ui-type="sap.m.VBox" data-direction="Column" data-align-items="Start">
+                  <div data-sap-ui-type="sap.m.FlexItemData" data-sap-ui-aggregation="layoutData" data-grow-factor="1"></div>
+                  <div id="CreatorName" data-sap-ui-type="sap.m.Label" class="styleCreatorName" data-text="{Creator}"></div>
+                  <div id="RequestType" data-sap-ui-type="sap.m.Label" class="styleRequestType" data-text="{Type}"></div>
+               </div>
+               <div id="vBox2" data-sap-ui-type="sap.m.VBox" data-direction="Column" data-align-items="End">
+                  <div data-sap-ui-type="sap.m.FlexItemData" data-sap-ui-aggregation="layoutData" data-grow-factor="3"></div>
+                  <div id="PriorityIcon" data-sap-ui-type="sap.m.Image" data-src="{Priority}"></div>
+                  <div id="DueDate" data-sap-ui-type="sap.m.Label" class="styleDueDate" data-text="{DueOn}"></div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div data-sap-ui-type="sap.m.List" data-inset="true" data-header-text="{i18n>view.Detail.instructions}">
+         <div data-sap-ui-type="sap.m.CustomListItem" data-counter="0">
+            <div id="Instruction" data-sap-ui-type="sap.m.Text" class="styleInstruction" data-text-align="Left" data-width="100%"></div>
+         </div>
+      </div>
+      <div data-sap-ui-type="sap.m.List" data-inset="true" data-header-text="{i18n>view.Detail.attachments}" data-items="{Attachments}">
+         <div id="ItemAttch" data-sap-ui-type="sap.m.StandardListItem" data-tap="onTap" data-type="Active" data-counter="0" data-title="{AttchItem}" data-icon="{AttchType}"></div>
+      </div>
+            <div data-sap-ui-aggregation="footer">
+         <div data-sap-ui-type="sap.m.Bar" data-translucent="true">
+            <div data-sap-ui-aggregation="contentRight">
+               <div id="DetailFooter1" data-sap-ui-type="sap.m.Button" 
+                  data-text="Accept" 
+                  data-icon="sap-icon://accept" 
+                  data-tap="onAccept">
+               </div>
+               <div id="DetailFooter2" data-sap-ui-type="sap.m.Button" 
+                  data-text="Reject" 
+                  data-icon="sap-icon://decline" 
+                  data-tap="onReject">
+               </div>
+              <div id="DetailFooter3" data-sap-ui-type="sap.m.Button" 
+                  data-tap="onForward" 
+                  data-icon="icons/forward_white.png"></div>
+            </div>
+         </div>
+      </div>
+<!--       <div data-sap-ui-type="sap.m.Bar" data-sap-ui-aggregation="footer">
+         <div id="DetailFooter1" data-sap-ui-type="sap.m.Button" data-sap-ui-aggregation="contentLeft" data-tap="onAccept" data-icon="icons/accept_white.png"></div>
+         <div id="DetailFooter2" data-sap-ui-type="sap.m.Button" data-sap-ui-aggregation="contentMiddle" data-tap="onReject" data-type="Reject" data-icon="icons/decline_white.png"></div>
+         <div id="DetailFooter3" data-sap-ui-type="sap.m.Button" data-sap-ui-aggregation="contentRight" data-tap="onForward" data-icon="icons/forward_white.png"></div>
+      </div> -->
+   </div>
+</template>

@@ -1,0 +1,48 @@
+<template data-controller-name="view.ApprovalItems">
+   <div data-sap-ui-type="sap.m.Page" data-sap-ui-aggregation="content" data-title="{i18n>view.ApprovalItems.title}" data-nav-button-text="Back">
+      <div data-sap-ui-type="sap.m.List" data-inset="true" data-no-data-text="No data found" data-items="{/}" id="List">
+         <div id="ListItem" data-sap-ui-type="sap.m.CustomListItem" data-tap="onShowDetails" data-type="Navigation" data-counter="0">
+            <div data-sap-ui-type="sap.m.HBox" data-align-items="Center">
+               <div id="TypeIcon" data-sap-ui-type="sap.m.Image" data-src="{path: 'Type', formatter: 'util.Conversions.Type2Icon'}"></div> -->
+               <div id="vBox1" data-sap-ui-type="sap.m.VBox" data-direction="Column" data-align-items="Start">
+                  <div data-sap-ui-type="sap.m.FlexItemData" data-sap-ui-aggregation="layoutData" data-grow-factor="1"></div>
+                  <div id="CreatorName" data-sap-ui-type="sap.m.Label" class="styleCreatorName" data-text="{Creator}"></div>
+                  <div id="RequestType" data-sap-ui-type="sap.m.Label" class="styleRequestType" data-text="{Type}"></div>
+               </div>
+               <div id="vBox2" data-sap-ui-type="sap.m.VBox" data-direction="Column" data-align-items="End">
+                  <div data-sap-ui-type="sap.m.FlexItemData" data-sap-ui-aggregation="layoutData" data-grow-factor="3"></div>
+                  <div id="PriorityIcon" data-sap-ui-type="sap.m.Image"  data-src="{path: 'Priority', formatter: 'util.Conversions.Priority2Icon'}"></div>
+                  <div id="DueDate" data-sap-ui-type="sap.m.Label" class="styleDueDate" data-text="{path: 'DueOn', formatter: 'util.Conversions.DateShortYTTInText'}"></div>
+              </div>
+            </div>
+         </div>
+      </div>
+      <div data-sap-ui-aggregation="customHeader">
+         <div data-sap-ui-type="sap.m.Bar">
+            <div data-sap-ui-aggregation="contentLeft">
+               <div data-sap-ui-type="sap.m.Button" data-icon="sap-icon://home" data-tap="tapHomeButton">
+               </div>
+            </div>
+            <div data-sap-ui-aggregation="contentRight">
+            <div data-sap-ui-type="sap.m.SegmentedButton" data-sap-ui-aggregation="contentMiddle" data-selected-button="main--ApprovalItems--select">
+            <div id="select" data-sap-ui-type="sap.m.Button" data-tap="onCurrent" data-text="{i18n>view.History.current}" data-enabled="false"></div>
+            <div data-sap-ui-type="sap.m.Button" data-tap="onHistory" data-text="{i18n>view.ApprovalItems.history}"></div>
+         </div>
+            </div>
+         </div>
+      </div>
+
+      <div id="ItemListBar" data-sap-ui-aggregation="footer">
+         <div data-sap-ui-type="sap.m.Bar" data-translucent="true">
+            <div data-sap-ui-aggregation="contentRight">
+            </div>
+         </div>
+      </div>
+       <!-- <div id="ItemListBar" data-sap-ui-type="sap.m.Bar" data-sap-ui-aggregation="footer" data-translucent="true">
+         <div data-sap-ui-type="sap.m.SegmentedButton" data-sap-ui-aggregation="contentMiddle" data-selected-button="main--ApprovalItemsPage--select">
+            <div id="select" data-sap-ui-type="sap.m.Button" data-tap="onCurrent" data-text="{i18n>view.History.current}" data-enabled="false"></div>
+            <div data-sap-ui-type="sap.m.Button" data-tap="onHistory" data-text="{i18n>view.ApprovalItems.history}"></div>
+         </div>
+      </div>  -->
+   </div>
+</template>
