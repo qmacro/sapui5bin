@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-		<title>FileUploader Test</title>
+		<title>OData File Uploader Test</title>
 
 		<script id="sap-ui-bootstrap"
 				src="../resources/sap-ui-core.js"
@@ -19,9 +19,9 @@
 			Replace Form.Submit with an AJAX call, the logic should work
 			with any <input type="file"
 		**/
-		jQuery.sap.declare("ODataFileLoader");
+		jQuery.sap.declare("ODataFileUploader");
 		jQuery.sap.require("sap.ui.commons.FileUploader");
-		sap.ui.commons.FileUploader.extend("ODataFileLoader", {
+		sap.ui.commons.FileUploader.extend("ODataFileUploader", {
 			metadata : {
 				properties : {
 					"modelName" : "string",
@@ -78,7 +78,7 @@
 			//model needs to be set to core so available to control
 			sap.ui.getCore().setModel(oModel);
 
-			var oFileUploader1 = new ODataFileLoader("upload_1", {
+			var oFileUploader1 = new ODataFileUploader("upload_1", {
 				name: "test1",
 				uploadUrl: sUrl + "CarrierCollection",
 				slug: "QF", //Qantas
