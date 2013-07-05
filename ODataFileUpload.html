@@ -13,6 +13,9 @@
 				>
 		</script>
 		<script type="text/javascript">
+		/**
+			OData File Loader Control
+		**/
 		jQuery.sap.declare("ODataFileLoader");
 		jQuery.sap.require("sap.ui.commons.FileUploader");
 		sap.ui.commons.FileUploader.extend("ODataFileLoader", {
@@ -45,8 +48,6 @@
 						type: 'POST',
 						url: this.getUploadUrl(),
 						headers: oHeaders,
-						// username: oRequest.user,
-						// password: oRequest.password,
 						cache: false,
                         contentType: false,
                         processData: false,
