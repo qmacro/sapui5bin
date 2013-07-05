@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+		<title>FileUploader Test</title>
+
+		<script id="sap-ui-bootstrap"
+				src="../resources/sap-ui-core.js"
+				type="text/javascript"
+				data-sap-ui-theme="sap_goldreflection"
+				data-sap-ui-libs="sap.ui.commons"
+				>
+		</script>
+		<script type="text/javascript">
+		jQuery.sap.declare("ODataFileLoader");
+		jQuery.sap.require("sap.ui.commons.FileUploader");
+		sap.ui.commons.FileUploader.extend("ODataFileLoader", {
+			metadata : {
+				properties : {
+					"modelName" : "string",
+					"slug"	: "string"
+				}
+			},
+			upload : function() {
+				var file = jQuery.sap.domById("upload_1-fu").files[0];
+ 				try {
+				if (file) {
+					this._bUploading = true;
+					var that = this;
+					var _handleSuccess = function(data){
+						that.fireUploadComplete({"response": "Success: " + /<message>(.*?)<\/message>/.exec(data.responseText)[1]});
+						that._bUploading = false;
+					}; 
+					var _handleError = function(data){
+						that.fireUploadComplete({"response": "Error: " + /<message>(.*?)<\/message>/.exec(data.responseText)[1]});
+						that._bUploading = false;
+					};
+					var oRequest = sap.ui.getCore().getModel(this.getModelName())._createRequest();
+					var oHeaders = {
+						"x-csrf-token": oRequest.headers['x-csrf-token'],
+						"slug": this.getSlug(),
+					}; 
+					jQuery.ajax({
+						type: 'POST',
+						url: this.getUploadUrl(),
+						headers: oHeaders,
+						// username: oRequest.user,
+						// password: oRequest.password,
+						cache: false,
+                        contentType: false,
+                        processData: false,
+						data: file,
+						success: _handleSuccess,
+						error: _handleError
+					});
+					jQuery.sap.log.info("File uploading to " + this.getUploadUrl());
+
+				}
+				} catch(oException) {
+			jQuery.sap.log.error("File upload failed:\n" + oException.message);
+				}
+			},
+			renderer : {
+			}
+		});
+	</script>
+		<script type="text/javascript">
+			var sUrl = '/sap/opu/odata/IWFND/RMTSAMPLEFLIGHT/';
+			var oModel = new sap.ui.model.odata.ODataModel(sUrl, true, 'developer', 'changeme');
+			oModel._loadData("CarrierCollection");
+			sap.ui.getCore().setModel(oModel);
+
+			var oFileUploader1 = new ODataFileLoader("upload_1", {
+				name: "test1",
+				uploadUrl: sUrl + "CarrierCollection",
+				slug: "QF", //Qantas
+				value: "",
+				width: "250px",
+				tooltip: "Upload your file to the local server.",
+				additionalData: "abc=123&test=456",
+				uploadComplete: function (oEvent) {
+					var sResponse = oEvent.getParameter("response");
+					if (sResponse) {
+						sap.ui.commons.MessageBox.show(sResponse);
+					}
+				}
+			});
+
+			var oLabel = new sap.ui.commons.Label({ text: "Fileuploader to the local server: ", labelFor: oFileUploader1});
+			oLabel.placeAt("target1");
+			oFileUploader1.placeAt("target1");
+
+			var oButton = new sap.ui.commons.Button({
+				text : "Upload",
+				press : function() {
+					oFileUploader1.upload();
+				}
+			});
+			oButton.placeAt("target1");
+
+		</script>
+	</head>
+
+	<body class="sapUiBody" role="application">
+		<div id="target1"></div>
+</code>
+	</body>
+</html>
