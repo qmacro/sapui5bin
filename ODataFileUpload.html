@@ -32,7 +32,7 @@
 					this._bUploading = true;
 					var that = this;
 					var _handleSuccess = function(data){
-						that.fireUploadComplete({"response": "Success: " + /<message>(.*?)<\/message>/.exec(data.responseText)[1]});
+						that.fireUploadComplete({"response": "Success: File uploaded to entity" });
 						that._bUploading = false;
 					}; 
 					var _handleError = function(data){
