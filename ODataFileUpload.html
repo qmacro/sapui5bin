@@ -71,17 +71,20 @@
 	</script>
 		<script type="text/javascript">
 			//example shows how to post an image to the QF QANTAS Entity in the CarrierCollection
-			var sUrl = '/sap/opu/odata/IWFND/RMTSAMPLEFLIGHT/';
+			var sUrl = '/sap/opu/odata/IWFND/RMTSAMPLEFLIGHT/',
+				sCollection = 'CarrierCollection',
+				sCarrier = 'QF',
+				sPath = sCollection + "('" + sCarrier + "')";
 			var oModel = new sap.ui.model.odata.ODataModel(sUrl, true, 'developer', 'changeme');
-			oModel._loadData("CarrierCollection");
+			oModel.read(sPath,null,null,true,null,null);
 
 			//model needs to be set to core so available to control
 			sap.ui.getCore().setModel(oModel);
 
 			var oFileUploader1 = new ODataFileUploader("upload_1", {
 				name: "test1",
-				uploadUrl: sUrl + "CarrierCollection",
-				slug: "QF", //Qantas
+				uploadUrl: sUrl + sCollection,
+				slug: sCarrier, //Qantas
 				value: "",
 				width: "250px",
 				tooltip: "Upload your file to the local server.",
@@ -91,7 +94,7 @@
 					if (sResponse) {
 						sap.ui.commons.MessageBox.show(sResponse);
 						var oImage = new sap.ui.commons.Image({
-							src: sUrl + "CarrierCollection('QF')/$value",
+							src: sUrl + sPath + "/$value",
 							alt: "uploaded image"
 						});
 						oImage.placeAt("target2");
