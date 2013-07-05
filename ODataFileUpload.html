@@ -15,6 +15,9 @@
 		<script type="text/javascript">
 		/**
 			OData File Loader Control
+
+			Replace Form.Submit with an AJAX call, the logic should work
+			with any <input type="file"
 		**/
 		jQuery.sap.declare("ODataFileLoader");
 		jQuery.sap.require("sap.ui.commons.FileUploader");
@@ -67,9 +70,12 @@
 		});
 	</script>
 		<script type="text/javascript">
+			//example shows how to post an image to the QF QANTAS Entity in the CarrierCollection
 			var sUrl = '/sap/opu/odata/IWFND/RMTSAMPLEFLIGHT/';
 			var oModel = new sap.ui.model.odata.ODataModel(sUrl, true, 'developer', 'changeme');
 			oModel._loadData("CarrierCollection");
+
+			//model needs to be set to core so available to control
 			sap.ui.getCore().setModel(oModel);
 
 			var oFileUploader1 = new ODataFileLoader("upload_1", {
@@ -84,6 +90,11 @@
 					var sResponse = oEvent.getParameter("response");
 					if (sResponse) {
 						sap.ui.commons.MessageBox.show(sResponse);
+						var oImage = new sap.ui.commons.Image({
+							src: sUrl + "CarrierCollection('QF')/$value",
+							alt: "uploaded image"
+						});
+						oImage.placeAt("target2");
 					}
 				}
 			});
@@ -105,6 +116,7 @@
 
 	<body class="sapUiBody" role="application">
 		<div id="target1"></div>
+		<div id="target2"></div>
 </code>
 	</body>
 </html>
