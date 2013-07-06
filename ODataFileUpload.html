@@ -14,10 +14,10 @@
 		</script>
 		<script type="text/javascript">
 		/**
-			OData File Loader Control
+			OData File Uploader Control
 
-			Replace Form.Submit with an AJAX call, the logic should work
-			with any <input type="file"
+			Extends FileUploader replacing the Form.Submit with an AJAX call, 
+			the logic should work with any <input type="file"
 		**/
 		jQuery.sap.declare("ODataFileUploader");
 		jQuery.sap.require("sap.ui.commons.FileUploader");
@@ -29,7 +29,7 @@
 				}
 			},
 			upload : function() {
-				var file = jQuery.sap.domById("upload_1-fu").files[0];
+				var file = jQuery.sap.domById(this.getId() + "-fu").files[0];
  				try {
 				if (file) {
 					this._bUploading = true;
