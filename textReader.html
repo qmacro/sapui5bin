@@ -21,12 +21,12 @@
 				var reader = new FileReader();
 
 				// On load set file contents to text view
-	      		reader.onload = (function(theFile) {
-	        		return function(evt) {	
-	        		    oTv = sap.ui.getCore().byId('txtContent');
-	        			oTv.setText(evt.target.result);		
+	      			reader.onload = (function(theFile) {
+	        			return function(evt) {	
+	        		  	  oTv = sap.ui.getCore().byId('txtContent');
+	        			  oTv.setText(evt.target.result);		
 					};
-	      		})(file);
+	      			})(file);
 
 		      	// Read in the file as text
 		     	reader.readAsText(file);
