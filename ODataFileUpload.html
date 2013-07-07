@@ -39,7 +39,14 @@
 						that._bUploading = false;
 					}; 
 					var _handleError = function(data){
-						that.fireUploadComplete({"response": "Error: " + /<message>(.*?)<\/message>/.exec(data.responseText)[1]});
+						var errorMsg = '';
+						if (data.responseText[1]){
+							errorMsg = /<message>(.*?)<\/message>/.exec(data.responseText)[1];
+						}else{
+							errorMsg = 'Something bad happened';
+						}
+
+						that.fireUploadComplete({"response": "Error: " + errorMsg});
 						that._bUploading = false;
 					};
 					var oRequest = sap.ui.getCore().getModel(this.getModelName())._createRequest();
@@ -52,7 +59,7 @@
 						url: this.getUploadUrl(),
 						headers: oHeaders,
 						cache: false,
-						contentType: false,
+						contentType: file.type,
 						processData: false,
 						data: file,
 						success: _handleSuccess,
@@ -70,12 +77,13 @@
 		});
 	</script>
 		<script type="text/javascript">
+
 			//example shows how to post an image to the QF QANTAS Entity in the CarrierCollection
 			var sUrl = '/sap/opu/odata/IWFND/RMTSAMPLEFLIGHT/',
 				sCollection = 'CarrierCollection',
 				sCarrier = 'QF',
 				sPath = sCollection + "('" + sCarrier + "')";
-			var oModel = new sap.ui.model.odata.ODataModel(sUrl, true, 'developer', 'changeme');
+			var oModel = new sap.ui.model.odata.ODataModel(sUrl, true, 'developer', 'ch4ngeme');
 			oModel.read(sPath,null,null,true,null,null);
 
 			//model needs to be set to core so available to control
@@ -119,6 +127,5 @@
 	<body class="sapUiBody" role="application">
 		<div id="target1"></div>
 		<div id="target2"></div>
-</code>
 	</body>
 </html>
