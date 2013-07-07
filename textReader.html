@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+		<title>Text Reader Test</title>
+
+		<script id="sap-ui-bootstrap"
+				src="https://sapui5.netweaver.ondemand.com/resources/sap-ui-core.js"
+				type="text/javascript"
+				data-sap-ui-theme="sap_goldreflection"
+				data-sap-ui-libs="sap.ui.commons"
+				>
+		</script>
+		<script type="text/javascript">
+		var oTextView = new sap.ui.commons.TextView('txtContent').placeAt("target1");
+		var _handleFileSelect = function(evt){
+			var file = evt.target.files[0];
+		
+			if (file) {
+				var reader = new FileReader();
+
+				// On load set file contents to text view
+	      		reader.onload = (function(theFile) {
+	        		return function(evt) {	
+	        		    oTv = sap.ui.getCore().byId('txtContent');
+	        			oTv.setText(evt.target.result);		
+					};
+	      		})(file);
+
+		      	// Read in the file as text
+		     	reader.readAsText(file);
+			};
+		};	
+
+		jQuery(function() {
+			jQuery.sap.byId("txtFile").bind('change', _handleFileSelect	);
+		});	
+		</script>
+	</head>
+
+	<body class="sapUiBody" role="application">
+		<input type="file" id="txtFile" />
+		<div id="target1"></div>
+	</body>
+</html>
+	
