@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+		<title>Text Reader Test</title>
+
+		<script id="sap-ui-bootstrap"
+				src="../resources/sap-ui-core.js"
+				type="text/javascript"
+				data-sap-ui-libs="sap.m, sap.me"
+				data-sap-ui-theme="sap_bluecrystal">
+		</script>
+		<script type="text/javascript">
+			var sURI = "http://services.odata.org/Northwind/Northwind.svc/";
+			var oModel = new sap.ui.model.odata.ODataModel(sURI, true);
+			var oBinding = oModel.bindList("/Categories");
+
+			var oTileCont = new sap.m.TileContainer("tc",{});
+
+			var _handler = function() {
+				$(oBinding.getContexts()).each(function(i, context){
+					var oTile = new sap.m.StandardTile({
+		                icon : 'sap-icon://menu',
+		                title : oModel.getProperty("CategoryName", context),
+		                info : oModel.getProperty("Description", context)
+		            });
+		            oTileCont.addTile(oTile);
+				});
+			};
+			oBinding.attachChange(_handler);
+			oBinding.getContexts();
+			
+			var page = new sap.m.Page({setShowHeader: true});
+			page.setEnableScrolling(false).setShowHeader(false).addContent(oTileCont);
+			var app = new sap.m.App();
+			app.addPage(page).setInitialPage(page.getId()).placeAt('body');			
+		</script>
+	</head>
+
+	<body class="sapUiBody" id="body" role="application">
+	</body>
+</html>
