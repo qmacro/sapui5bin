@@ -21,11 +21,11 @@
 			var _handler = function() {
 				$(oBinding.getContexts()).each(function(i, context){
 					var oTile = new sap.m.StandardTile({
-		                icon : 'sap-icon://menu',
-		                title : oModel.getProperty("CategoryName", context),
-		                info : oModel.getProperty("Description", context)
-		            });
-		        	oTileCont.addTile(oTile);
+						icon : 'sap-icon://menu',
+						title : oModel.getProperty("CategoryName", context),
+						info : oModel.getProperty("Description", context)
+					});
+					oTileCont.addTile(oTile);
 				});
 			};
 			oBinding.attachChange(_handler);
