@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-		<title>Text Reader Test</title>
+		<title>OData Tile Creation</title>
 
 		<script id="sap-ui-bootstrap"
 				src="../resources/sap-ui-core.js"
@@ -14,22 +14,16 @@
 		<script type="text/javascript">
 			var sURI = "http://services.odata.org/Northwind/Northwind.svc/";
 			var oModel = new sap.ui.model.odata.ODataModel(sURI, true);
-			var oBinding = oModel.bindList("/Categories");
-
 			var oTileCont = new sap.m.TileContainer("tc",{});
-
-			var _handler = function() {
-				$(oBinding.getContexts()).each(function(i, context){
-					var oTile = new sap.m.StandardTile({
-						icon : 'sap-icon://menu',
-						title : oModel.getProperty("CategoryName", context),
-						info : oModel.getProperty("Description", context)
-					});
-					oTileCont.addTile(oTile);
-				});
-			};
-			oBinding.attachChange(_handler);
-			oBinding.getContexts();
+			sap.ui.getCore().setModel(oModel);
+			//Tile Template
+			var oTileTmp = new sap.m.StandardTile({
+				icon : "sap-icon://menu",
+				title : "{CategoryName}",
+				info : "{Description}"
+			});
+			//Bind Categories use template to build tiles
+			oTileCont.bindAggregation("tiles","/Categories",oTileTmp);
 			
 			var page = new sap.m.Page({setShowHeader: true});
 			page.setEnableScrolling(false).setShowHeader(false).addContent(oTileCont);
