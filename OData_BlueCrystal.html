@@ -9,8 +9,13 @@
 	type="text/javascript" data-sap-ui-libs="sap.m, sap.me"
 	data-sap-ui-theme="sap_bluecrystal">	
 </script>
+<!-- The OData Northwind service was down this morning, so i used the fake service based on
+     Sinon.JS FakeXHR. To run on the real service instead please comment out the following  2 lines. -->
+<script type="text/javascript" src="../resources/sap/ui/thirdparty/sinon.js"></script>
+<script type="text/javascript" src="../test-resources/sap/ui/core/qunit/ODataModelFakeService.js"></script>
 <script type="text/javascript">
-	var sURI = "http://services.odata.org/Northwind/Northwind.svc/";
+	var sURI= "http://services.odata.org/Northwind/Northwind.svc/"
+	if (typeof baseURL === "string") sURI=baseURL; //if mock service use the baseURL
 	var oModel = new sap.ui.model.odata.ODataModel(sURI, true);
 	var oTileCont = new sap.m.TileContainer("tileCont", {});
 	sap.ui.getCore().setModel(oModel);
@@ -77,7 +82,7 @@
 
 	var app = new sap.m.App("App");
 	app.addPage(page1).addPage(page2).setInitialPage(page1.getId());
-	var shell = new sap.m.Shell("Shell");
+	var shell = new sap.m.Shell("Shell",{showLogout : false});
 	shell.setApp(app).placeAt('body');
 
 	function _handleTileTap(oEvent) {
@@ -89,7 +94,7 @@
 		//return the number of products linked to Category
 		if (oValue) {
 			var sPath = this.getBindingContext().getPath() + '/Products';
-			return this.getModel().bindList(sPath).getContexts().length;
+			 return this.getModel().bindList(sPath).getContexts().length;
 		}
 	};
 </script>
@@ -97,3 +102,5 @@
 <body class="sapUiBody" id="body" role="application">
 </body>
 </html>
+
+ 
