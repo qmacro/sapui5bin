@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-<title>OData BlueCrystal Simple Example</title>
+<title>OData BlueCrystal Simple Example (Declaritive HTML)</title>
 
 <script id="sap-ui-bootstrap" src="../resources/sap-ui-core.js"
 	data-sap-ui-debug="true"
@@ -38,7 +38,6 @@
 			var sPath = this.getBindingContext().getPath() + '/Products';
 			 return this.getModel().bindList(sPath).getContexts().length;
 		}
-		return 10;
 	};
 </script>
 </head>
@@ -46,8 +45,7 @@
 <div id="shell" data-sap-ui-type="sap.m.Shell" data-show-logout='false' >
    <div id="app" data-sap-ui-type="sap.m.App">
       <div id="page1" data-sap-ui-type="sap.m.Page" data-enable-scrolling="false" data-title="Products by Category">
-         <div id="tc" data-sap-ui-type="sap.m.TileContainer" data-sap-ui-default-aggregation="tiles" 
-            data-tiles="{path:'/Categories', parameters:{expand:'Products'}}">
+         <div id="tc" data-sap-ui-type="sap.m.TileContainer" data-tiles="{path:'/Categories', parameters:{expand:'Products'}}">
             <div data-sap-ui-type="sap.m.StandardTile"  
                data-number="{path:'CategoryID',formatter:'productCount'}"
                data-number-unit="Products"
