@@ -1,0 +1,131 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+		<title>OData File Uploader Test</title>
+
+		<script id="sap-ui-bootstrap"
+				src="../resources/sap-ui-core.js"
+				type="text/javascript"
+				data-sap-ui-theme="sap_goldreflection"
+				data-sap-ui-libs="sap.ui.commons"
+				>
+		</script>
+		<script type="text/javascript">
+		/**
+			OData File Uploader Control
+
+			Extends FileUploader replacing the Form.Submit with an AJAX call, 
+			the logic should work with any <input type="file"
+		**/
+		jQuery.sap.declare("ODataFileUploader");
+		jQuery.sap.require("sap.ui.commons.FileUploader");
+		sap.ui.commons.FileUploader.extend("ODataFileUploader", {
+			metadata : {
+				properties : {
+					"modelName" : "string",
+					"slug"	: "string"
+				}
+			},
+			upload : function() {
+				var file = jQuery.sap.domById(this.getId() + "-fu").files[0];
+ 				try {
+				if (file) {
+					this._bUploading = true;
+					var that = this;
+					var _handleSuccess = function(data){
+						that.fireUploadComplete({"response": "Success: File uploaded to entity" });
+						that._bUploading = false;
+					}; 
+					var _handleError = function(data){
+						var errorMsg = '';
+						if (data.responseText[1]){
+							errorMsg = /<message>(.*?)<\/message>/.exec(data.responseText)[1];
+						}else{
+							errorMsg = 'Something bad happened';
+						}
+
+						that.fireUploadComplete({"response": "Error: " + errorMsg});
+						that._bUploading = false;
+					};
+					var oRequest = sap.ui.getCore().getModel(this.getModelName())._createRequest();
+					var oHeaders = {
+						"x-csrf-token": oRequest.headers['x-csrf-token'],
+						"slug": this.getSlug(),
+					}; 
+					jQuery.ajax({
+						type: 'POST',
+						url: this.getUploadUrl(),
+						headers: oHeaders,
+						cache: false,
+						contentType: file.type,
+						processData: false,
+						data: file,
+						success: _handleSuccess,
+						error: _handleError
+					});
+					jQuery.sap.log.info("File uploading to " + this.getUploadUrl());
+
+				}
+				} catch(oException) {
+			jQuery.sap.log.error("File upload failed:\n" + oException.message);
+				}
+			},
+			renderer : {
+			}
+		});
+	</script>
+		<script type="text/javascript">
+
+			//example shows how to post an image to the QF QANTAS Entity in the CarrierCollection
+			var sUrl = '/sap/opu/odata/IWFND/RMTSAMPLEFLIGHT/',
+				sCollection = 'CarrierCollection',
+				sCarrier = 'QF',
+				sPath = sCollection + "('" + sCarrier + "')";
+			var oModel = new sap.ui.model.odata.ODataModel(sUrl, true, 'developer', 'ch4ngeme');
+			oModel.read(sPath,null,null,true,null,null);
+
+			//model needs to be set to core so available to control
+			sap.ui.getCore().setModel(oModel);
+
+			var oFileUploader1 = new ODataFileUploader("upload_1", {
+				name: "test1",
+				uploadUrl: sUrl + sCollection,
+				slug: sCarrier, //Qantas
+				value: "",
+				width: "250px",
+				tooltip: "Upload your file to the local server.",
+				uploadComplete: function (oEvent) {
+					var sResponse = oEvent.getParameter("response");
+					if (sResponse) {
+						sap.ui.commons.MessageBox.show(sResponse);
+						var oImage = new sap.ui.commons.Image({
+							src: sUrl + sPath + "/$value",
+							alt: "uploaded image"
+						});
+						oImage.placeAt("target2");
+					}
+				}
+			});
+
+			var oLabel = new sap.ui.commons.Label({ text: "Fileuploader to the local server: ", labelFor: oFileUploader1});
+			oLabel.placeAt("target1");
+			oFileUploader1.placeAt("target1");
+
+			var oButton = new sap.ui.commons.Button({
+				text : "Upload",
+				press : function() {
+					oFileUploader1.upload();
+				}
+			});
+			oButton.placeAt("target1");
+
+		</script>
+	</head>
+
+	<body class="sapUiBody" role="application">
+		<div id="target1"></div>
+		<div id="target2"></div>
+	</body>
+</html>

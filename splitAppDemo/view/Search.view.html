@@ -1,0 +1,12 @@
+<template data-controller-name="view.Search">
+   <div data-sap-ui-type="sap.m.Page" data-sap-ui-aggregation="content" data-title="Contacts" data-nav-button-text="Back">
+      <div id="searchText" data-sap-ui-type="sap.m.SearchField" data-live-change="onSearch" data-placeholder="Search"></div>
+      <div id="searchList" data-sap-ui-type="sap.m.List" data-items="{search>/}">
+         <div data-sap-ui-type="sap.m.StandardListItem" data-type="Active" data-counter="0" data-title="{search>Name}" data-info="{search>ID}"></div>
+      </div>
+      <div data-sap-ui-type="sap.m.Bar" data-sap-ui-aggregation="customHeader">
+         <div data-sap-ui-type="sap.m.Button" data-sap-ui-aggregation="contentLeft" data-tap="onCancel" data-text="{i18n>view.Search.cancel}"></div>
+         <div data-sap-ui-type="sap.m.Label" data-sap-ui-aggregation="contentMiddle" data-text="{i18n>view.Search.title}"></div>
+      </div>
+   </div>
+</template>

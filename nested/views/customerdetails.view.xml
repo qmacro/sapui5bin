@@ -1,0 +1,116 @@
+<core:View xmlns:layout="sap.ui.commons.layout"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    controllerName="nested.controller.customers"
+    xmlns="sap.ui.commons" >
+    <layout:MatrixLayout columns="2" layoutFixed="false" >
+        <layout:MatrixLayoutRow>
+            <layout:MatrixLayoutCell columns="2" >
+                <TextView design="H1" text="Customer" >
+                </TextView>
+            </layout:MatrixLayoutCell>
+        </layout:MatrixLayoutRow>
+        <layout:MatrixLayoutRow>
+            <layout:MatrixLayoutCell>
+                <layout:MatrixLayout layoutFixed="true"
+                    width="220px" >
+                    <layout:MatrixLayoutRow>
+                        <layout:MatrixLayoutCell vAlign="Top" >
+                            <mvc:JSView id="vwCustomerImage" viewName="nested.views.customerimage" />
+                        </layout:MatrixLayoutCell>
+                    </layout:MatrixLayoutRow>
+                </layout:MatrixLayout>
+            </layout:MatrixLayoutCell>
+            <layout:MatrixLayoutCell>
+                <layout:MatrixLayout
+                    id="lytCustomerDetails"
+                    layoutFixed="false"
+                    width="400px" >
+                    <layout:MatrixLayoutRow>
+                        <layout:MatrixLayoutCell vAlign="Top" >
+                            <Label text="Company Name" width="100px" ></Label>
+                        </layout:MatrixLayoutCell>
+                        <layout:MatrixLayoutCell>
+                            <TextField
+                                editable="false"
+                                value="{CompanyName}"
+                                width="200px" >
+                            </TextField>
+                        </layout:MatrixLayoutCell>
+                    </layout:MatrixLayoutRow>
+                    <layout:MatrixLayoutRow>
+                        <layout:MatrixLayoutCell>
+                            <Label
+                                text="Contact Name"
+                                width="100px" >
+                            </Label>
+                        </layout:MatrixLayoutCell>
+                        <layout:MatrixLayoutCell>
+                            <TextField
+                                editable="false"
+                                value="{ContactName}"
+                                width="200px" >
+                            </TextField>
+                        </layout:MatrixLayoutCell>
+                    </layout:MatrixLayoutRow>
+                    <layout:MatrixLayoutRow>
+                        <layout:MatrixLayoutCell>
+                            <Label text="Contact Title" width="100px" ></Label>
+                        </layout:MatrixLayoutCell>
+                        <layout:MatrixLayoutCell>
+                            <TextField editable="false" value="{ContactTitle}" width="200px" ></TextField>
+                        </layout:MatrixLayoutCell>
+                    </layout:MatrixLayoutRow>
+                    <layout:MatrixLayoutRow>
+                        <layout:MatrixLayoutCell>
+                            <Label
+                                text="Address"
+                                width="100px" >
+                            </Label>
+                        </layout:MatrixLayoutCell>
+                        <layout:MatrixLayoutCell>
+                            <TextField
+                                editable="false"
+                                value="{Address}"
+                                width="200px" >
+                            </TextField>
+                        </layout:MatrixLayoutCell>
+                    </layout:MatrixLayoutRow>
+                    <layout:MatrixLayoutRow>
+                        <layout:MatrixLayoutCell>
+                            <Label text="City" width="100px" ></Label>
+                        </layout:MatrixLayoutCell>
+                        <layout:MatrixLayoutCell>
+                            <TextField editable="false" value="{City}" width="150px" ></TextField>
+                        </layout:MatrixLayoutCell>
+                    </layout:MatrixLayoutRow>
+                    <layout:MatrixLayoutRow>
+                        <layout:MatrixLayoutCell>
+                            <Label text="Postal Code" width="100px" ></Label>
+                        </layout:MatrixLayoutCell>
+                        <layout:MatrixLayoutCell>
+                            <TextField editable="false" value="{PostalCode}" width="150px" ></TextField>
+                        </layout:MatrixLayoutCell>
+                    </layout:MatrixLayoutRow>
+                    <layout:MatrixLayoutRow>
+                        <layout:MatrixLayoutCell>
+                            <Label text="Region" width="100px" ></Label>
+                        </layout:MatrixLayoutCell>
+                        <layout:MatrixLayoutCell>
+                            <TextField editable="false" value="{Region}" width="150px" ></TextField>
+                        </layout:MatrixLayoutCell>
+                    </layout:MatrixLayoutRow>
+                    <layout:MatrixLayoutRow>
+                        <layout:MatrixLayoutCell>
+                            <Label text="Country" width="100px" ></Label>
+                        </layout:MatrixLayoutCell>
+                        <layout:MatrixLayoutCell>
+                            <TextField editable="false" value="{Country}" width="150px" ></TextField>
+                        </layout:MatrixLayoutCell>
+                    </layout:MatrixLayoutRow>
+                </layout:MatrixLayout>
+            </layout:MatrixLayoutCell>
+        </layout:MatrixLayoutRow>
+    </layout:MatrixLayout>
+</core:View>
