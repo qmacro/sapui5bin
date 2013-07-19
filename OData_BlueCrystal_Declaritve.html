@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-<title>OData BlueCrystal Simple Example (Declaritive HTML)</title>
+<title>OData BlueCrystal Simple Example</title>
 
 <script id="sap-ui-bootstrap" src="../resources/sap-ui-core.js"
 	data-sap-ui-debug="true"
@@ -36,67 +36,67 @@
 		//return the number of products linked to Category
 		if (oValue) {
 			var sPath = this.getBindingContext().getPath() + '/Products';
-			 return this.getModel().bindList(sPath).getContexts().length;
+			 return sap.ui.getCore().getModel().bindList(sPath).getContexts().length;
 		}
 	};
 </script>
 </head>
 <body class="sapUiBody" id="body" role="application">
-<div id="shell" data-sap-ui-type="sap.m.Shell" data-show-logout='false' >
-   <div id="app" data-sap-ui-type="sap.m.App">
-      <div id="page1" data-sap-ui-type="sap.m.Page" data-enable-scrolling="false" data-title="Products by Category">
-         <div id="tc" data-sap-ui-type="sap.m.TileContainer" data-tiles="{path:'/Categories', parameters:{expand:'Products'}}">
-            <div data-sap-ui-type="sap.m.StandardTile"  
-               data-number="{path:'CategoryID',formatter:'productCount'}"
-               data-number-unit="Products"
-               data-icon="sap-icon://action"
-               data-title="{CategoryName}"
-               data-info="{Description}"
-               data-press="_handleTileTap">
-            </div>
-         </div>
-      </div>
-      <div id="page2" data-sap-ui-type="sap.m.Page" >
-         <div data-sap-ui-aggregation="customHeader">
-            <div data-sap-ui-type="sap.m.Bar">
-               <div data-sap-ui-aggregation="contentLeft">
-                  <div data-sap-ui-type="sap.m.Button" data-icon="sap-icon://home" data-tap="_handleHomeTap">
-                  </div>
-               </div>
-               <div data-sap-ui-aggregation="contentMiddle">
-                  <div data-sap-ui-type="sap.m.Label" data-text="{CategoryName}">
-                  </div>
+   <div id="shell" data-sap-ui-type="sap.m.Shell" data-show-logout='false' >
+      <div id="app" data-sap-ui-type="sap.m.App">
+         <div id="page1" data-sap-ui-type="sap.m.Page" data-enable-scrolling="false" data-title="Products by Category">
+            <div id="tc" data-sap-ui-type="sap.m.TileContainer" data-tiles="{path:'/Categories', parameters:{expand:'Products'}}">
+               <div data-sap-ui-type="sap.m.StandardTile"  
+                  data-number="{path:'CategoryID',formatter:'productCount'}"
+                  data-number-unit="Products"
+                  data-icon="sap-icon://action"
+                  data-title="{CategoryName}"
+                  data-info="{Description}"
+                  data-press="_handleTileTap">
                </div>
             </div>
          </div>
-         <div data-sap-ui-aggregation="content">
-            <div data-sap-ui-type="sap.m.ObjectHeader" data-intro="{Description}">			
+         <div id="page2" data-sap-ui-type="sap.m.Page" >
+            <div data-sap-ui-aggregation="customHeader">
+               <div data-sap-ui-type="sap.m.Bar">
+                  <div data-sap-ui-aggregation="contentLeft">
+                     <div data-sap-ui-type="sap.m.Button" data-icon="sap-icon://home" data-tap="_handleHomeTap">
+                     </div>
+                  </div>
+                  <div data-sap-ui-aggregation="contentMiddle">
+                     <div data-sap-ui-type="sap.m.Label" data-text="{CategoryName}">
+                     </div>
+                  </div>
+               </div>
             </div>
-            <div data-sap-ui-type="sap.me.TabContainer" data-badge-info="{path:'CategoryID',formatter:'productCount'}">
-               <div data-sap-ui-aggregation="contentInfo">
-                  <div id="ProductList" data-sap-ui-type="sap.m.List" data-items="{Products}">
-                     <div data-sap-ui-type="sap.m.ObjectListItem" data-title="{ProductName}" data-number-unit="EUR"
-                        data-number="{path:'UnitPrice',type:'sap.ui.model.type.Float',formatOptions:{maxFractionDigits:2}}">
-                        <div data-sap-ui-aggregation="attributes">
-                           <div data-sap-ui-type="sap.m.ObjectAttribute" data-text="{QuantityPerUnit}"/>
+            <div data-sap-ui-aggregation="content">
+               <div data-sap-ui-type="sap.m.ObjectHeader" data-intro="{Description}">        
+               </div>
+               <div data-sap-ui-type="sap.me.TabContainer" data-badge-info="{path:'CategoryID',formatter:'productCount'}">
+                  <div data-sap-ui-aggregation="contentInfo">
+                     <div id="ProductList" data-sap-ui-type="sap.m.List" data-items="{Products}">
+                        <div data-sap-ui-type="sap.m.ObjectListItem" data-title="{ProductName}" data-number-unit="EUR"
+                           data-number="{path:'UnitPrice',type:'sap.ui.model.type.Float',formatOptions:{maxFractionDigits:2}}">
+                           <div data-sap-ui-aggregation="attributes">
+                              <div data-sap-ui-type="sap.m.ObjectAttribute" data-text="{QuantityPerUnit}">
+                              </div>
                            </div>
                         </div>
                      </div>
                   </div>
                </div>
             </div>
-         </div>
-         <div data-sap-ui-aggregation="footer">
-            <div data-sap-ui-type="sap.m.Bar" data-translucent="true">
-               <div data-sap-ui-aggregation="contentLeft">
-                  <div data-sap-ui-type="sap.m.Button" data-icon="sap-icon://action-settings"/>
+            <div data-sap-ui-aggregation="footer">
+               <div data-sap-ui-type="sap.m.Bar" data-translucent="true">
+                  <div data-sap-ui-aggregation="contentLeft">
+                     <div data-sap-ui-type="sap.m.Button" data-icon="sap-icon://action-settings">
+                     </div>
                   </div>
                </div>
             </div>
          </div>
       </div>
    </div>
-</div>
 </body>
 </html>
 
