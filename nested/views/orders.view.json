@@ -1,0 +1,35 @@
+{   
+   "Type":"sap.ui.core.mvc.JSONView", 
+   "controllerName":"nested.controller.customers",
+   "content": [{  
+          "Type":"sap.ui.table.DataTable",  
+          "id":"tblOrders",  
+          "title":"Orders",  
+          "visibleRowCount":5,  
+          "selectionMode":"Single",  
+          "columns" : [{  
+              "Type":"sap.ui.table.Column",  
+              "label":"Customer ID",    
+              "template": {  
+                  "Type":"sap.ui.commons.TextField",  
+                  "value":"{CustomerID}"  
+              }            
+          },  
+        {  
+              "Type":"sap.ui.table.Column",  
+              "label":"Order Number",  
+              "template": {  
+                  "Type":"sap.ui.commons.TextField",  
+                  "value":"{OrderID}"  
+              }            
+          },  
+        {  
+              "Type":"sap.ui.table.Column",  
+              "label":"Employee",    
+              "template": {  
+                  "Type":"sap.ui.commons.TextField",  
+                  "value":"{EmployeeID}"  
+              }            
+          }]                    
+   }]  
+}  

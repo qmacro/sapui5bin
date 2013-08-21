@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+<title>OData BlueCrystal Simple Example</title>
+
+<script id="sap-ui-bootstrap" src="../resources/sap-ui-core.js"
+	type="text/javascript" data-sap-ui-libs="sap.m, sap.me"
+	data-sap-ui-theme="sap_bluecrystal">	
+</script>
+<!-- The OData Northwind service was down this morning, so i used the fake service based on
+     Sinon.JS FakeXHR. To run on the real service instead please comment out the following  2 lines. -->
+<script type="text/javascript" src="../resources/sap/ui/thirdparty/sinon.js"></script>
+<script type="text/javascript" src="../test-resources/sap/ui/core/qunit/ODataModelFakeService.js"></script>
+<script type="text/javascript">
+	var sURI= "http://services.odata.org/Northwind/Northwind.svc/"
+	if (typeof baseURL === "string") sURI=baseURL; //if mock service use the baseURL
+	var oModel = new sap.ui.model.odata.ODataModel(sURI, true);
+	var oTileCont = new sap.m.TileContainer("tileCont", {});
+	sap.ui.getCore().setModel(oModel);
+	//Tile Template
+	var oTileTmp = new sap.m.StandardTile({
+		number : {
+			path : "CategoryID",
+			formatter : productCount
+		},
+		numberUnit : "Products",
+		icon : "sap-icon://action",
+		title : "{CategoryName}",
+		info : "{Description}",
+		press : _handleTileTap
+	});
+	//Bind Categories  use template to build tiles,
+	oTileCont.bindAggregation("tiles", {
+		path : "/Categories",
+		template : oTileTmp,
+		parameters : { expand : "Products" }
+	});
+
+	var page1 = new sap.m.Page("home", { title : "Products by Category"	});
+	page1.setEnableScrolling(false).addContent(oTileCont);
+	// PAGE 2 //
+	var page2 = new sap.m.Page("page2", {
+		customHeader : new sap.m.Bar({
+			contentLeft : [ new sap.m.Button({
+				icon : "sap-icon://home",
+				tap : function() { app.back();}
+			}) ],
+			contentMiddle : [ new sap.m.Label("title", { text : "{CategoryName}"
+			}) ]
+		}),
+		footer : new sap.m.Bar({
+			transluscent : "true",
+			contentLeft : [ new sap.m.Button({ icon : "sap-icon://action-settings"})]
+		}),
+		content : [ new sap.m.ObjectHeader({intro : "{Description}" }),
+
+		new sap.me.TabContainer("tabContainer", {
+			badgeInfo : { path : "CategoryID", formatter : productCount	},
+			contentInfo : new sap.m.List("list", {
+				items : {
+					path : "Products",
+					template : new sap.m.ObjectListItem({
+						type : "Active",
+						title : "{ProductName}",
+						numberUnit : "EUR",
+						attributes : [ new sap.m.ObjectAttribute({
+							text : "{QuantityPerUnit}"
+						}) ],
+						number : {
+							path : "UnitPrice",
+							type : new sap.ui.model.type.Float({
+								maxFractionDigits : 2
+							})
+						}
+					})
+				}
+			})
+		}) ]
+	});
+
+	var app = new sap.m.App("App");
+	app.addPage(page1).addPage(page2).setInitialPage(page1.getId());
+	var shell = new sap.m.Shell("Shell",{showLogout : false});
+	shell.setApp(app).placeAt('body');
+
+	function _handleTileTap(oEvent) {
+		app.to("page2");
+		page2.setBindingContext(this.getBindingContext());
+	};
+
+	function productCount(oValue) {
+		//return the number of products linked to Category
+		if (oValue) {
+			var sPath = this.getBindingContext().getPath() + '/Products';
+			 return this.getModel().bindList(sPath).getContexts().length;
+		}
+	};
+</script>
+</head>
+<body class="sapUiBody" id="body" role="application">
+</body>
+</html>
+
+ 

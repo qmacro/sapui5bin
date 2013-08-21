@@ -1,0 +1,81 @@
+[{
+	"type": "Vacation",
+	"entitlement": "53 days",
+	"availableBalance": "41 days",
+	"pendingItems":"1 pending items",
+	"items": [
+	{
+		"from":"2012-12-27",
+		"to":"2012-12-27",
+		"length":"1 day",
+		"state":"Rejected"
+		},
+		{
+			"from":"2012-12-03",
+			"to":"2012-12-04",
+			"length":"3 days",
+			"state":"Approved"
+		},
+		{
+			"from":"2012-11-19",
+			"to":"2012-11-24",
+			"length":"7 days",
+			"state":"Approved"
+		}
+	]
+},
+{
+	"type": "Work Accident",
+	"entitlement": "n/a",
+	"availableBalance": "n/a",
+	"pendingItems":"0 pending items",
+	"items": [
+		{
+		"from":"2012-07-16",
+		"to":"2012-07-20",
+		"length":"5 days",
+		"state":"Pending"
+		}
+	]
+},
+{
+	"type": "Sick Leave",
+	"entitlement": "n/a",
+	"availableBalance": "n/a",
+	"pendingItems":"0 pending items",
+
+	"items": [
+		{
+		"from":"2012-08-13",
+		"to":"2012-08-17",
+		"length":"5 days",
+		"state":"Approved"
+		},
+		{
+			"from":"2012-04-18",
+			"to":"2012-04-20",
+			"length":"3 days",
+			"state":"Approved"
+		},
+		{
+			"from":"2012-01-09",
+			"to":"2012-01-11",
+			"length":"3 days",
+			"state":"Approved"
+		}
+	]
+},
+{
+	"type": "Unpaid Leave",
+	"entitlement": "n/a",
+	"availableBalance": "n/a",
+	"pendingItems":"0 pending items",
+	"items": [
+		{
+			"from":"2012-12-28",
+			"to":"2012-12-28",
+			"length":"1 day",
+			"state":"Approved"
+		}
+	]
+}]
