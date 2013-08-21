@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+
+    <script id="sap-ui-bootstrap"
+        src="/sapui5/latest/libs/resources/sap-ui-core.js"
+        data-sap-ui-theme="sap_goldreflection"
+        data-sap-ui-libs="sap.ui.commons"></script>
+
+    <script type="text/javascript">
+    
+        // Global Variables
+        var slider;
+        var sliderHtmlTag = "sliderPosition";
+
+        /*
+        * Callback function to be called when the slider value is changed
+        */
+
+        var sliderCallback = function(){
+            alert(slider.getValue());
+        }
+
+        /*
+        * Setup the slider on-screen
+        */
+        function setupSlider(){
+            slider = new sap.ui.commons.Slider({
+                id : 'sliderSelector',
+                tooltip: 'Please select a value',
+                width: '300px',
+                min: -600,
+                max: 600,
+                value: 0,
+                smallStepWidth: 1,
+                change : sliderCallback,
+            });
+            
+            // attach it to some element in the page
+            slider.placeAt(sliderHtmlTag);   
+        }
+        
+        $(document).ready(function(){
+            setupSlider();
+        });
+    </script>
+</head>
+<body class="sapUiBody">
+
+    <!-- This is where you place the UI5 button -->
+    <div id="sliderPosition"></div>
+
+</body>
+</html>
