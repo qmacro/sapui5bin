@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>              
+                
+            <!-- Local Machine Relative Links -->
+            <script id="sap-ui-bootstrap"
+                src="/sapui5/latest/libs/resources/sap-ui-core.js"
+                data-sap-ui-theme="sap_goldreflection"
+                data-sap-ui-libs="sap.ui.commons,sap.ui.table"></script>
+            <script type="text/javascript">
+            
+                var mar, radioBtns, oItem;
+                var radioStatus = ["One", "Two", "Three", "Four", "Five", "Six"];
+                
+                var radioCallback = function () {
+                    alert(radioBtns.getSelectedItem().getText());
+                };
+                
+                function setupRadioButtons(){
+
+                    radioBtns = new sap.ui.commons.RadioButtonGroup({
+                        columns : radioStatus.length,
+                        select : radioCallback
+                    });
+
+                    radioStatus.forEach(function(entry) {
+                        oItem = new sap.ui.core.Item({
+                            text : entry,
+                            key : entry});
+                        radioBtns.addItem(oItem);
+                    });
+
+                    radioBtns.placeAt("radioBody");
+                }
+                
+                // Function for when our document is loaded successfully.
+                $(document).ready(function () {
+                    // Radio selection Setup
+                    setupRadioButtons(); 
+                });
+            
+            </script>  
+    </head>
+    <body id="main"style="font-family:Arial;">
+        <div id="radioBody"></div>
+            
+    </body>
+</html>
