@@ -1,0 +1,17 @@
+<template data-controller-name="view.Forward">
+   <div data-sap-ui-type="sap.m.Page" data-sap-ui-aggregation="content" data-title="Forward" data-nav-button-text="Back">
+      <div data-sap-ui-type="sap.m.List">
+         <div data-sap-ui-type="sap.m.CustomListItem" data-counter="0">
+            <div id="forwardTo" data-sap-ui-type="sap.m.Label" class="styleForwardTo" data-text="{i18n>view.Forward.to}" data-text-align="Center"></div>
+            <div id="agentName" data-sap-ui-type="sap.m.Label" class="styleAgentName" data-text-align="Center"></div>
+         </div>
+         <div id="SendItem" data-sap-ui-type="sap.m.StandardListItem" data-counter="0" data-title="{Creator}" data-description="{DueOn}" data-icon="{Type}"></div>
+      </div>
+      <div id="ForwardComment" data-sap-ui-type="sap.m.TextArea" data-width="100%" data-height="200px" data-placeholder="{i18n>view.Forward.comment}" data-wrapping="None"></div>
+      <div data-sap-ui-type="sap.m.Bar" data-sap-ui-aggregation="customHeader">
+         <div data-sap-ui-type="sap.m.Button" data-sap-ui-aggregation="contentLeft" data-tap="onCancel" data-text="{i18n>view.Forward.cancel}"></div>
+         <div data-sap-ui-type="sap.m.Label" data-sap-ui-aggregation="contentMiddle" data-text="{i18n>view.Forward.title}"></div>
+         <div id="sendButton" data-sap-ui-type="sap.m.Button" data-sap-ui-aggregation="contentRight" data-tap="onSend" data-text="{i18n>view.Forward.send}" data-type="Accept"></div>
+      </div>
+   </div>
+</template>

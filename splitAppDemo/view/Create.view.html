@@ -1,0 +1,35 @@
+<template data-controller-name="view.Create">
+   <div id="createPage" data-sap-ui-type="sap.m.Page" data-sap-ui-aggregation="content" data-nav-button-tap="onCancel" data-title="Create" data-show-nav-button="true" data-nav-button-text="Back">
+      <div data-sap-ui-type="sap.m.List" class="pageCreateSelectBoxLI" data-inset="true">
+         <div data-sap-ui-type="sap.m.CustomListItem" data-counter="0">
+            <div id="pageCreateSelectBox" data-sap-ui-type="sap.m.Select" class="pageCreateSelectBox" data-change="onTypeChanged" data-items="{/}">
+               <div data-sap-ui-type="sap.ui.core.Item" data-key="{type}"></div>
+            </div>
+         </div>
+      </div>
+      <div data-sap-ui-type="sap.m.FlexBox" class="sapMFlexBoxMerge" data-justify-content="SpaceBetween">
+         <div data-sap-ui-type="sap.m.Text" class="sapMFlexBoxText" data-text="{i18n>view.Create.availableBalance}"></div>
+         <div data-sap-ui-type="sap.m.Text" class="sapMFlexBoxText"></div>
+      </div>
+      <div data-sap-ui-type="sap.m.List" class="sapMFlexBoxFromToList" data-inset="true">
+         <div data-sap-ui-type="sap.m.InputListItem" data-counter="0" data-label="{i18n>view.Create.from}">
+            <div id="pageCreateFrom" data-sap-ui-type="sap.m.Input" data-change="onDateChanged" data-value="{create>/from}" data-type="Date" data-width="150px"></div>
+         </div>
+         <div data-sap-ui-type="sap.m.InputListItem" data-counter="0" data-label="{i18n>view.Create.to}">
+            <div id="pageCreateTo" data-sap-ui-type="sap.m.Input" data-change="onDateChanged" data-value="{create>/to}" data-type="Date" data-width="150px"></div>
+         </div>
+      </div>
+      <div data-sap-ui-type="sap.m.FlexBox" class="sapMFlexBoxMerge" data-justify-content="SpaceBetween">
+         <div data-sap-ui-type="sap.m.Text" class="sapMFlexBoxText" data-text="{i18n>view.Create.duration}"></div>
+         <div data-sap-ui-type="sap.m.Text" class="sapMFlexBoxText"></div>
+      </div>
+      <div data-sap-ui-type="sap.m.FlexBox" class="sapMFlexBoxMerge" data-direction="Column">
+         <div data-sap-ui-type="sap.m.TextArea" class="sapMFlexBoxTextArea" data-rows="5" data-placeholder="{i18n>view.Create.commentsToApprover}" data-wrapping="None"></div>
+      </div>
+      <div data-sap-ui-type="sap.m.Bar" data-sap-ui-aggregation="customHeader">
+         <div id="pageCreateBackButton" data-sap-ui-type="sap.m.Button" data-sap-ui-aggregation="contentLeft" data-tap="onCancel" data-text="{i18n>view.Create.cancel}"></div>
+         <div data-sap-ui-type="sap.m.Label" data-sap-ui-aggregation="contentMiddle" data-text="{i18n>view.Create.title}"></div>
+         <div id="pageCreateDoneButton" data-sap-ui-type="sap.m.Button" data-sap-ui-aggregation="contentRight" data-tap="onCreate" data-text="{i18n>view.Create.submit}"></div>
+      </div>
+   </div>
+</template>

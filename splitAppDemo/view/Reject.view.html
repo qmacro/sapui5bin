@@ -1,0 +1,13 @@
+<template data-controller-name="view.Reject">
+   <div data-sap-ui-type="sap.m.Page" data-sap-ui-aggregation="content" data-title="Decline" data-nav-button-text="Back">
+      <div data-sap-ui-type="sap.m.List">
+         <div id="RejectItem" data-sap-ui-type="sap.m.StandardListItem" data-counter="0" data-title="{Creator}" data-icon="{Type}"></div>
+      </div>
+      <div id="RejectComment" data-sap-ui-type="sap.m.TextArea" data-width="100%" data-height="200px" data-placeholder="{i18n>view.Reject.reason}" data-wrapping="None"></div>
+      <div data-sap-ui-type="sap.m.Bar" data-sap-ui-aggregation="customHeader">
+         <div data-sap-ui-type="sap.m.Button" data-sap-ui-aggregation="contentLeft" data-tap="onCancel" data-text="{i18n>view.Reject.cancel}" data-type="Back"></div>
+         <div data-sap-ui-type="sap.m.Label" data-sap-ui-aggregation="contentMiddle" data-text="{i18n>view.Reject.title}"></div>
+         <div data-sap-ui-type="sap.m.Button" data-sap-ui-aggregation="contentRight" data-tap="onConfirm" data-text="{i18n>view.Reject.confirm}" data-type="Accept"></div>
+      </div>
+   </div>
+</template>

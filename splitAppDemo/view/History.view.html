@@ -1,0 +1,27 @@
+<template data-controller-name="view.History">
+   <div data-sap-ui-type="sap.m.Page" data-sap-ui-aggregation="content" data-title="{i18n>view.History.title}" data-nav-button-text="Back">
+      <div id="HistoryList" data-sap-ui-type="sap.m.List" data-inset="true" data-items="{history>/}">
+         <div id="HistoryItem" data-sap-ui-type="sap.m.StandardListItem" data-counter="0" data-title="{history>Creator}" data-description="{history>StatusText}" data-icon="{history>Type}" data-info="{history>ProceededOn}"></div>
+      </div>
+            <div data-sap-ui-aggregation="customHeader">
+         <div data-sap-ui-type="sap.m.Bar">
+            <div data-sap-ui-aggregation="contentLeft">
+               <div data-sap-ui-type="sap.m.Button" data-icon="sap-icon://home" data-tap="tapHomeButton">
+               </div>
+            </div>
+            <div data-sap-ui-aggregation="contentRight">
+      <div data-sap-ui-type="sap.m.SegmentedButton" data-sap-ui-aggregation="contentMiddle" data-selected-button="main--History--pressed">
+            <div data-sap-ui-type="sap.m.Button" data-tap="onCurrent" data-text="{i18n>view.History.current}"></div>
+            <div id="pressed" data-sap-ui-type="sap.m.Button" data-tap="onHistory" data-text="{i18n>view.ApprovalItems.history}" data-enabled="false"></div> 
+            </div>
+         </div>
+      </div>
+   </div>
+      <div id="ItemListBar" data-sap-ui-type="sap.m.Bar" data-sap-ui-aggregation="footer">
+   <!--       <div data-sap-ui-type="sap.m.SegmentedButton" data-sap-ui-aggregation="contentMiddle" data-selected-button="main--HistoryPage--pressed">
+            <div data-sap-ui-type="sap.m.Button" data-tap="onCurrent" data-text="{i18n>view.History.current}"></div>
+            <div id="pressed" data-sap-ui-type="sap.m.Button" data-tap="onHistory" data-text="{i18n>view.ApprovalItems.history}" data-enabled="false"></div> -->
+         </div>
+      </div>
+   </div>
+</template>
