@@ -13,23 +13,23 @@ sap.ui.jsview("cart.order", {
 
 		// Headings
 		oLayout.createRow(new c.TextView({
-			design : 'H4',
+			design : 'Standard',
 			text : "Category",
 			width : "20ex"
 		}), new c.TextView({
-			design : 'H4',
+			design : 'Standard',
 			text : "Product",
 			width : "20ex"
 		}), new c.TextView({
-			design : 'H4',
+			design : 'Standard',
 			text : "Price",
 			width : "15ex"
 		}), new c.TextView({
-			design : 'H4',
+			design : 'Standard',
 			text : "Quantity",
 			width : "10ex"
 		}), new c.TextView({
-			design : 'H4',
+			design : 'Standard',
 			text : "Sub Total",
 			width : "15ex"
 		}));
