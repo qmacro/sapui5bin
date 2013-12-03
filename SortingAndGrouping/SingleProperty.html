@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html><head>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+    <title>Sorting and Grouping: Single Property</title>
+
+    <script id='sap-ui-bootstrap' type='text/javascript'
+        src='/sapui5/latest/libs/resources/sap-ui-core.js'
+        data-sap-ui-theme='sap_bluecrystal'
+        data-sap-ui-libs='sap.m'></script>
+    <script>
+
+        /*
+            Takes an arbitrary list of numbers, a couple of boundaries
+            and presents the numbers in a list, grouped by the boundaries
+            specified. Sorting and grouping based on a single property.
+
+            See http://scn.sap.com/community/developer-center/front-end/blog/2013/11/29/custom-sorter-and-grouper
+            
+        */
+
+        var sSM = 10;  // < 10  Small
+        var sML = 15;  // < 15  Medium
+                       //   15+ Large
+
+        // Generate the list of numbers and assign to a model
+        var aValues = [];
+        for (var i = 0; i < 30; i++) aValues.push(i);
+      
+        sap.ui.getCore().setModel(
+            new sap.ui.model.json.JSONModel({
+                records: aValues.map(function(v) { return { value: v }; })
+            })
+        );
+        
+        // Sort order and title texts of the S/M/L groups
+        var mGroupInfo = {
+            S: { order: 2, text: "Small"},
+            M: { order: 1, text: "Medium"},
+            L: { order: 3, text: "Large"}
+        }
+
+        // Returns to what group (S/M/L) a value belongs
+        var fGroup = function(v) {
+            return v < sSM ? "S" : v < sML ? "M" : "L";
+        }
+
+        // Grouper function to be supplied as 3rd parm to Sorter
+        // Note that it uses the mGroupInfo, as does the Sorter
+        var fGrouper = function(oContext) {
+            var v = oContext.getProperty("value");
+            var group = fGroup(v);
+            return { key: group, text: mGroupInfo[group].text };
+        }
+
+        // The Sorter, with a custom compare function, and the Grouper
+        var oSorter = new sap.ui.model.Sorter("value", null, fGrouper);
+        oSorter.fnCompare = function(a, b) {
+
+            // Determine the group and group order
+            var agroup = mGroupInfo[fGroup(a)].order;
+            var bgroup = mGroupInfo[fGroup(b)].order;
+
+            // Return sort result, by group ...
+            if (agroup < bgroup) return -1;
+            if (agroup > bgroup) return  1;
+
+            // ... and then within group (when relevant)
+            if (a < b) return -1;
+            if (a == b) return 0;
+            if (a > b) return  1;
+
+        }
+        
+        // Simple List in a Page
+        new sap.m.App({
+            pages: [
+                new sap.m.Page({
+                    title: "Sorted Groupings",
+                    content: [
+                        new sap.m.List("list", {
+                            items: {
+                                path: '/records',
+                                template: new sap.m.StandardListItem({
+                                    title: '{value}'
+                                }),
+                                sorter: oSorter
+                            }
+                        })
+                    ]
+                })
+            ]
+        }).placeAt("content");
+
+    </script>
+
+</head>
+    <body class='sapUiBody'><div id='content'></div>
+</body>
+</html>

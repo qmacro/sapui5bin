@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html><head>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+    <title>Sorting and Grouping: Two Properties</title>
+
+    <script id='sap-ui-bootstrap' type='text/javascript'
+        src='/sapui5/latest/libs/resources/sap-ui-core.js'
+        data-sap-ui-theme='sap_bluecrystal'
+        data-sap-ui-libs='sap.m'></script>
+    <script>
+
+        var aBeerData = [
+            { beerName:  "Leffe Brune",      beerType: "Belgian Brown Ale" },
+            { beerName:  "90 Minute IPA",    beerType: "Imperial / Double IPA" },
+            { beerName:  "Turone Brune",     beerType: "Belgian Brown Ale" },
+            { beerName:  "Extase",           beerType: "Belgian IPA" },
+            { beerName:  "Landlord",         beerType: "English Bitter" },
+            { beerName:  "Continuum",        beerType: "English Bitter" },
+            { beerName:  "Yang",             beerType: "Imperial / Double IPA" },
+            { beerName:  "Hoptimum 2013",    beerType: "Imperial / Double IPA" },
+            { beerName:  "Nelson's Revenge", beerType: "English Bitter" }
+        ];
+
+        var oModel = new sap.ui.model.json.JSONModel(aBeerData);
+        sap.ui.getCore().setModel(oModel);
+
+        var fGrouper = function(oContext) {
+            var sType = oContext.getProperty("beerType") || "Undefined";
+            return { key: sType, value: sType }
+        }
+
+        new sap.m.App({
+            pages: [
+                new sap.m.Page({
+                    title: "Craft Beer",
+                    content: [
+                        new sap.m.List("list", {
+                            items: {
+                                path: '/',
+                                template: new sap.m.StandardListItem({
+                                    title: "{beerName}",
+                                    description: "{beerType}"
+                                }),
+                                sorter: [
+                                    new sap.ui.model.Sorter("beerType", null, fGrouper),
+                                    new sap.ui.model.Sorter("beerName", null, null)
+                                ]
+                            }
+                        })
+                    ]
+                })
+            ]
+        }).placeAt("content");
+
+    </script>
+
+</head>
+    <body class='sapUiBody'><div id='content'></div>
+</body>
+</html>
