@@ -1,0 +1,7 @@
+{
+	"icon": {
+		"check": "img/icon/IconCheck_44x44.png",
+		"rejected": "img/icon/IconRejected_44x44.png",
+		"pending": "img/icon/IconPending_44x44.png"
+	}
+}

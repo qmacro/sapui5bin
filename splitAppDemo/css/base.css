@@ -1,0 +1,453 @@
+* BLUE STYLE */
+/* ===========================
+
+   custom swatch colors
+   ===========================
+
+   #0f6093 - *rgb(15,96,147)
+   #94aac0 - rgb(148,170,192)
+   #3f6093 - rgb(63,96,147)
+   #2e618d - rgb(46,97,141)
+   #c2d4e2 - rgb(194,212,226)
+
+   #7a9dbc - rgb(122,157,188)
+   #3b6b96 - rgb(59,107,150)
+   #406e95 - rgb(64,110,149)
+   #7398b8 - rgb(115,152,184)
+
+   #91a9bf - rgb(145,169,191)
+
+   #c2daf1 - *rgb(194,218,241)
+   #d4e0ed - *rgb(212,224,237)
+   #7fa8cb - *rgb(127,168,203)
+
+   #787a7c - *rgb(120,122,124)
+   #005DA1 - rgb(0,93,161)
+
+   #86adcf - *rgb(134,173,207)
+   #326a99 - *rgb(50,106,153)
+
+   #005B9C - rgb(0,91,156)
+   #0060A7 - rgb(0,96,167)
+   #0083CA - rgb(0,131,202)
+
+   =========================== */
+
+.sapMDLI.pae-template-item:active {
+  background-image: -webkit-linear-gradient(top, #005B9C 0, #0060A7 50%, #0083CA 100%);
+}
+
+p.comment {
+  background-color: rgba(255,255,255,0.4);
+}
+
+.sapMSplitApp, .sapMApp {
+  background: #eaeff5 url(images/mobileBG.png) no-repeat right top;
+}
+body.sapUiBody div.sapMPage {
+  background: transparent;
+}
+.sap-tablet.sapUiAppdesignerMasterDetail{
+    background: #eaeff5 url(images/background531.png) repeat-x center top;
+  }
+
+.sap-tablet .sapUiAppdesignerMasterPage .sapMPage{
+    background: #eaeff5 url(images/iPadBGLeft.png) no-repeat right top;
+    background-size: 339px;
+}
+
+.sap-tablet .sapUiAppdesignerDetailPage .sapMPage{
+    background: #eaeff5 url(images/iPadBGRight.png) no-repeat right top;
+}
+.sapUiAppdesignerDetailPage {
+	background: transparent url(images/mobileBG.png) no-repeat right top;
+	background-color: #eaeff5;
+	
+}
+.splitContainer-detail.splitContainer-standalone {
+    background: transparent url(images/backgroundPortrait.png) no-repeat right top;
+}
+
+.sapUiAppdesignerMasterDetail {
+  background:transparent;
+}
+
+@media only screen and (min-width: 531px) {
+  body.sapUiBody.sap-tablet div.sapMApp {
+    background: #eff4f9 url(images/background531.png) repeat-x center top;
+  }
+}
+
+body.sapUiBody header.sapMBar.sapMHeader-CTX {
+  background: none;
+  background-color: rgba(97, 152, 203, 0.25);
+  border: none;
+  border-bottom:solid 1px #94aac0;
+  -webkit-box-shadow: none;
+  color: #3f6093;
+  height: 53px;
+}
+
+body.sapUiBody header.sapMBar.sapMHeader-CTX label.sapMLabel {
+  color: #2e618d;
+  font-size: 22px;
+  line-height: 56px;
+  text-shadow: 0 1px 1px white;
+}
+
+body.sapUiBody .sap-mobile div.sapMPage {
+  	background: transparent url(images/mobileBG.png) no-repeat right top;
+	background-color: #eaeff5;
+}
+body.sapUiBody .sap-tablet div.sapMPage {
+  	
+	background-color: transparent;
+}
+
+div.sapMPage {
+	background-color: transparent;	
+}
+
+body.sapUiBody .splitContainer-master div.sapMPage {
+  background: transparent;
+}
+
+
+body.sapUiBody .sapMPageBg {
+  background: transparent;
+}
+
+body.sapUiBody .sapMPopoverCont {
+  background: #eee url(images/background.png) no-repeat center top;
+}
+
+body.sapUiBody div.sapMPage > section {
+  top: 54px;
+  background: transparent;
+}
+
+
+body.sapUiBody div.sapMPageScroll {
+  background-color: rgba(255,255,255,0.6);
+
+}
+
+body.sapUiBody .sapMPopover div.sapMPage .sapMBar {
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+/*LIST */
+.sapMListInsetBG {
+	background-color: transparent !important;	
+	margin-top: 14px;
+}
+
+.sap-ios .sapMListInset {
+	border-radius: 0px;
+	border: solid 1px #CCC;
+	margin: 0.75em 9px 0.75em 9px;
+	box-shadow: 0 1px 0 white;
+	-webkit-box-shadow: inset 0 0.0625em white, inset 0 0 0 #DEDEDE;
+}
+
+.sap-ios .sapMListInsetHdr {
+	margin-top: 0px;
+	border: solid 1px #CCC;
+}
+
+.sap-ios .sapMListHdrInset {
+	color: #ffffff;
+	line-height: 25px !important;
+	text-shadow: 0 0.0588em 1px 0 white;
+	margin: 0 9px 0em 9px;
+	box-shadow: none;
+	font-size: 1.0625em;
+	font-weight: bold;
+	-webkit-box-sizing: border-box;
+	line-height: 1em;
+	background-image: -webkit-linear-gradient(top, #b5bdbd 10%, 
+                                         #949494 100%);
+	border-radius: 5px 5px 0 0 ;
+	padding: 0 0.625rem;
+	height: 25px;
+}
+
+.sapMLIB{
+  border-bottom: 1px solid #b8bdbe !important;
+}
+
+.sapMListInset .sapMLIB:last-child {
+  border-bottom: none !important;
+}
+
+.sap-ios .sapMListInset li:first-child {
+border-radius: 0px 0px 0px 0px;
+}
+
+.sapMListUl .sapMDLILabel {
+	color: #396ba5;
+	text-align: left;
+	font-size:1.2em;
+	line-height: 2em;
+}
+
+.sap-ios .sapMListInset .sapMDLILabel,
+.sap-ios .sapMListInset .sapMILILabel {
+	color: #396ba5;
+	font-size:14px;
+	text-align: right;
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	-webkit-box-pack: end;
+	line-height: 1.4;
+	max-width: 80px;
+	min-width: 80px;
+	white-space: normal;
+}
+
+.sap-ios .sapMDLI {
+-webkit-box-align: center;
+}
+
+.sapMDLIValue {
+	color: #636363 !important;
+	font-size: 0.8em;
+	text-align:left !important;
+	width: 40%;
+	line-height: 3.4em;
+	padding-left: 1em;
+}
+.sap-ios .sapMLIB{
+	background-color: rgba(255,255,255, 0.5);
+	-webkit-box-shadow: none;	
+	height: 3.3em;
+	padding: 0 10px;
+	position: relative;
+}
+/* Buttons */
+
+.sap-ios .sapMBar-CTX .sapMBtn {
+  border-width: 8px !important;
+  height: 36px !important;
+  margin-top: 9px !important;
+}
+
+.sap-ios .sapMBar-CTX .sapMBtnDefault, 
+.sap-ios .sapMBar-CTX .sapMBtnDisabled, 
+.sap-ios .sapMBar-CTX .sapMBtnDisabled:active, 
+.sap-ios .sapMBar-CTX .sapMBtnBackDisabled, 
+.sap-ios .sapMBar-CTX .sapMBtnBackDisabled:active {
+  background: transparent !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  /* -webkit-border-image: url('data:image/mobile/svg+xml;utf8,<svg width="17" height="36" viewBox="0 0 17 36" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="surface" gradientUnits="objectBoundingBox" x1="1" x2="1" y1="0" y2="1"><stop stop-color="#7a9dbc" offset="0"/><stop stop-color="#3b6b96" offset="0.75"/></linearGradient><linearGradient id="light" gradientUnits="objectBoundingBox" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#7a9dbc" offset="0.45" stop-opacity="0.4"/><stop stop-color="#3b6b96" offset="0.65" stop-opacity="0.4"/></linearGradient></defs><rect x="1" y="1" rx="7" ry="7" width="15" height="34" fill="url(#surface)" stroke="#000" stroke-opacity="0.5"/><rect x="2" y="3" rx="6" ry="6" width="13" height="31" fill="url(#light)" stroke="#FFFFFF" stroke-opacity="0.3"/></svg>') 8 8 8 8 stretch; */
+  -webkit-border-image: url(images/button.png) 8 8 8 7 stretch;
+  padding: 0;
+}
+
+.sap-ios .sapMBar-CTX .sapMBtnDefault:active {
+  background: transparent !important;
+  /* -webkit-border-image: url('data:image/mobile/svg+xml;utf8,<svg width="17" height="36" viewBox="0 0 17 36" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="surface" gradientUnits="objectBoundingBox" x1="1" x2="1" y1="0" y2="1"><stop stop-color="#406e95" offset="0"/><stop stop-color="#7398b8" offset="0.75"/></linearGradient><linearGradient id="light" gradientUnits="objectBoundingBox" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#406e95" offset="0.45" stop-opacity="0.4"/><stop stop-color="#7398b8" offset="0.65" stop-opacity="0.4"/></linearGradient></defs><rect x="1" y="2" rx="7" ry="7" width="15" height="33" fill="url(#surface)" stroke="#000" stroke-opacity="0.5"/><rect x="2" y="4" rx="6" ry="6" width="13" height="30" fill="url(#light)" stroke="#FFFFFF" stroke-opacity="0.3"/></svg>') 8 8 8 8 stretch; */
+  -webkit-border-image: url(images/button-active.png) 8 8 8 7 stretch;
+}
+
+.sap-ios .sapMBar-CTX .sapMBtnDefault .sapMBtnContent, 
+.sap-ios .sapMBar-CTX .sapMBtnDisabled .sapMBtnContent, 
+.sap-ios .sapMBar-CTX .sapMBtnDisabled:active .sapMBtnContent, 
+.sap-ios .sapMBar-CTX .sapMBtnBackDisabled .sapMBtnContent, 
+.sap-ios .sapMBar-CTX .sapMBtnBackDisabled:active .sapMBtnContent {
+  background: transparent !important;
+  display: block;
+  height: 20px !important;
+  line-height: 17px !important;
+  padding: 0 5px;
+}
+
+.sap-ios .sapMBar-CTX .sapMBtnDefault:active .sapMBtnContent {
+  height: 18px !important;
+  padding-top: 2px;
+}
+
+.sap-ios .sapMBtnBack:before {
+  display: none !important;
+}
+
+.sap-ios .sapMBar-CTX .sapMBtnBack {
+  background: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  /* -webkit-border-image: url('data:image/svg+xml;utf8,<svg width="25" height="36" viewBox="0 0 25 36" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="surface" gradientUnits="objectBoundingBox" x1="1" x2="1" y1="0" y2="1"><stop stop-color="#7a9dbc" offset="0"/><stop stop-color="#3b6b96" offset="0.75"/></linearGradient><linearGradient id="light" gradientUnits="objectBoundingBox" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#7a9dbc" offset="0.45" stop-opacity="0.4"/><stop stop-color="#3b6b96" offset="0.65" stop-opacity="0.4"/></linearGradient></defs><path d="M 1,18 Q 9,1 16,1 L 17,1 Q 24,1 24,8 L 24,28 Q 24,35 17,35 Q 9,35 1,18 z" fill="url(#surface)" stroke="#000" stroke-opacity="0.5"/><path d="M 2,18 Q 9,3 16,3 L 17,3 Q 23,3 23,8 L 23,28 Q 23,34 17,34 Q 9,34 2,18 z" fill="url(#light)" stroke="#FFFFFF" stroke-opacity="0.3"/></svg>') 8 8 8 16 stretch; */
+  -webkit-border-image: url(images/button-back.png) 8 8 8 15 stretch;
+  border-width: 8px 8px 8px 16px !important;
+  margin-left: 7px !important;
+  padding: 0;
+}
+
+.sap-ios .sapMBar-CTX .sapMBtnBack:active {
+  background: transparent !important;
+  /* -webkit-border-image: url('data:image/svg+xml;utf8,<svg width="25" height="36" viewBox="0 0 25 36" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="surface" gradientUnits="objectBoundingBox" x1="1" x2="1" y1="0" y2="1"><stop stop-color="#406e95" offset="0"/><stop stop-color="#7398b8" offset="0.75"/></linearGradient><linearGradient id="light" gradientUnits="objectBoundingBox" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#406e95" offset="0.45" stop-opacity="0.4"/><stop stop-color="#7398b8" offset="0.65" stop-opacity="0.4"/></linearGradient></defs><path d="M 1,19 Q 9,2 16,2 L 17,2 Q 24,2 24,8 L 24,28 Q 24,35 17,35 Q 9,35 1,19 z" fill="url(#surface)" stroke="#000" stroke-opacity="0.5"/><path d="M 2,19 Q 9,4 16,4 L 17,4 Q 23,4 23,8 L 23,28 Q 23,34 17,34 Q 9,34 2,19 z" fill="url(#light)" stroke="#FFFFFF" stroke-opacity="0.3"/></svg>') 8 8 8 16 stretch; */
+  -webkit-border-image: url(images/button-back-active.png) 8 8 8 15 stretch;
+}
+
+.sap-ios .sapMBar-CTX .sapMBtnBack .sapMBtnContent {
+  display: block;
+  height: 20px !important;
+  line-height: 17px !important;
+  padding: 0 5px 0 0;
+  font-size: 12px;
+}
+
+.sap-ios .sapMBar-CTX .sapMBtnBack:active .sapMBtnContent {
+  height: 18px !important;
+  padding-top: 2px;
+}
+
+.sap-ios .sapMBar-CTX .sapMBtnReject, 
+.sap-ios .sapMBar-CTX .sapMBtnAccept {
+  border-radius: 10px !important;
+  border-width: 0 !important;
+  margin-top: 3px !important;
+}
+
+button.share .sapMBtnContent {
+  background: transparent url(images/btn_share.png) no-repeat 7px 0;
+  width: 22px !important;
+}
+
+button.sapMBtnDefault.share:active .sapMBtnContent {
+  background-position: 7px 2px;
+}
+
+button.up .sapMBtnContent {
+  background: transparent url(../images/btn_up.png) no-repeat 6px 0;
+  width: 16px !important;
+}
+
+button.sapMBtnDefault.up:active .sapMBtnContent {
+  background-position: 6px 2px;
+}
+
+button.down .sapMBtnContent {
+  background: transparent url(../images/btn_down.png) no-repeat 6px 0;
+  width: 16px !important;
+}
+
+button.sapMBtnDefault.down:active .sapMBtnContent {
+  background-position: 6px 2px;
+}
+
+/* SegmentedButton */
+
+.sapMSegB {
+  background-color: rgba(15,96,147,0.2);
+  border-bottom: solid 1px #91a9bf;
+  height: 44px !important;
+  z-index: 1;
+}
+
+ul.sapMSegB > li:first-child, 
+ul.sapMSegB > li:last-child {
+  width:40% !important;
+}
+
+.sap-ios .sapMSegBBtn {
+  background-image: -webkit-linear-gradient(top, rgb(194,218,241) 20%, 
+                                                 rgb(212,224,237) 40%, 
+                                                 rgb(127,168,203) 100%);
+  background-image: linear-gradient(top, rgb(194,218,241) 20%, 
+                                         rgb(212,224,237) 40%, 
+                                         rgb(127,168,203) 100%);
+  box-shadow: -1px -1px 0 rgba(120,122,124, 0.2) inset, 
+                0 2px 1px rgba(120,122,124, 0.9) inset,
+                      inset 0 1px 1px #005DA1 !important;
+  -webkit-box-shadow: -1px -1px 0 rgba(120,122,124, 0.2) inset,
+                        0 2px 1px rgba(120,122,124, 0.9) inset,
+                              inset 0 1px 1px #005DA1 !important;
+  color: #2e618d;
+}
+
+.sap-ios .sapMSegBBtn.sapMSegBBtnSel {
+  background-image: -webkit-linear-gradient(top, rgb(134,173,207) 10%, 
+                                                 rgb(50,106,153) 100%);
+  background-image: linear-gradient(top, rgb(134,173,207) 10%, 
+                                         rgb(50,106,153) 100%);
+  box-shadow: -1px -1px 0 rgba(50,106,153, 0.2) inset,
+                0 2px 1px rgba(50,106,153, 0.9) inset,
+                     inset 0 1px 1px #005DA1 !important;
+  -webkit-box-shadow: -1px -1px 0 rgba(50,106,153, 0.2) inset,
+                        0 2px 1px rgba(50,106,153, 0.9) inset,
+                             inset 0 1px 1px #005DA1 !important;
+}
+
+/* Calendar */
+
+.fc-state-default, 
+.fc-state-default .fc-button-inner {
+  border: none !important;
+  background: transparent !important;
+}
+
+.fc-state-default .fc-button-effect span {
+  display: none;
+}
+
+/* SearchField */
+
+body.sapUiBody .purchaseorder-search, 
+body.sapUiBody .purchaserequisition-search {
+  background-color: rgba(15,96,147,0.2);
+  border-bottom: solid 1px #94aac0;
+  display: block;
+  height: 42px;
+  position: absolute;
+  left: 0;
+  width: 100%;
+}
+
+.employeeLabel {
+	font-size: 20px;
+	font-weight: bold;
+	text-shadow: 0 1px 1px white;
+	padding-top: 24px;
+	padding-left: 10px;
+	padding-bottom: 5px;
+}
+.informationLabel {
+	font-size: 15px;
+	padding-left: 10px;
+	padding-bottom: 10px;
+	color:#636363;
+}
+.profileImage {
+	margin-top: 22px;
+	margin-bottom: 0;
+	margin-left: 9px;
+	border: solid 1px grey;
+	background-size: 100%;
+}
+
+.sapMCb {
+	width: 100% !important;
+}
+
+.sapMCb > .sapMRbBLabel {
+	vertical-align: top !important;
+	padding-left: 10px !important;
+}
+
+.sap-ios #pageDetails-navButton span {
+	display: none !important;
+}
+.sap-ios #pageDetails-navButton {
+	-webkit-border-image: none !important;
+	width: 64px !important;
+	height: 36px !important;
+	border: none !important;
+}
+.sap-ios #pageDetails-navButton {
+	background: transparent url(images/backbutton.png) no-repeat left top !important;
+}
+.sap-ios #pageDetails-navButton:active {
+	background: transparent url(images/backbutton_pressed.png) no-repeat left top !important;
+}

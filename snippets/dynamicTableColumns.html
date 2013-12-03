@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>  
+<html>  
+<head> 
+    <title>Dynamic table columns</title> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="/sapui5/latest/libs/resources/sap-ui-core.js" 
+        type="text/javascript"   
+        id="sap-ui-bootstrap"  
+        data-sap-ui-libs="sap.ui.commons, sap.ui.table"  
+        data-sap-ui-theme="sap_goldreflection">  
+    </script>  
+
+    <script type="text/javascript">
+    
+        var aData = [
+            {lastName: "OCallaghan", name: "Brenton", checked: true},
+            {lastName: "Adams", name: "DJ", checked: true},
+            {lastName: "Stanger", name: "Lindsay", checked: false}
+        ];
+        
+        var checkedCheckbox;
+        var dataTable;
+
+        function loadTableData(){
+            //Create a model and bind the table rows to this model
+            var oModel2 = new sap.ui.model.json.JSONModel();
+            oModel2.setData({modelData: aData});
+            dataTable.setModel(oModel2);
+            dataTable.bindRows("/modelData");
+
+            //Sort the table by first name
+            dataTable.sort(dataTable.getColumns()[1]);
+        }
+        
+        function setupTable(){
+            
+            //Create an instance of the table control
+            dataTable = new sap.ui.table.Table({
+                title: "Dynamic table columns",
+                visibleRowCount: 3,
+                firstVisibleRow: 3,
+                selectionMode: sap.ui.table.SelectionMode.Single,
+            });
+            
+            //Define the columns and the control templates to be used
+            dataTable.addColumn(new sap.ui.table.Column({
+                label: new sap.ui.commons.Label({text: "Last Name"}),
+                template: new sap.ui.commons.TextView().bindProperty("text", "lastName"),
+                width: "200px"
+            }));
+            
+            dataTable.addColumn(new sap.ui.table.Column({
+                label: new sap.ui.commons.Label({text: "First Name"}),
+                template: new sap.ui.commons.TextField().bindProperty("value", "name"),
+                width: "200px"
+            }));
+            
+            // Create an invisible row that can be switched on and off.
+            checkedCheckbox = new sap.ui.table.Column({
+                label: new sap.ui.commons.Label({text: "Checked"}),
+                template: new sap.ui.commons.CheckBox().bindProperty("checked", "checked"),
+                visible: false
+            });
+            dataTable.addColumn(checkedCheckbox);
+            
+            //Bring the table onto the UI 
+            dataTable.placeAt("customisableTable");
+        }
+        
+        // Setup the checkbox that enables/disables the hidden column.
+        function setupCheckbox(){
+            var checkedVisibleCB = new sap.ui.commons.CheckBox({
+                text : 'Hidden Column Visible',
+                tooltip : 'Hidden Column Visible',
+                checked : false,
+                change : function() { 
+                    checkedCheckbox.setVisible(checkedVisibleCB.getChecked()); 
+                }
+            });
+            checkedVisibleCB.placeAt("checkbox");
+        }
+        
+        $(document).ready(function(){
+            setupTable();
+            setupCheckbox();
+            loadTableData();
+        });
+    </script>  
+</head>  
+
+<body class="sapUiBody" role="application">  
+  <div id="customisableTable"></div>  
+  <div id="checkbox"></div>
+</body>  
+</html>  

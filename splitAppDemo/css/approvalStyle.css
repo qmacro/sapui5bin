@@ -1,0 +1,53 @@
+.styleInstruction {
+		color: rgb(41,109,146);
+        margin-left: 8pt;
+        margin-top: 10pt;
+        margin-bottom: 10pt;
+        font-family: sans-serif;
+        font-size: 12pt;
+    }
+
+.styleAgentName {
+        color: rgb(41,109,146);
+        margin-left: 8pt;
+        margin-top: 10pt;
+        margin-bottom: 10pt;
+        font-family: sans-serif;
+        font-size: 12pt;
+    }
+
+.styleForwardTo {
+        color: black;
+        margin-left: 6pt;
+        margin-top: 10pt;
+        margin-bottom: 10pt;
+        font-weight: bold;
+    }
+
+.styleCreatorName {		
+        color: black;
+        font-weight: bold;
+        margin-left: 6pt;
+        margin-top: 6pt;
+        text-align: center;
+    }
+    
+.styleRequestType {		
+        color: rgb(41,109,146);
+        font-family: sans-serif;
+        font-size: 11pt;
+        margin-left: 6pt;
+        margin-bottom: 6pt;
+        text-align: center;
+    }
+    
+.styleDueDate {
+		width: 100%;
+        color: rgb(41,109,146);
+        font-family: sans-serif;
+        font-size: 11pt;
+        text-align: right;
+        margin-right: 2pt;
+        margin-left: 2pt;
+        margin-top: 2pt;
+    }        

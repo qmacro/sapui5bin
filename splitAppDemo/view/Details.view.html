@@ -1,0 +1,17 @@
+<template data-controller-name="view.Details">
+   <div data-sap-ui-type="sap.m.Page" data-sap-ui-aggregation="content" data-nav-button-tap="onBack" data-title="{type}" data-show-nav-button="true" data-nav-button-text="Back">
+      <div data-sap-ui-type="sap.m.FlexBox" class="sapMFlexBoxMerge" data-justify-content="SpaceBetween">
+         <div data-sap-ui-type="sap.m.Text" class="sapMFlexBoxText" data-text="{i18n>view.Details.accruedLeave}"></div>
+         <div data-sap-ui-type="sap.m.Text" class="sapMFlexBoxText"></div>
+      </div>
+      <div data-sap-ui-type="sap.m.FlexBox" class="sapMFlexBoxMerge" data-justify-content="SpaceBetween">
+         <div data-sap-ui-type="sap.m.Text" class="sapMFlexBoxTextBold" data-text="{i18n>view.Details.availableBalance}"></div>
+         <div data-sap-ui-type="sap.m.Text" class="sapMFlexBoxTextBold"></div>
+      </div>
+      <div data-sap-ui-type="sap.m.FlexBox" data-justify-content="SpaceBetween">
+         <div data-sap-ui-type="sap.m.Text" class="sapMFlexBoxTextBold" data-text="{i18n>view.Details.leaveSummary}"></div>
+      </div>
+      <div id="detailsList" data-sap-ui-type="sap.ui.core.mvc.HTMLView" data-view-name="component.hr.detailslist.view.DetailsList"></div>
+      <div data-sap-ui-type="sap.m.Button" data-sap-ui-aggregation="headerContent" data-tap="onCreate" data-text="+"></div>
+   </div>
+</template>
