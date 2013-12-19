@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html><head>
+<meta name="description" content="Input Placeholder in <IE9" />
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+	
+	<title>Input Placeholder</title>
+  <style> 
+    .placeHolder{
+      color: #b3b3b3 !important;
+    }
+  </style>
+	
+    <script id='sap-ui-bootstrap' type='text/javascript' 
+        src='https://sapui5.netweaver.ondemand.com/resources/sap-ui-core.js'
+          data-sap-ui-theme="sap_goldreflection"
+          data-sap-ui-libs="sap.ui.commons">
+    </script> 
+	
+	<script>
+      (function () {
+    /**
+     * this control extends the standard Textfield and adds placeholder like
+     * functionality for browsers that dont support 'placeholder' eg <ie9
+     * if the Textfield value is initial the placeholder text is set, on focus
+     * the placeholder text is removed
+     */
+
+    "use strict";
+    /*jslint browser: true*/
+    /*global jQuery, sap*/
+    jQuery.sap.declare("my.controls.TextField");
+    jQuery.sap.require("sap.ui.commons.TextField.extend");
+    sap.ui.commons.TextField.extend("my.controls.TextField", {
+        renderer: {
+            renderInnerAttributes: function (oRm, oTextField) {
+                if (!this.isInputSupported) {
+                    if (oTextField.getValue() === oTextField.getPlaceholder()) {
+                        oRm.addClass('placeHolder'); //set placeholder class
+                    }
+                }
+            },
+        },
+
+        init: function () {
+            if (sap.ui.commons.TextField.init) { // check whether superclass has an init() method
+                sap.ui.commons.TextField.init.apply(this, arguments); // call super.init()
+            }
+
+            // determine whether placeholders are supported
+          this.isInputSupported = false;// 'placeholder' in document.createElement('input');
+        },
+
+        setPlaceholder: function (text) {
+            sap.ui.commons.TextField.prototype.setPlaceholder.apply(this, arguments); //call super methods
+
+            // set placeholder as text if required	
+            if (!this.isInputSupported && this.getValue() === "") {
+                this.setValue(text);
+            }
+        },
+        onfocusin: function () {
+            sap.ui.commons.TextField.prototype.onfocusin.apply(this, arguments); //call super methods
+            if (this.getValue() === this.getPlaceholder()) {
+                this.setValue("");
+                jQuery.sap.byId(this.getId()).removeClass('placeHolder');
+            }
+
+        },
+
+        onfocusout: function () {
+            sap.ui.commons.TextField.prototype.onfocusout.apply(this, arguments); //call super methods
+            if (this.isInputSupported) {
+                return;
+            }
+
+            if (this.getValue() === '') {
+                this.setValue(this.getPlaceholder());
+                jQuery.sap.byId(this.getId()).addClass('placeHolder');
+            }
+
+        }
+    });
+}());
+
+      new my.controls.TextField({placeholder: sap.ui.version}).placeAt("content");
+      
+ 	</script>
+	</head>
+	<body class='sapUiBody'>
+		<div id='content'></div>
+	</body>
+</html>
