@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta charset="UTF-8">
+        
+        <title>Phonebook</title>
+        
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-3420943-1', 'plinky.it');
+          ga('send', 'pageview');
+
+        </script>
+
+		<script id="sap-ui-bootstrap"
+				src="resources/sap-ui-core.js"
+				data-sap-ui-theme='sap_bluecrystal'
+				data-sap-ui-libs='sap.m, sap.ui.commons'>
+		</script>        
+        
+        <script>
+            // Tell UI5 where to find application content
+			sap.ui.localResources("util");
+			sap.ui.localResources("view");
+			sap.ui.localResources("model");
+            jQuery.sap.registerModulePath('Application', 'Application');
+
+            // Launch application
+            jQuery.sap.require("Application");
+            var oApp = new Application({root : "content"}); // instantiate your application and mark the HTML element with id "content" as location for the UI
+        </script>  
+
+        
+    </head>
+    <body class="sapUiBody" id="content">
+    </body>
+</html>

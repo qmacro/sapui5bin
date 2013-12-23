@@ -1,0 +1,92 @@
+{
+	"status":{
+		"http_code":200
+	},
+	"contents":[
+		{
+			"name":"John",
+			"lastname":"Doe",
+			"fullname":"John Doe",
+			"address":"300 N Michigan Ave",
+			"address2":"apt 123",
+			"city":"Chicago",
+			"state":"Illinois",
+			"pcode":"32432",
+			"country":"USA",
+			"phone":"+1(312)555-1234",
+			"dob":"10\/18\/1965",
+			"email":"john.doe@gmail.com",
+			"skype":"john65",
+			"twitter":"john65",
+			"image":"http:\/\/www.plinky.it\/examples\/openUI5\/phonebook\/img\/man_default.jpeg"
+		},
+		{
+			"name":"Claire",
+			"lastname":"Rampling",
+			"fullname":"Claire Rampling",
+			"address":"1000 S Duthy Road",
+			"address2":"",
+			"city":"New York",
+			"state":"New York",
+			"pcode":"12234",
+			"country":"USA",
+			"phone":"+1(646)555-2341",
+			"dob":"4\/3\/1970",
+			"email":"claire.rampling@gmail.com",
+			"skype":"CRampling",
+			"twitter":"ClaireR",
+			"image":"http:\/\/www.plinky.it\/examples\/openUI5\/phonebook\/img\/girl_default.jpeg"
+		},
+		{
+			"name":"Stephanie",
+			"lastname":"Black",
+			"fullname":"Stephanie Black",
+			"address":"124 W La Salle",
+			"address2":"st 710",
+			"city":"Los Angeles",
+			"state":"California",
+			"pcode":"34266",
+			"country":"USA",
+			"phone":"+1(310)555-3412",
+			"dob":"11\/12\/1960",
+			"email":"stephanie.black@gmail.com",
+			"skype":"Steph60",
+			"twitter":"Black60",
+			"image":"http:\/\/www.plinky.it\/examples\/openUI5\/phonebook\/img\/girl_default.jpeg"
+		},
+		{
+			"name":"Ivan",
+			"lastname":"Femia",
+			"fullname":"Ivan Femia",
+			"address":"400 E Maple",
+			"address2":"apt 4500",
+			"city":"San Francisco",
+			"state":"California",
+			"pcode":"54343",
+			"country":"USA",
+			"phone":"+1(415)555-4123",
+			"dob":"7\/9\/1940",
+			"email":"ivan.femia@gmail.com",
+			"skype":"lordwater77",
+			"twitter":"ivanfemia",
+			"image":"http:\/\/www.plinky.it\/examples\/openUI5\/phonebook\/img\/man_default.jpeg"
+		},
+		{
+			"name":"Carl",
+			"lastname":"Dust",
+			"fullname":"Carl Dust",
+			"address":"123 N Clark",
+			"address2":"apt 5500",
+			"city":"Miami",
+			"state":"Florida",
+			"pcode":"34344",
+			"country":"USA",
+			"phone":"+1(321)555-4567",
+			"dob":"11\/8\/1945",
+			"email":"carl.dust@gmail.com",
+			"skype":"carl",
+			"twitter":"cdust",
+			"image":"http:\/\/www.plinky.it\/examples\/openUI5\/phonebook\/img\/man_default.jpeg"
+		}
+	]
+}
