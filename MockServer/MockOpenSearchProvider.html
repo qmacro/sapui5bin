@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta charset="UTF-8">
+
+        <title>Mock OpenSearchProvider</title>
+
+        <script id="sap-ui-bootstrap" 
+                type="text/javascript"
+                src="/sapui5/latest/libs/resources/sap-ui-core.js"
+                data-sap-ui-theme="sap_bluecrystal"
+                data-sap-ui-libs="sap.m"
+                data-sap-ui-xx-bindingSyntax="complex"
+                data-sap-ui-resourceroots='{"qmacro": "./"}'>
+        >
+        </script>
+
+        <script>
+
+        // Load some sample data
+        jQuery.sap.require("qmacro.sapmlibcontrols");
+
+        // The Mock Server mechanism
+        jQuery.sap.require("sap.ui.core.util.MockServer");
+
+        // Create a Mock Server to function as an Open Search Provider endpoint
+        var oMockServer = new sap.ui.core.util.MockServer({
+            rootUri: "http://localhost/controlsearch",
+            requests: [
+                {
+                    method: "GET",
+                    path: "/term/:term",
+                    response: function(oXhr, sTerm) {
+                        var aResults = qmacro.sapmlibcontrols.controlNames.filter(function(sName) {
+                            return sName.match(new RegExp("^" + sTerm, "i"));
+                        });
+                        oXhr.respondJSON(
+                            200,
+                            null,
+                            [sTerm, aResults]
+                        )
+                    }
+                }
+            ]
+        });
+        oMockServer.start();
+
+        // Open Search Provider definition as support for assisted input
+        var oOSP = new sap.ui.core.search.OpenSearchProvider({});
+        oOSP.setSuggestUrl("http://localhost/controlsearch/term/{searchTerms}");
+
+        new sap.m.Input({
+            placeholder: "Search for sap.m control names",
+            showSuggestion: true,
+            suggest: function(oEvent) {
+                var that = this;
+                oOSP.suggest(oEvent.getParameter("suggestValue"), function(sValue, aSuggestions) {
+                    if (sValue === that.getValue()) {
+                        that.destroySuggestionItems();
+                        for (var i = 0, ii = aSuggestions.length; i < ii; i++) {
+                            that.addSuggestionItem(new sap.ui.core.Item({text: aSuggestions[i]}));
+                        }
+                    }
+                });        
+            }
+
+        }).placeAt("content");
+
+
+        </script>
+    </head>
+
+    <body class="sapUiBody" role="application">
+        <div id="content"></div>
+    </body>
+</html>
