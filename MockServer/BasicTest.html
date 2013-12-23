@@ -47,11 +47,25 @@
                         )
                     }
                 },
+                {
+                    method: "GET",
+                    path: "/customer/([A-Z][0-9]+)/orders",
+                    response: function(oXhr, sCustomer) {
+                        oXhr.respond(
+                            200,
+                            {
+                                "Content-Type": "application/json"
+                            },
+                            JSON.stringify({customer: sCustomer})
+                        )
+                    }
+                },
             ]
         });
 
         oMockServer.start();
 
+        // Simple fixed URL
         new sap.m.Button({
             text: "Press me",
             press: function(oEvent) {
@@ -64,6 +78,7 @@
             }
         }).placeAt("content");
 
+        // URL with parameter
         new sap.m.Button({
             text: "Parameter test",
             press: function(oEvent) {
@@ -73,6 +88,32 @@
                 });
                 var mData = oRes.data;
                 oEvent.getSource().setText("Parameter was " + mData.identifier);
+            }
+        }).placeAt("content");
+
+        // URL with regex matcher
+        new sap.m.Button({
+            text: "Regex test - pass",
+            press: function(oEvent) {
+                var oRes = jQuery.sap.sjax({
+                    url: "http://localhost/qmacro/customer/T1729/orders",
+                    dataType: "json"
+                });
+                var sResult = oRes.success ? "Customer was " + oRes.data.customer : "Call failed";
+                oEvent.getSource().setText(sResult);
+            }
+        }).placeAt("content");
+
+        // URL with regex matcher (deliberate fail)
+        new sap.m.Button({
+            text: "Regex test - fail",
+            press: function(oEvent) {
+                var oRes = jQuery.sap.sjax({
+                    url: "http://localhost/qmacro/customer/7zd8as/orders",
+                    dataType: "json"
+                });
+                var sResult = oRes.success ? "Customer was " + oRes.data.customer : "Call failed";
+                oEvent.getSource().setText(sResult);
             }
         }).placeAt("content");
 
