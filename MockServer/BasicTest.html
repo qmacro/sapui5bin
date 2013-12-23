@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta charset="UTF-8">
+
+        <title>Mock Server - Basic Test</title>
+
+        <script id="sap-ui-bootstrap" 
+                type="text/javascript"
+                src="/sapui5/latest/libs/resources/sap-ui-core.js"
+                data-sap-ui-theme="sap_bluecrystal"
+                data-sap-ui-libs="sap.m"
+                data-sap-ui-xx-bindingSyntax="complex"
+        >
+        </script>
+
+        <script>
+
+        jQuery.sap.require("sap.ui.core.util.MockServer");
+        var oMockServer = new sap.ui.core.util.MockServer({
+            rootUri: "http://localhost/qmacro",
+            requests: [
+                {
+                    method: "GET",
+                    path: "/test",
+                    response: function(oXhr) {
+                        oXhr.respond(
+                            200,
+                            {
+                                "Content-Type": "application/json"
+                            },
+                            '{"greeting": "Hello World"}'
+                        )
+                    }
+                }
+
+            ]
+        });
+
+        oMockServer.start();
+        var oControl = new sap.m.Button({
+            text: "Press me",
+            press: function(oEvent) {
+                var oRes = jQuery.sap.sjax({
+                    url: "http://localhost/qmacro/test",
+                    dataType: "json"
+                });
+                var mData = oRes.data;
+                oEvent.getSource().setText(mData.greeting);
+            }
+        });
+
+        oControl.placeAt("content");
+
+
+        </script>
+    </head>
+
+    <body class="sapUiBody" role="application">
+        <div id="content"></div>
+    </body>
+</html>
