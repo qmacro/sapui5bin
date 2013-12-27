@@ -9,3 +9,7 @@ Learn more about SAPUI5 [here][1].
 Currently coded against the 1.8.4 release.
 
 [1]: http://scn.sap.com/community/developer-center/front-end "SAPUI5 Homepage on SCN"
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/ivanfemia/sapui5bin/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
