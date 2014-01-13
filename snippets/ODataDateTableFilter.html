@@ -51,7 +51,10 @@
                                 <commons:TextField value="{LastName}" />
                             </template>
                         </Column>
-                        <Column>
+                        <Column
+                            sortProperty="BirthDate"
+                            filterProperty="BirthDate"
+                            filterType='util.formatting.dateType'>
                             <label>
                                 <commons:Label text="Birth Date" />
                             </label>
@@ -60,9 +63,7 @@
                                     value="{
                                         path: 'BirthDate',
                                         formatter: 'util.formatting.dateShort'
-                                    }"
-                                    sortProperty="BirthDate"
-                                    filterProperty="BirthDate" />
+                                    }" />
                             </template>
                         </Column>
                     </columns>
@@ -86,15 +87,12 @@
                     return dateFormat.format(oDate);
                 },
 
-                dateType: function(sValue) {
-                    return sValue;
-                    // return new sap.ui.model.type.Date({
-                    //     source: {
-                    //         pattern: "yyyy-MM-dd"
-                    //     },
-                    //     pattern: "dd.MM.yyyy"
-                    // });
-                }
+                dateType: sap.ui.model.type.Date({
+                    source: {
+                        pattern: "yyyy-MM-dd"
+                    },
+                    pattern: "dd.MM.yyyy"
+                })
 
             };
 
