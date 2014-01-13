@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta charset="UTF-8">
+
+        <title>OData Date Table Filter</title>
+
+        <script id="sap-ui-bootstrap" 
+                type="text/javascript"
+                src="/sapui5/latest/libs/resources/sap-ui-core.js"
+                data-sap-ui-theme="sap_goldreflection"
+                data-sap-ui-libs="sap.ui.commons,sap.ui.table,sap.ui.core"
+                data-sap-ui-xx-bindingSyntax="complex"
+        >
+        </script>
+
+
+        <!-- XML-based view definition -->
+        <script id="view1" type="sapui5/xmlview">
+            <mvc:View
+                controllerName="local.controller"
+                xmlns:mvc="sap.ui.core.mvc"
+                xmlns:commons="sap.ui.commons"
+                xmlns="sap.ui.table">
+                <Table
+                    id="tt"
+                    rows="{
+                        path: '/Employees',
+                        parameters: {
+                            select: 'FirstName, LastName, BirthDate'
+                        }
+                    }"
+                    title="Table Example"
+                    visibleRowCount="7"
+                    firstVisibleRow="3">
+                    <columns>
+                        <Column>
+                            <label>
+                                <commons:Label text="First Name" />
+                            </label>
+                            <template>
+                                <commons:TextField value="{FirstName}" />
+                            </template>
+                        </Column>
+                        <Column>
+                            <label>
+                                <commons:Label text="Last Name" />
+                            </label>
+                            <template>
+                                <commons:TextField value="{LastName}" />
+                            </template>
+                        </Column>
+                        <Column>
+                            <label>
+                                <commons:Label text="Birth Date" />
+                            </label>
+                            <template>
+                                <commons:TextField
+                                    value="{
+                                        path: 'BirthDate',
+                                        formatter: 'util.formatting.dateShort'
+                                    }"
+                                    sortProperty="BirthDate"
+                                    filterProperty="BirthDate" />
+                            </template>
+                        </Column>
+                    </columns>
+                </Table>
+
+            </mvc:View> 
+        </script>
+
+        <script>
+
+
+
+            jQuery.sap.declare("util.formatting");
+            jQuery.sap.require("sap.ui.core.format.DateFormat");
+
+            util.formatting = {
+
+                dateShort: function(oDate) {
+                    var oDate = (oDate instanceof Date) ? oDate : new Date(oDate);
+                    var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({pattern : "dd.MM.yyyy" });
+                    return dateFormat.format(oDate);
+                },
+
+                dateType: function(sValue) {
+                    return sValue;
+                    // return new sap.ui.model.type.Date({
+                    //     source: {
+                    //         pattern: "yyyy-MM-dd"
+                    //     },
+                    //     pattern: "dd.MM.yyyy"
+                    // });
+                }
+
+            };
+
+
+            // Controller definition
+            sap.ui.controller("local.controller", {
+                
+                onInit: function(oEvent) {}
+
+            });
+            
+            var oView = sap.ui.xmlview({
+                viewContent: jQuery('#view1').html()
+            });
+            
+            var sURI = "http://services.odata.org/V3/Northwind/Northwind.svc/";
+            oView.setModel(new sap.ui.model.odata.ODataModel(sURI, true));
+            oView.placeAt('content');
+
+        </script>
+
+    </head>
+
+    <body class="sapUiBody" role="application">
+        <div id="content"></div>
+        <p>For background, see <a href='http://scn.sap.com/thread/3437301'>Using Table filter when a formatter function is used</a>. This is a single-page MVC version of John Patterson's solution that he <a href='http://jsbin.com/aNebeKi/1/edit'>showed in JSBin</a>.
+    </body>
+</html>
