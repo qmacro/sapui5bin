@@ -53,8 +53,7 @@
                         </Column>
                         <Column
                             sortProperty="BirthDate"
-                            filterProperty="BirthDate"
-                            filterType='util.formatting.dateType'>
+                            filterProperty="BirthDate">
                             <label>
                                 <commons:Label text="Birth Date" />
                             </label>
@@ -85,14 +84,7 @@
                     var oDate = (oDate instanceof Date) ? oDate : new Date(oDate);
                     var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({pattern : "dd.MM.yyyy" });
                     return dateFormat.format(oDate);
-                },
-
-                dateType: sap.ui.model.type.Date({
-                    source: {
-                        pattern: "yyyy-MM-dd"
-                    },
-                    pattern: "dd.MM.yyyy"
-                })
+                }
 
             };
 
@@ -107,6 +99,12 @@
             var oView = sap.ui.xmlview({
                 viewContent: jQuery('#view1').html()
             });
+            
+            // This should be possible to set on the Column in the XML declaration
+            // but I'm not sure how yet, brain freeze.
+            oView.byId("tt").getColumns()[2].setFilterType(new sap.ui.model.type.Date({
+                source: {pattern: "yyyy-MM-dd"}, pattern: "dd.MM.yyyy"
+            }));
             
             var sURI = "http://services.odata.org/V3/Northwind/Northwind.svc/";
             oView.setModel(new sap.ui.model.odata.ODataModel(sURI, true));
