@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta charset="UTF-8">
+
+        <title>DateTimeInput Binding</title>
+
+        <script id="sap-ui-bootstrap" 
+                type="text/javascript"
+                src="/sapui5/latest/libs/resources/sap-ui-core.js"
+                data-sap-ui-theme="sap_bluecrystal"
+                data-sap-ui-libs="sap.m"
+                data-sap-ui-xx-bindingSyntax="complex"
+        >
+        </script>
+
+        <script>
+
+        var mData = { someDate: new Date() };
+
+        new sap.m.DateTimeInput({
+            type: sap.m.DateTimeInputType.DateTime,
+            change: function() {
+                alert("New date in model is " + mData.someDate)
+            }
+        })
+        .setModel(new sap.ui.model.json.JSONModel(mData))
+        .bindProperty("dateValue", "/someDate")
+        .placeAt("content");
+
+
+        </script>
+    </head>
+
+    <body class="sapUiBody" role="application">
+        <div id="content"></div>
+    </body>
+</html>
