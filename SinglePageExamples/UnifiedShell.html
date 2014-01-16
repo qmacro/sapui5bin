@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta charset="UTF-8">
+
+        <title>Unified Shell Example</title>
+
+        <script id="sap-ui-bootstrap" 
+                type="text/javascript"
+                src="/sapui5/latest/libs/resources/sap-ui-core.js"
+                data-sap-ui-theme="sap_bluecrystal"
+                data-sap-ui-libs="sap.m, sap.ui.unified"
+                data-sap-ui-xx-bindingSyntax="complex"
+        >
+        </script>
+
+
+        <!-- XML-based view definition -->
+        <script id="view1" type="sapui5/xmlview">
+            <mvc:View
+                controllerName="local.controller"
+                xmlns:mvc="sap.ui.core.mvc"
+                xmlns:unified="sap.ui.unified"
+                xmlns="sap.m">
+                <unified:Shell>
+                    <Shell
+                        title="My Application"
+                        logo="http://sap.github.io/openui5/images/icotxt_white_220x72_blue_open.png">
+                        <SplitApp>
+                            <masterPages>
+                                <Page title="Master" />
+                            </masterPages>
+                            <detailPages>
+                                <Page title="Detail" />
+                            </detailPages>
+                        </SplitApp>
+                    </Shell>
+                </unified:Shell>
+
+            </mvc:View> 
+        </script>
+
+        <script>
+
+            // Controller definition
+            sap.ui.controller("local.controller", {
+                
+                onInit: function(oEvent) {
+                    // code
+                }
+
+            });
+            
+            // Instantiate the View, assign a model
+            // and display
+            var oView = sap.ui.xmlview({
+                viewContent: jQuery('#view1').html()
+            });
+            
+            oView.setModel(new sap.ui.model.json.JSONModel({
+                name: "value"
+            }));
+            
+            oView.placeAt('content');
+
+        </script>
+
+    </head>
+
+    <body class="sapUiBody" role="application">
+        <div id="content"></div>
+    </body>
+</html>
