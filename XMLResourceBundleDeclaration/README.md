@@ -1,7 +1,7 @@
 XMLResourceBundleDeclaration
 ============================
 
-In the SDK Developer Guide docu, specifically the "The Model View Controller (MVC) Approach in SAPUI5" section, it says it's possible to declaratively specify a resource bundle in the XML view definition (see section "Data Binding in XML Views"). 
+In the SDK Developer Guide docu, specifically the "[The Model View Controller (MVC) Approach in SAPUI5](https://openui5.hana.ondemand.com/#docs/guide/MVC.html)" section, it says it's possible to declaratively specify a resource bundle in the XML view definition (see section "Data Binding in XML Views"). 
 
 This is very neat, and saves on the usual incantations in, say, the Component definition, that would look like this:
 
