@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta charset="UTF-8">
+
+        <title>XMLResourceBundleDeclaration</title>
+
+        <script id="sap-ui-bootstrap" 
+                type="text/javascript"
+                src="/sapui5/latest/resources/sap-ui-core.js"
+                data-sap-ui-theme="sap_bluecrystal"
+                data-sap-ui-libs="sap.m"
+                data-sap-ui-resourceroots='{"qmacro": "./"}'>
+        </script>
+
+        <script>
+
+        sap.ui.view({
+            id: "idViewMain",
+            viewName: "qmacro.view.Main",
+            type: "XML"
+        }).placeAt("content");
+
+        </script>
+    </head>
+
+    <body class="sapUiBody" role="application">
+        <div id="content"></div>
+    </body>
+</html>

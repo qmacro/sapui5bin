@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mvc:View
+	resourceBundleName="qmacro.i18n.messageBundle"
+	resourceBundleAlias="i18n"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+
+    <Page title="{i18n>PAGE_TITLE}" />
+
+</mvc:View>
