@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta charset="UTF-8">
+
+        <title>Model Array New Items</title>
+
+        <script id="sap-ui-bootstrap" 
+                type="text/javascript"
+                src="/sapui5/latest/resources/sap-ui-core.js"
+                data-sap-ui-theme="sap_bluecrystal"
+                data-sap-ui-libs="sap.m"
+                data-sap-ui-xx-bindingSyntax="complex"
+        >
+        </script>
+
+
+        <!-- XML-based view definition -->
+        <script id="view1" type="sapui5/xmlview">
+            <mvc:View
+                controllerName="local.controller"
+                xmlns:mvc="sap.ui.core.mvc"
+                xmlns="sap.m">
+                <App><Page title="Item Push Test">
+                	<Input id="name" placeholder="Conference name" />
+                	<Input id="description" placeholder="Conference description" />
+                	<Button
+                        text="Add Conference ({/conferenceCount} currently)"
+                        press="handleAddPress" />
+                	<List
+                		id="idList"
+                        headerText="Conferences"
+                		items="{/conferences}">
+                		<StandardListItem 
+                			title="{name}"
+                			description="{description}" />
+           	        </List>
+                </Page></App>
+            </mvc:View> 
+        </script>
+
+        <script>
+
+        // Initial data setup
+        var oData = {
+            conferences: [
+                { name: "FOSDEM", description: "Free and Open Developers European Meeting" },
+                { name: "SAP TechEd", description: "SAP Technical Education" },
+                { name: "OSCON", description: "Open Source Convention" }
+            ],
+        };
+        oData.conferenceCount = oData.conferences.length;
+
+
+        // Controller definition
+        sap.ui.controller("local.controller", {
+            
+            handleAddPress: function(oEvent) {
+                console.log(this.byId("name").getValue());
+                oData.conferences.push({
+                    name: this.byId("name").getValue(),
+                    description: this.byId("description").getValue()
+                });
+                // Deliberate, for button binding
+                oData.conferenceCount = oData.conferences.length;
+                this.getView().getModel().updateBindings();
+
+            }
+
+        });
+        
+        // View instantiation
+        sap.ui.xmlview({ viewContent: jQuery('#view1').html() })
+            .setModel(new sap.ui.model.json.JSONModel(oData))
+            .placeAt('content');
+
+        </script>
+
+    </head>
+
+    <body class="sapUiBody" role="application">
+        <div id="content"></div>
+    </body>
+</html>
