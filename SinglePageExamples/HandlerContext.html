@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta charset="UTF-8">
+
+        <title>Handler Context in JavaScript Views</title>
+
+        <script id="sap-ui-bootstrap" 
+                type="text/javascript"
+                src="/sapui5/latest/resources/sap-ui-core.js"
+                data-sap-ui-theme="sap_bluecrystal"
+                data-sap-ui-libs="sap.m"
+                data-sap-ui-xx-bindingSyntax="complex"
+        >
+        </script>
+
+        <script>
+
+            jQuery.sap.require("sap.m.MessageToast");
+
+            sap.ui.jsview("local.view", {
+                getControllerName: function() {
+                    return "local.controller";
+                },
+                createContent: function(oController) {
+                    return new sap.m.Button({
+                        text: "Press Me",
+                        press: [oController.myHandler, oController]
+                    });
+                }
+            });
+
+            sap.ui.controller("local.controller", {
+                myHandler: function(oEvent) {
+                    sap.m.MessageToast.show(this.toString());
+                }
+            });
+
+            sap.ui.view({
+                type: sap.ui.core.mvc.ViewType.JS,
+                viewName: "local.view"
+            }).placeAt("uiArea");
+
+        </script>
+
+    </head>
+
+    <body class="sapUiBody" role="application">
+        <div id="uiArea"></div>
+    </body>
+</html>
