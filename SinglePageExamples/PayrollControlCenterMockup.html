@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta charset="UTF-8">
+
+        <title>My Worklist</title>
+
+        <script id="sap-ui-bootstrap" 
+                type="text/javascript"
+                src="/sapui5/latest/resources/sap-ui-core.js"
+                data-sap-ui-theme="sap_bluecrystal"
+                data-sap-ui-libs="sap.m"
+                data-sap-ui-xx-bindingSyntax="complex"
+        >
+        </script>
+
+
+        <!-- XML-based view definition -->
+        <script id="view1" type="sapui5/xmlview">
+            <mvc:View
+                controllerName="local.controller"
+                xmlns:mvc="sap.ui.core.mvc"
+                xmlns="sap.m">
+                <App>
+                    <Page
+                        title="My worklist">
+                        <IconTabBar>
+                            <items>
+                                <IconTabFilter
+                                    text="All payroll areas"
+                                    icon="sap-icon://group"
+                                    design="Horizontal">
+                                    <content>
+                                        <FlexBox
+                                            alignItems="Start"
+                                            justifyContent="Center"
+                                            items="{/items}">
+                                            <StandardTile
+                                                title="{description}"
+                                                icon="sap-icon://process"
+                                                number="{errors}"
+                                                numberUnit="ERRORS"
+                                                info="{
+                                                    path: 'errors',
+                                                    formatter: 'local.formatter.info'     
+                                                }"
+                                                infoState="{
+                                                    path: 'errors',
+                                                    formatter: 'local.formatter.infoState'
+                                                }" />
+                                        </FlexBox>
+
+                                    </content>
+                                    
+                                </IconTabFilter>
+                                <IconTabFilter
+                                    binding="{/cities/0}"
+                                    text="{name} ({id})"
+                                    icon="sap-icon://group"
+                                    design="Horizontal">
+                                    
+                                </IconTabFilter>
+                                <IconTabFilter
+                                    binding="{/cities/1}"
+                                    text="{name} ({id})"
+                                    icon="sap-icon://group"
+                                    design="Horizontal">
+                                    
+                                </IconTabFilter>
+                                
+                            </items>
+                        </IconTabBar>
+                        
+                    </Page>
+                </App>
+            </mvc:View> 
+        </script>
+
+        <script>
+
+        jQuery.sap.declare("local.formatter");
+
+        local.formatter = {
+            info: function(errors) {
+                return errors ? "Errors" : "All OK";
+            },
+            infoState: function(errors) {
+                return errors ? "Error" : "Success";
+            }
+        };
+
+            // Controller definition
+            sap.ui.controller("local.controller", {});
+            
+            // Instantiate the View, assign a model
+            // and display
+            var oView = sap.ui.xmlview({
+                viewContent: jQuery('#view1').html()
+            });
+            
+            oView.setModel(new sap.ui.model.json.JSONModel({
+                cities: [
+                    { id: "A1", name: "Kobe" },
+                    { id: "A2", name: "Hiroshoma" }
+                ],
+                items: [
+                    { description: "Master data quality check", errors: 4, cityId: "A1" },
+                    { description: "Pre payroll process", errors: 8, cityId: "A1" },
+                    { description: "Errors from payroll run", errors: 0, cityId: "A2" },
+                    { description: "Payroll data validations", errors: 20, cityId: "A1" }
+                ]
+            }));
+            
+            oView.placeAt('content');
+
+        </script>
+
+    </head>
+
+    <body class="sapUiBody" role="application">
+        <div id="content"></div>
+    </body>
+</html>
