@@ -79,24 +79,77 @@
 
         <script>
 
-        jQuery.sap.declare("local.formatter");
+            jQuery.sap.declare("local.formatter");
 
-        local.formatter = {
-            info: function(errors) {
-                return errors ? "Errors" : "All OK";
-            },
-            infoState: function(errors) {
-                return errors ? "Error" : "Success";
-            }
-        };
+            local.formatter = {
+                info: function(errors) {
+                    return errors ? "Errors" : "All OK";
+                },
+                infoState: function(errors) {
+                    return errors ? "Error" : "Success";
+                }
+            };
 
             // Controller definition
             sap.ui.controller("local.controller", {});
             
             // Instantiate the View, assign a model
             // and display
-            var oView = sap.ui.xmlview({
-                viewContent: jQuery('#view1').html()
+            sap.ui.jsview("local.view", {
+                createContent: function(oEvent) {
+                    var aIconTabFilters = [0,1].map(function(n) {
+                        var oITF = new sap.m.IconTabFilter({
+                            text: "{name} ({id})",
+                            icon: "sap-icon://group",
+                            design: "Horizontal"
+                        });
+                        oITF.bindElement("/cities/"+n);
+                        return oITF;
+                    });
+                    var oFlexBox = new sap.m.FlexBox({
+                        alignItems: "Start",
+                        justifyContent: "Center",
+                    });
+                    oFlexBox.bindAggregation("items", "/items", new sap.m.StandardTile({
+                        title: "{description}",
+                        icon: "sap-icon://process",
+                        number: "{errors}",
+                        numberUnit: "ERRORS",
+                        info: {
+                            path: 'errors',
+                            formatter: local.formatter.info     
+                        },
+                        infoState: {
+                            path: 'errors',
+                            formatter: local.formatter.infoState
+                        }
+                    }));
+                    aIconTabFilters.unshift(new sap.m.IconTabFilter({
+                        text: "All payroll areas",
+                        icon: "sap-icon://group",
+                        design: "Horizontal",
+                        content: [
+                            oFlexBox
+                        ]
+                    }));
+                    return new sap.m.App({
+                        pages: [
+                            new sap.m.Page({
+                                title: "My worklist",
+                                content: [
+                                    new sap.m.IconTabBar({
+                                        items: aIconTabFilters
+                                    })
+                                ]
+                            })
+                        ]
+                    })
+                }
+            });
+
+            var oView = sap.ui.view({
+                type: sap.ui.core.mvc.ViewType.JS,
+                viewName: "local.view"
             });
             
             oView.setModel(new sap.ui.model.json.JSONModel({
