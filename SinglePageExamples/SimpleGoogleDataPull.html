@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="UTF-8">
+
+    <title>Pull and show data from a Google spreadsheet</title>
+
+    <script id="sap-ui-bootstrap"
+      type="text/javascript"
+      src="/sapui5/latest/resources/sap-ui-core.js"
+      data-sap-ui-theme="sap_bluecrystal"
+      data-sap-ui-libs="sap.m"
+    >
+    </script>
+
+    <script id="view1" type="sapui5/xmlview">
+      <mvc:View
+        xmlns:mvc="sap.ui.core.mvc"
+        xmlns="sap.m">
+        <App><Page title="Google Sheet Data in UI5">
+          <IconTabBar>
+            <items>
+              <IconTabFilter
+                icon="sap-icon://product"
+                text="Things">
+                <content>
+                  <List
+                    noDataText="Loading data from Google"
+                    items="{/Sheet1}">
+                    <StandardListItem
+                      title="{Thing}"
+                      description="{Description}" />
+                  </List>
+                </content>
+              </IconTabFilter>
+            </items>
+          </IconTabBar>
+          <footer>
+            <Bar />
+          </footer>
+        </Page></App>
+      </mvc:View>
+    </script>
+
+    <script>
+
+      // Data source definition
+      var datasource = {
+
+        // SheetAsJSON service
+        serviceURL : "https://script.google.com/macros/s/AKfycbxOLElujQcy1-ZUer1KgEvK16gkTLUqYftApjNCM_IRTL3HSuDk/exec?id=",
+
+        // Specify Spreadsheet ID
+        sheetId : "1-TCN-T4Ov9Ey7rTNhj52SjPRpY9ap58Wquegu5azg5w",
+      };
+
+      // Model, to be filled with data from Google
+      var oModel = new sap.ui.model.json.JSONModel();
+
+      // View instantiation
+      var oView = sap.ui.xmlview({
+        viewContent: jQuery('#view1').html()
+      });
+      oView.setModel(oModel).placeAt("content").setBusy(true);
+
+      jQuery.ajax(datasource["serviceURL"] + datasource["sheetId"], {
+        dataType: "jsonp",
+        success: function(data){
+          oModel.setData(data);
+          oView.setBusy(false);
+        }
+      });
+
+    </script>
+
+  </head>
+
+  <body class="sapUiBody" id="content" />
+</html>
