@@ -17,7 +17,7 @@
 
     <script id="Root" type="sapui5/xmlview">
       <mvc:View
-        controllerName="local.controller"
+        controllerName="local.root.controller"
         xmlns:mvc="sap.ui.core.mvc"
         xmlns="sap.m">
         <SplitApp id="idRoot" />
@@ -26,11 +26,14 @@
 
     <script id="Master" type="sapui5/xmlview">
       <mvc:View
+        controllerName="local.master.controller"
         xmlns:mvc="sap.ui.core.mvc"
         xmlns="sap.m">
         <Page
           title="Master">
           <List
+            mode="SingleSelectMaster"
+            select="onSelect"
             noDataText="Loading log entries"
             items="{/log/entries}">
             <items>
@@ -75,6 +78,7 @@
         xmlns="sap.m">
         <Page
           title="Detail">
+          <Label text="Detail placeholder" />
           <footer>
             <Bar>
             </Bar>
@@ -146,11 +150,11 @@
       };
 
 
-      // Controller definition
-      sap.ui.controller("local.controller", {
+      // Root controller definition
+      sap.ui.controller("local.root.controller", {
 
         returnView : function(sViewName) {
-          return sap.ui.xmlview({
+          return sap.ui.xmlview(sViewName, {
             viewContent : jQuery("#" + sViewName).html()
           });
         },
@@ -159,6 +163,20 @@
           var oSplitApp = this.getView().byId("idRoot");
           oSplitApp.addMasterPage(this.returnView("Master"));
           oSplitApp.addDetailPage(this.returnView("Detail"));
+        },
+
+        onSelect : function(oEvent) {
+          debugger;
+
+        }
+
+      });
+
+      // Master controller definition
+      sap.ui.controller("local.master.controller", {
+
+        onSelect : function(oEvent) {
+          this.getView().getParent()
         }
 
       });
