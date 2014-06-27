@@ -1,0 +1,163 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="UTF-8">
+
+    <title>HAR Viewer</title>
+
+    <script id="sap-ui-bootstrap"
+      type="text/javascript"
+      src="/sapui5/latest/resources/sap-ui-core.js"
+      data-sap-ui-theme="sap_bluecrystal"
+      data-sap-ui-libs="sap.m"
+      data-sap-ui-xx-bindingSyntax="complex"
+    >
+    </script>
+
+    <script id="Root" type="sapui5/xmlview">
+      <mvc:View
+        controllerName="local.controller"
+        xmlns:mvc="sap.ui.core.mvc"
+        xmlns="sap.m">
+        <SplitApp id="idRoot" />
+      </mvc:View>
+    </script>
+
+    <script id="Master" type="sapui5/xmlview">
+      <mvc:View
+        xmlns:mvc="sap.ui.core.mvc"
+        xmlns="sap.m">
+        <Page
+          title="Master">
+          <List
+            noDataText="Loading log entries"
+            items="{/log/entries}">
+            <items>
+              <ObjectListItem
+                icon="{
+                  path : 'request/url',
+                  formatter : 'local.Formatter.iconFromURL'
+                }"
+                intro="{
+                  path : 'request/url',
+                  formatter : 'local.Formatter.pathFromURL'
+                }"
+                title="{
+                  path : 'request/url',
+                  formatter : 'local.Formatter.nameFromURL'
+                }">
+                <firstStatus>
+                  <ObjectStatus
+                    text="{
+                      path : 'request/url',
+                      formatter : 'local.Formatter.typeFromURL'
+                    }" />
+                </firstStatus>
+                <attributes>
+                  <ObjectAttribute
+                    text="{response/content/mimeType}" />
+                </attributes>
+              </ObjectListItem>
+            </items>
+          </List>
+        </Page>
+      </mvc:View>
+    </script>
+
+    <script id="Detail" type="sapui5/xmlview">
+      <mvc:View
+        xmlns:mvc="sap.ui.core.mvc"
+        xmlns="sap.m">
+        <Page
+          title="Detail" />
+      </mvc:View>
+    </script>
+
+
+    <script>
+
+      jQuery.sap.declare("local.Formatter");
+      local.Formatter = {
+
+        URLRoot : "https://ec2-54-236-207-58.compute-1.amazonaws.com:1081",
+
+        types : {
+          odata : { re : /\/sap\/opu\/odata/, icon : "database" },
+          app : { re : /\/sap\/bc\/ui5_ui5\/sap/, icon : "header" },
+          ui5 : { re : /\/sap\/bc\/ui5_ui5\/ui2\/ushell\/resources/, icon : "detail-view" },
+        },
+
+        determinePathAndType : function(sPath) {
+          var info = {};
+          Object.keys(local.Formatter.types).forEach(function(sType) {
+            if (!info.type) {
+              var mTypeInfo = local.Formatter.types[sType];
+              info.path = sPath.replace(mTypeInfo.re, "");
+              if (info.path !== sPath) {
+                info.type = sType;
+                info.icon = mTypeInfo.icon;
+              }
+            }
+          });
+          return info;
+        },
+
+        parseURL : function(sURL) {
+          var re = new RegExp("^" + local.Formatter.URLRoot + "(.+)\/(.+?)$");
+          var results = re.exec(sURL);
+          var info = {
+            path : results[1],
+            name : results[2]
+          };
+          jQuery.extend(info, local.Formatter.determinePathAndType(info.path));
+          return info;
+        },
+
+        nameFromURL : function(sURL) {
+          return local.Formatter.parseURL(sURL).name;
+        },
+
+        pathFromURL : function(sURL) {
+          return local.Formatter.parseURL(sURL).path;
+        },
+
+        typeFromURL : function(sURL) {
+          return local.Formatter.parseURL(sURL).type;
+        },
+
+        iconFromURL : function(sURL) {
+          return "sap-icon://" + local.Formatter.parseURL(sURL).icon;
+        }
+
+      };
+
+
+      // Controller definition
+      sap.ui.controller("local.controller", {
+
+        returnView : function(sViewName) {
+          return sap.ui.xmlview({
+            viewContent : jQuery("#" + sViewName).html()
+          });
+        },
+
+        onInit : function() {
+          var oSplitApp = this.getView().byId("idRoot");
+          oSplitApp.addMasterPage(this.returnView("Master"));
+          oSplitApp.addDetailPage(this.returnView("Detail"));
+        }
+
+      });
+
+      var sURL = "hardata.json";
+      sap.ui.xmlview({ viewContent: jQuery('#Root').html() })
+        .setModel(new sap.ui.model.json.JSONModel(sURL))
+        .placeAt('content');
+
+    </script>
+
+  </head>
+
+  <body class="sapUiBody" id="content" />
+</html>
