@@ -30,7 +30,7 @@
         xmlns:mvc="sap.ui.core.mvc"
         xmlns="sap.m">
         <Page
-          title="Master">
+          title="Requests">
           <List id="idList"
             mode="SingleSelectMaster"
             select="onSelect"
@@ -78,7 +78,7 @@
         xmlns:mvc="sap.ui.core.mvc"
         xmlns="sap.m">
         <Page
-          title="Detail">
+          title="Request">
           <ObjectHeader
             icon="{
               path : 'request/url',
@@ -92,7 +92,29 @@
               path : 'request/url',
               formatter : 'local.Formatter.nameFromURL'
             }">
+            <firstStatus>
+              <ObjectStatus
+                text="{
+                  path : 'request/url',
+                  formatter : 'local.Formatter.typeFromURL'
+                }" />
+            </firstStatus>
+            <attributes>
+              <ObjectAttribute
+                text="{response/content/mimeType}" />
+            </attributes>
           </ObjectHeader>
+          <IconTabBar>
+            <items>
+              <IconTabFilter
+                text="Content">
+                <TextArea
+                  rows="30"
+                  cols="100"
+                  value="{response/content/text}" />
+              </IconTabFilter>
+            </items>
+          </IconTabBar>
           <footer>
             <Bar>
             </Bar>
@@ -111,8 +133,8 @@
 
         types : {
           odata : { re : /\/sap\/opu\/odata/, icon : "database" },
-          app : { re : /\/sap\/bc\/ui5_ui5\/sap/, icon : "header" },
-          ui5 : { re : /\/sap\/bc\/ui5_ui5\/ui2\/ushell\/resources/, icon : "detail-view" },
+          application : { re : /\/sap\/bc\/ui5_ui5\/sap/, icon : "header" },
+          library : { re : /\/sap\/bc\/ui5_ui5\/ui2\/ushell\/resources/, icon : "detail-view" },
         },
 
         determinePathAndType : function(sPath) {
