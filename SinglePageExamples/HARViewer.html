@@ -61,6 +61,10 @@
               </ObjectListItem>
             </items>
           </List>
+          <footer>
+            <Bar>
+            </Bar>
+          </footer>
         </Page>
       </mvc:View>
     </script>
@@ -70,7 +74,12 @@
         xmlns:mvc="sap.ui.core.mvc"
         xmlns="sap.m">
         <Page
-          title="Detail" />
+          title="Detail">
+          <footer>
+            <Bar>
+            </Bar>
+          </footer>
+        </Page>
       </mvc:View>
     </script>
 
@@ -113,6 +122,10 @@
           jQuery.extend(info, local.Formatter.determinePathAndType(info.path));
           return info;
         },
+
+        // Need to refactor this stuff, hrm. Perhaps too much
+        // stuff in this Formatter, might be worth massaging the
+        // data in the model once it's loaded, instead
 
         nameFromURL : function(sURL) {
           return local.Formatter.parseURL(sURL).name;
