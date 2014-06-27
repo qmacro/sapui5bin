@@ -26,12 +26,12 @@
 
     <script id="Master" type="sapui5/xmlview">
       <mvc:View
-        controllerName="local.master.controller"
+        controllerName="local.masterdetail.controller"
         xmlns:mvc="sap.ui.core.mvc"
         xmlns="sap.m">
         <Page
           title="Master">
-          <List
+          <List id="idList"
             mode="SingleSelectMaster"
             select="onSelect"
             noDataText="Loading log entries"
@@ -74,11 +74,25 @@
 
     <script id="Detail" type="sapui5/xmlview">
       <mvc:View
+        controllerName="local.masterdetail.controller"
         xmlns:mvc="sap.ui.core.mvc"
         xmlns="sap.m">
         <Page
           title="Detail">
-          <Label text="Detail placeholder" />
+          <ObjectHeader
+            icon="{
+              path : 'request/url',
+              formatter : 'local.Formatter.iconFromURL'
+            }"
+            intro="{
+              path : 'request/url',
+              formatter : 'local.Formatter.pathFromURL'
+            }"
+            title="{
+              path : 'request/url',
+              formatter : 'local.Formatter.nameFromURL'
+            }">
+          </ObjectHeader>
           <footer>
             <Bar>
             </Bar>
@@ -119,11 +133,14 @@
         parseURL : function(sURL) {
           var re = new RegExp("^" + local.Formatter.URLRoot + "(.+)\/(.+?)$");
           var results = re.exec(sURL);
-          var info = {
-            path : results[1],
-            name : results[2]
-          };
-          jQuery.extend(info, local.Formatter.determinePathAndType(info.path));
+          var info = {};
+          if (results) {
+            info = {
+              path : results[1],
+              name : results[2]
+            };
+            jQuery.extend(info, local.Formatter.determinePathAndType(info.path));
+          }
           return info;
         },
 
@@ -160,30 +177,57 @@
         },
 
         onInit : function() {
-          var oSplitApp = this.getView().byId("idRoot");
-          oSplitApp.addMasterPage(this.returnView("Master"));
-          oSplitApp.addDetailPage(this.returnView("Detail"));
+          this.oSplitApp = this.getView().byId("idRoot");
+          this.oSplitApp.addMasterPage(this.returnView("Master"));
+          this.oSplitApp.addDetailPage(this.returnView("Detail"));
+
+          // Sharing the gift of navigation!
+          this.oSplitApp.getMasterPage("Master").getController().nav = this;
         },
 
-        onSelect : function(oEvent) {
-          debugger;
-
+        navTo : function(sPageId, oContext) {
+          var oPage = this.oSplitApp.getPage(sPageId);
+          this.oSplitApp.to(sPageId);
+          if (oContext) {
+            oPage.setBindingContext(oContext);
+          }
         }
 
       });
 
-      // Master controller definition
-      sap.ui.controller("local.master.controller", {
+      // Master & Detail controller definition (experimental)
+      sap.ui.controller("local.masterdetail.controller", {
+
+        onInit : function() {
+          sap.ui.getCore().getEventBus().subscribe("data", "requestComplete", function() {
+            var oView = this.getView();
+            if (oView.getId() === "Master") {
+              var oList = oView.byId("idList");
+              var oFirstItem = oList.getItems()[0];
+              oList.setSelectedItem(oFirstItem);
+              this.selectItem(oFirstItem);
+            }
+          }, this);
+        },
+
+        selectItem : function(oItem) {
+          this.nav.navTo("Detail", oItem.getBindingContext());
+        },
 
         onSelect : function(oEvent) {
-          this.getView().getParent()
+          var oItem = oEvent.getParameter("listItem") || oEvent.getSource();
+          this.selectItem(oItem);
         }
 
       });
 
       var sURL = "hardata.json";
+      var oModel = new sap.ui.model.json.JSONModel(sURL);
+      oModel.attachEventOnce('requestCompleted', function() {
+        sap.ui.getCore().getEventBus().publish("data", "requestComplete");
+      });
       sap.ui.xmlview({ viewContent: jQuery('#Root').html() })
-        .setModel(new sap.ui.model.json.JSONModel(sURL))
+        .setModel(oModel)
         .placeAt('content');
 
     </script>
