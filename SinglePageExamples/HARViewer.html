@@ -38,7 +38,7 @@
             items="{/log/entries}">
             <items>
               <ObjectListItem
-                icon="{
+                icon="sap-icon://{
                   path : 'request/url',
                   formatter : 'local.Formatter.iconFromURL'
                 }"
@@ -80,7 +80,7 @@
         <Page
           title="Request">
           <ObjectHeader
-            icon="{
+            icon="sap-icon://{
               path : 'request/url',
               formatter : 'local.Formatter.iconFromURL'
             }"
@@ -169,6 +169,7 @@
         // Need to refactor this stuff, hrm. Perhaps too much
         // stuff in this Formatter, might be worth massaging the
         // data in the model once it's loaded, instead
+        // nameFromURL : compose(get("name"), local.Formatter.parseURL(sURL)),
 
         nameFromURL : function(sURL) {
           return local.Formatter.parseURL(sURL).name;
@@ -183,7 +184,7 @@
         },
 
         iconFromURL : function(sURL) {
-          return "sap-icon://" + local.Formatter.parseURL(sURL).icon;
+          return local.Formatter.parseURL(sURL).icon;
         }
 
       };
@@ -243,9 +244,37 @@
 
       });
 
+      function enhanceData(oModel) {
+        var urlRoot = "https://ec2-54-236-207-58.compute-1.amazonaws.com:1081",
+            re = new RegExp("^" + urlRoot + "(\/sap\/opu\/odata|\/sap\/bc\/ui5_ui5\/sap|\/sap\/bc\/ui5_ui5\/ui2\/ushell\/resources)(\/.+)\/(.+?)$"),
+            data = oModel.getData();
+
+        data.log.entries = data.log.entries.map(function(d) {
+          var match = d.request.url.match(re),
+              infoMap = {
+                '/sap/opu/odata' : { type : "Database", icon : "database" },
+                '/sap/bc/ui5_ui5/sap' : { type : "Application", icon : "header" },
+                '/sap/bc/ui5_ui5/ui2/ushell/resources' : { type : "Library", icon : "detail-view" }
+              };
+
+          var obj = {
+            name : match[3] || "Unknown",
+            path : match[2] || "Unknown"
+          };
+
+          jQuery.extend(obj, infoMap[match[1]]);
+          jQuery.extend(d.request, { urlData : obj });
+          
+          return d;
+        });
+
+        oModel.setData(data);
+      }
+
       var sURL = "hardata.json";
       var oModel = new sap.ui.model.json.JSONModel(sURL);
       oModel.attachEventOnce('requestCompleted', function() {
+        enhanceData(oModel);
         sap.ui.getCore().getEventBus().publish("data", "requestComplete");
       });
       sap.ui.xmlview({ viewContent: jQuery('#Root').html() })
