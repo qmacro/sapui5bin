@@ -38,24 +38,12 @@
             items="{/log/entries}">
             <items>
               <ObjectListItem
-                icon="sap-icon://{
-                  path : 'request/url',
-                  formatter : 'local.Formatter.iconFromURL'
-                }"
-                intro="{
-                  path : 'request/url',
-                  formatter : 'local.Formatter.pathFromURL'
-                }"
-                title="{
-                  path : 'request/url',
-                  formatter : 'local.Formatter.nameFromURL'
-                }">
+                icon="sap-icon://{request/urlData/icon}"
+                intro="{request/urlData/path}"
+                title="{request/urlData/name}">
                 <firstStatus>
                   <ObjectStatus
-                    text="{
-                      path : 'request/url',
-                      formatter : 'local.Formatter.typeFromURL'
-                    }" />
+                    text="{request/urlData/type}" />
                 </firstStatus>
                 <attributes>
                   <ObjectAttribute
@@ -80,24 +68,12 @@
         <Page
           title="Request">
           <ObjectHeader
-            icon="sap-icon://{
-              path : 'request/url',
-              formatter : 'local.Formatter.iconFromURL'
-            }"
-            intro="{
-              path : 'request/url',
-              formatter : 'local.Formatter.pathFromURL'
-            }"
-            title="{
-              path : 'request/url',
-              formatter : 'local.Formatter.nameFromURL'
-            }">
+            icon="sap-icon://{request/urlData/icon}"
+            intro="{request/urlData/path}"
+            title="{request/urlData/name}">
             <firstStatus>
               <ObjectStatus
-                text="{
-                  path : 'request/url',
-                  formatter : 'local.Formatter.typeFromURL'
-                }" />
+                text="{request/urlData/type}" />
             </firstStatus>
             <attributes>
               <ObjectAttribute
@@ -125,70 +101,6 @@
 
 
     <script>
-
-      jQuery.sap.declare("local.Formatter");
-      local.Formatter = {
-
-        URLRoot : "https://ec2-54-236-207-58.compute-1.amazonaws.com:1081",
-
-        types : {
-          odata : { re : /\/sap\/opu\/odata/, icon : "database" },
-          application : { re : /\/sap\/bc\/ui5_ui5\/sap/, icon : "header" },
-          library : { re : /\/sap\/bc\/ui5_ui5\/ui2\/ushell\/resources/, icon : "detail-view" },
-        },
-
-        determinePathAndType : function(sPath) {
-          var info = {};
-          Object.keys(local.Formatter.types).forEach(function(sType) {
-            if (!info.type) {
-              var mTypeInfo = local.Formatter.types[sType];
-              info.path = sPath.replace(mTypeInfo.re, "");
-              if (info.path !== sPath) {
-                info.type = sType;
-                info.icon = mTypeInfo.icon;
-              }
-            }
-          });
-          return info;
-        },
-
-        parseURL : function(sURL) {
-          var re = new RegExp("^" + local.Formatter.URLRoot + "(.+)\/(.+?)$");
-          var results = re.exec(sURL);
-          var info = {};
-          if (results) {
-            info = {
-              path : results[1],
-              name : results[2]
-            };
-            jQuery.extend(info, local.Formatter.determinePathAndType(info.path));
-          }
-          return info;
-        },
-
-        // Need to refactor this stuff, hrm. Perhaps too much
-        // stuff in this Formatter, might be worth massaging the
-        // data in the model once it's loaded, instead
-        // nameFromURL : compose(get("name"), local.Formatter.parseURL(sURL)),
-
-        nameFromURL : function(sURL) {
-          return local.Formatter.parseURL(sURL).name;
-        },
-
-        pathFromURL : function(sURL) {
-          return local.Formatter.parseURL(sURL).path;
-        },
-
-        typeFromURL : function(sURL) {
-          return local.Formatter.parseURL(sURL).type;
-        },
-
-        iconFromURL : function(sURL) {
-          return local.Formatter.parseURL(sURL).icon;
-        }
-
-      };
-
 
       // Root controller definition
       sap.ui.controller("local.root.controller", {
@@ -264,7 +176,7 @@
 
           jQuery.extend(obj, infoMap[match[1]]);
           jQuery.extend(d.request, { urlData : obj });
-          
+
           return d;
         });
 
