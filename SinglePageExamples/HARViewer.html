@@ -15,6 +15,31 @@
     >
     </script>
 
+    <style>
+    .code {
+      font-family: monospace;
+    }
+    </style>
+
+    <script id="ViewSettingsDialog" type="sapui5/xmlfragment">
+    <core:FragmentDefinition
+        xmlns="sap.m"
+        xmlns:core="sap.ui.core">
+        <ViewSettingsDialog
+          confirm="onConfirm">
+          <filterItems>
+            <ViewSettingsFilterItem text="Type" key="type">
+              <items>
+                <ViewSettingsItem text="Database" key="database" />
+                <ViewSettingsItem text="Application" key="application" />
+                <ViewSettingsItem text="Library" key="library" />
+              </items>
+            </ViewSettingsFilterItem>
+          </filterItems>
+        </ViewSettingsDialog>
+      </core:FragmentDefinition>
+    </script>
+
     <script id="Root" type="sapui5/xmlview">
       <mvc:View
         controllerName="local.root.controller"
@@ -54,6 +79,11 @@
           </List>
           <footer>
             <Bar>
+              <contentRight>
+                <Button
+                  press="onListSettings"
+                  icon="sap-icon://action-settings" />
+              </contentRight>
             </Bar>
           </footer>
         </Page>
@@ -85,6 +115,7 @@
               <IconTabFilter
                 text="Content">
                 <TextArea
+                  styleClass="code"
                   rows="30"
                   cols="100"
                   value="{response/content/text}" />
@@ -152,6 +183,19 @@
         onSelect : function(oEvent) {
           var oItem = oEvent.getParameter("listItem") || oEvent.getSource();
           this.selectItem(oItem);
+        },
+
+        onListSettings : function(oEvent) {
+          if (!this.oViewSettingsDialog) {
+            this.oViewSettingsDialog = sap.ui.xmlfragment({
+              fragmentContent : jQuery("#ViewSettingsDialog").html()
+            }, this);
+          }
+          this.oViewSettingsDialog.open();
+        },
+
+        onConfirm : function(oEvent) {
+          debugger;
         }
 
       });
