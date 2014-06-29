@@ -133,6 +133,15 @@
 
     <script>
 
+      // Custom Filter
+      jQuery.sap.declare("local.CustomFilter");
+      sap.ui.model.Filter.extend("local.CustomFilter", {
+        constructor : function(mParameters) {
+          this.sPath = mParameters.sPath;
+          this.fnTest = (typeof(mParameters.fnTest) === "function") ? mParameters.fnTest : function(value) { return true; };
+        }
+      });
+
       // Root controller definition
       sap.ui.controller("local.root.controller", {
 
@@ -198,7 +207,13 @@
           var oListBinding = this.getView().byId("idList").getBinding("items");
           var aFilters = oEvent.getParameter("filterItems").map(function(oFilterItem) {
             // Hardcode 'type' filter for now
-            return new sap.ui.model.Filter("request/urlData/type", "EQ", oFilterItem.getKey());
+            return new local.CustomFilter({
+              sPath : "request/urlData/type",
+              fnTest : function(value) {
+                // Useful, not!
+                return Math.random() > 0.5;
+              }
+            });
           });
           oListBinding.filter(aFilters);
         }
