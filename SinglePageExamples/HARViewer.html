@@ -195,7 +195,12 @@
         },
 
         onConfirm : function(oEvent) {
-          debugger;
+          var oListBinding = this.getView().byId("idList").getBinding("items");
+          var aFilters = oEvent.getParameter("filterItems").map(function(oFilterItem) {
+            // Hardcode 'type' filter for now
+            return new sap.ui.model.Filter("request/urlData/type", "EQ", oFilterItem.getKey());
+          });
+          oListBinding.filter(aFilters);
         }
 
       });
