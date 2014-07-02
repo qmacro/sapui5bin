@@ -21,22 +21,18 @@
     }
     </style>
 
-    <script id="ViewSettingsDialog" type="sapui5/xmlfragment">
+    <script id="ActionSheet" type="sapui5/xmlfragment">
     <core:FragmentDefinition
         xmlns="sap.m"
         xmlns:core="sap.ui.core">
-        <ViewSettingsDialog
-          confirm="onConfirm">
-          <filterItems>
-            <ViewSettingsFilterItem text="Type" key="type">
-              <items>
-                <ViewSettingsItem text="Database" key="database" />
-                <ViewSettingsItem text="Application" key="application" />
-                <ViewSettingsItem text="Library" key="library" />
-              </items>
-            </ViewSettingsFilterItem>
-          </filterItems>
-        </ViewSettingsDialog>
+        <ActionSheet
+          placement="Top"
+          buttons="{/requestTypes}">
+          <buttons>
+            <Button
+              text="{type}" />
+          </buttons>
+        </ActionSheet>
       </core:FragmentDefinition>
     </script>
 
@@ -81,8 +77,8 @@
             <Bar>
               <contentRight>
                 <Button
-                  press="onListSettings"
-                  icon="sap-icon://action-settings" />
+                  press="onFilterButtonPress"
+                  icon="sap-icon://filter" />
               </contentRight>
             </Bar>
           </footer>
@@ -203,6 +199,16 @@
           this.oViewSettingsDialog.open();
         },
 
+        onFilterButtonPress : function(oEvent) {
+          if (!this.oActionSheet) {
+            this.oActionSheet = sap.ui.xmlfragment({
+              fragmentContent : jQuery("#ActionSheet").html()
+            }, this);
+          }
+          this.getView().addDependent(this.oActionSheet);
+          this.oActionSheet.openBy(oEvent.getSource());
+        },
+
         onConfirm : function(oEvent) {
           var oListBinding = this.getView().byId("idList").getBinding("items");
           var aFilters = oEvent.getParameter("filterItems").map(function(oFilterItem) {
@@ -225,13 +231,19 @@
             re = new RegExp("^" + urlRoot + "(\/sap\/opu\/odata|\/sap\/bc\/ui5_ui5\/sap|\/sap\/bc\/ui5_ui5\/ui2\/ushell\/resources)(\/.+)\/(.+?)$"),
             data = oModel.getData();
 
+        var infoMap = {
+          '/sap/opu/odata' : { type : "Database", icon : "database" },
+          '/sap/bc/ui5_ui5/sap' : { type : "Application", icon : "header" },
+          '/sap/bc/ui5_ui5/ui2/ushell/resources' : { type : "Library", icon : "detail-view" }
+        };
+
+        // Add the three types to the model
+        data.requestTypes = Object.keys(infoMap).map(function(key) {
+          return { type : infoMap[key].type };
+        });
+
         data.log.entries = data.log.entries.map(function(d) {
-          var match = d.request.url.match(re),
-              infoMap = {
-                '/sap/opu/odata' : { type : "Database", icon : "database" },
-                '/sap/bc/ui5_ui5/sap' : { type : "Application", icon : "header" },
-                '/sap/bc/ui5_ui5/ui2/ushell/resources' : { type : "Library", icon : "detail-view" }
-              };
+          var match = d.request.url.match(re);
 
           var obj = {
             name : match[3] || "Unknown",
