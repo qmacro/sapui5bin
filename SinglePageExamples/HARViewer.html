@@ -16,7 +16,7 @@
     </script>
 
     <style>
-    .code {
+    .sapMTextArea.code .sapMTextAreaInner {
       font-family: monospace;
     }
     </style>
@@ -30,7 +30,15 @@
           buttons="{/requestTypes}">
           <buttons>
             <Button
-              text="{type}" />
+              press="onFilterTypePress"
+              icon="sap-icon://{icon}"
+              text="{type}">
+              <customData>
+                <core:CustomData
+                  key="type"
+                  value="{type}" />
+              </customData>
+            </Button>
           </buttons>
         </ActionSheet>
       </core:FragmentDefinition>
@@ -111,7 +119,7 @@
               <IconTabFilter
                 text="Content">
                 <TextArea
-                  styleClass="code"
+                  class="code"
                   rows="30"
                   cols="100"
                   value="{response/content/text}" />
@@ -128,6 +136,8 @@
 
 
     <script>
+
+      var sNoFilterType = "No Filter";
 
       // Custom Filter
       jQuery.sap.declare("local.CustomFilter");
@@ -190,37 +200,30 @@
           this.selectItem(oItem);
         },
 
-        onListSettings : function(oEvent) {
-          if (!this.oViewSettingsDialog) {
-            this.oViewSettingsDialog = sap.ui.xmlfragment({
-              fragmentContent : jQuery("#ViewSettingsDialog").html()
-            }, this);
-          }
-          this.oViewSettingsDialog.open();
-        },
-
         onFilterButtonPress : function(oEvent) {
           if (!this.oActionSheet) {
             this.oActionSheet = sap.ui.xmlfragment({
               fragmentContent : jQuery("#ActionSheet").html()
             }, this);
+            this.getView().addDependent(this.oActionSheet);
           }
-          this.getView().addDependent(this.oActionSheet);
           this.oActionSheet.openBy(oEvent.getSource());
         },
 
-        onConfirm : function(oEvent) {
+        onFilterTypePress : function(oEvent) {
+
+          // Get custom data, be over cautious, why not?
+          var aCustomData = oEvent.getSource().getCustomData();
+          var sType = aCustomData.filter(function(d) {
+            return d.getKey() === "type";
+          })[0].getValue();
+
+          // Filter the list binding
           var oListBinding = this.getView().byId("idList").getBinding("items");
-          var aFilters = oEvent.getParameter("filterItems").map(function(oFilterItem) {
-            // Hardcode 'type' filter for now
-            return new local.CustomFilter({
-              sPath : "request/urlData/type",
-              fnTest : function(value) {
-                // Useful, not!
-                return Math.random() > 0.5;
-              }
-            });
-          });
+          var aFilters = [];
+          if (sType && sType !== sNoFilterType) {
+            aFilters.push(new sap.ui.model.Filter("request/urlData/type", "EQ", sType));
+          }
           oListBinding.filter(aFilters);
         }
 
@@ -237,10 +240,11 @@
           '/sap/bc/ui5_ui5/ui2/ushell/resources' : { type : "Library", icon : "detail-view" }
         };
 
-        // Add the three types to the model
+        // Add the three types to the model plus an 'all'
         data.requestTypes = Object.keys(infoMap).map(function(key) {
-          return { type : infoMap[key].type };
+          return infoMap[key];
         });
+        data.requestTypes.push({ type : sNoFilterType, icon : "decline" })
 
         data.log.entries = data.log.entries.map(function(d) {
           var match = d.request.url.match(re);
