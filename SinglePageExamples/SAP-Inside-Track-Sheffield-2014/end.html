@@ -1,0 +1,138 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="UTF-8">
+
+    <title>SAP Inside Track Sheffield 2014</title>
+
+    <script id="sap-ui-bootstrap"
+      type="text/javascript"
+      src="/ui5/latest/resources/sap-ui-core.js"
+      data-sap-ui-theme="sap_bluecrystal"
+      data-sap-ui-libs="sap.m"
+      data-sap-ui-xx-bindingSyntax="complex">
+    </script>
+
+    <script id="view-root" type="sapui5/xmlview">
+      <mvc:View
+        controllerName="root.controller"
+        displayBlock="true"
+        xmlns:mvc="sap.ui.core.mvc"
+        xmlns="sap.m">
+        <App id="app" />
+      </mvc:View>
+    </script>
+
+    <script id="view-main" type="sapui5/xmlview">
+      <mvc:View
+        controllerName="main.controller"
+        displayBlock="true"
+        xmlns:mvc="sap.ui.core.mvc"
+        xmlns="sap.m">
+        <Page
+          title="Main">
+          <List
+            mode="SingleSelectMaster"
+            select="onSelect"
+            items="{/Sessions}">
+            <items>
+              <StandardListItem
+                description="{Presenter}"
+                title="{Title}" />
+            </items>
+            </List>
+          <footer>
+            <Bar />
+          </footer>
+        </Page>
+      </mvc:View>
+    </script>
+
+    <script id="view-detail" type="sapui5/xmlview">
+      <mvc:View
+        controllerName="detail.controller"
+        displayBlock="true"
+        xmlns:mvc="sap.ui.core.mvc"
+        xmlns="sap.m">
+        <Page
+          showNavButton="true"
+          navButtonPress="onNavButtonPress"
+          title="Detail">
+          <content>
+            <ObjectHeader
+              title="{Title}"
+              number="{Room}"
+              numberUnit="Room">
+              <attributes>
+                <ObjectAttribute
+                  text="{Presenter}" />
+              </attributes>
+              <firstStatus>
+                <ObjectStatus
+                  text="Stream: {Stream}" />
+              </firstStatus>
+            </ObjectHeader>
+          </content>
+          <footer>
+            <Bar />
+          </footer>
+        </Page>
+      </mvc:View>
+    </script>
+
+    <script>
+      _g = sap.ui.getCore().byId;
+
+      sap.ui.controller("root.controller", {
+
+        onInit : function(oEvent) {
+
+          // Put the two views into the root view
+          var oApp = this.getView().byId("app");
+          ["main", "detail"].forEach(function(pageId) {
+            oApp.addPage(sap.ui.xmlview(pageId, {
+              viewContent : jQuery("#view-" + pageId).html()
+            }));
+          });
+
+          var oModel = new sap.ui.model.json.JSONModel(
+            ["http://cors-anywhere.herokuapp.com","http://bit.ly/sitsheffsessions"].join("/")
+          );
+          this.getView().setModel(oModel);
+
+        }
+      });
+
+
+      sap.ui.controller("main.controller", {
+        onSelect : function(oEvent) {
+          var oSelectedItem = oEvent.getParameter("listItem");
+          var oBindingContext = oSelectedItem.getBindingContext();
+          var oApp = this.getView().getParent();
+          oApp.getPage("detail").setBindingContext(oBindingContext);
+          oApp.to("detail");
+        }
+      });
+
+
+      sap.ui.controller("detail.controller", {
+
+        onNavButtonPress : function(oEvent) {
+          this.getView().getParent().back();
+        }
+
+      });
+
+      // Start it all up
+      sap.ui.xmlview("root", {
+        viewContent: jQuery('#view-root').html()
+      }).placeAt("content");
+
+    </script>
+    <script src="http://localhost:35729/livereload.js"></script>
+
+  </head>
+
+  <body class="sapUiBody" id="content" />
+</html>
