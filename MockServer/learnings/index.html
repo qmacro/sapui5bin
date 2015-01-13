@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta charset="UTF-8">
+		<title>Mock Server Learnings</title>
+		<script id="sap-ui-bootstrap"
+			type="text/javascript"
+			src="/ui5/latest/resources/sap-ui-core.js"
+			data-sap-ui-theme="sap_bluecrystal"
+			data-sap-ui-libs="sap.m"
+			data-sap-ui-xx-bindingSyntax="complex"
+		>
+		</script>
+
+		<script id="Main" type="sapui5/xmlview">
+			<mvc:View
+				displayBlock="true"
+				xmlns:mvc="sap.ui.core.mvc"
+				xmlns="sap.m">
+				<List
+					items="{/Categories}">
+					<items>
+						<StandardListItem
+							title="{CategoryName}"
+							description="{Description}" />
+					</items>
+				</List>
+			</mvc:View>
+		</script>
+
+		<script>
+			jQuery.sap.require("sap.ui.core.util.MockServer");
+
+			var sUrlRoot = "/myservice/";
+			var oMockServer = new sap.ui.core.util.MockServer({
+				rootUri : sUrlRoot
+			});
+
+			oMockServer.simulate("mock/northwind.xml", true);
+			oMockServer.start();
+
+			sap.ui.xmlview({
+				viewContent : jQuery("#Main").html()
+			})
+			.setModel(new sap.ui.model.odata.ODataModel("/myservice/", true))
+			.placeAt("content");
+		</script>
+	</head>
+	<body id="content"
+		class="sapUiBody" />
+</html>
