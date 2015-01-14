@@ -19,11 +19,12 @@
 				xmlns:mvc="sap.ui.core.mvc"
 				xmlns="sap.m">
 				<List
-					items="{/Categories}">
+					items="{/CarrierCollection}">
 					<items>
 						<StandardListItem
-							title="{CategoryName}"
-							description="{Description}" />
+							info="{carrid}"
+							title="{CARRNAME}"
+							description="{CURRCODE}" />
 					</items>
 				</List>
 			</mvc:View>
@@ -37,7 +38,8 @@
 				rootUri : sUrlRoot
 			});
 
-			oMockServer.simulate("mock/northwind.xml", true);
+			oMockServer.simulate("mock/rmtsampleflight/metadata.xml", true);
+			// oMockServer.simulate("mock/rmtsampleflight/metadata.xml", "mock/rmtsampleflight/");
 			oMockServer.start();
 
 			sap.ui.xmlview({
